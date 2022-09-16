@@ -12,7 +12,31 @@
 		DA53F3B128645AF7003D02EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA53F3B028645AF7003D02EF /* Assets.xcassets */; };
 		DA53F3B428645AF7003D02EF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA53F3B328645AF7003D02EF /* Preview Assets.xcassets */; };
 		DA53F3B628645AF7003D02EF /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3B528645AF7003D02EF /* Persistence.swift */; };
-		DA53F3B928645AF7003D02EF /* Formkdiary.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3B728645AF7003D02EF /* Formkdiary.xcdatamodeld */; };
+		DA53F3C328645E05003D02EF /* PageMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3BF28645E05003D02EF /* PageMO+CoreDataClass.swift */; };
+		DA53F3C428645E05003D02EF /* PageMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3C028645E05003D02EF /* PageMO+CoreDataProperties.swift */; };
+		DA53F3C528645E05003D02EF /* NoteMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3C128645E05003D02EF /* NoteMO+CoreDataClass.swift */; };
+		DA53F3C628645E05003D02EF /* NoteMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3C228645E05003D02EF /* NoteMO+CoreDataProperties.swift */; };
+		DA53F3CF286462C4003D02EF /* DailyMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3C7286462C4003D02EF /* DailyMO+CoreDataClass.swift */; };
+		DA53F3D0286462C4003D02EF /* DailyMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3C8286462C4003D02EF /* DailyMO+CoreDataProperties.swift */; };
+		DA53F3D3286462C4003D02EF /* MonthlyMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3CB286462C4003D02EF /* MonthlyMO+CoreDataClass.swift */; };
+		DA53F3D4286462C4003D02EF /* MonthlyMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3CC286462C4003D02EF /* MonthlyMO+CoreDataProperties.swift */; };
+		DA53F3D5286462C4003D02EF /* MemoMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3CD286462C4003D02EF /* MemoMO+CoreDataClass.swift */; };
+		DA53F3D6286462C4003D02EF /* MemoMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3CE286462C4003D02EF /* MemoMO+CoreDataProperties.swift */; };
+		DA53F3D8286472EE003D02EF /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3D7286472EE003D02EF /* MainView.swift */; };
+		DA53F3DA286474E1003D02EF /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3D9286474E1003D02EF /* NoteView.swift */; };
+		DA53F3DC28647575003D02EF /* NoteAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3DB28647575003D02EF /* NoteAddView.swift */; };
+		DA53F3DE28649ACA003D02EF /* PageAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3DD28649ACA003D02EF /* PageAddView.swift */; };
+		DA53F3E0286EE2D8003D02EF /* TestS.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3DF286EE2D8003D02EF /* TestS.swift */; };
+		DA53F3E2286EE3F8003D02EF /* PageSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3E1286EE3F8003D02EF /* PageSelectView.swift */; };
+		DA53F3E4286EE673003D02EF /* MonthlyDefaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3E3286EE673003D02EF /* MonthlyDefaultView.swift */; };
+		DA53F3E6286EFB63003D02EF /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3E5286EFB63003D02EF /* Extensions.swift */; };
+		DAABCBB428D1AA7600F8244E /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAABCBB328D1AA7600F8244E /* PageView.swift */; };
+		DABF60A9286F148900620006 /* DailyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF60A8286F148900620006 /* DailyView.swift */; };
+		DABF60AB286F424100620006 /* PageAddWeeeklyCalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF60AA286F424100620006 /* PageAddWeeeklyCalView.swift */; };
+		DABF60AD286F479000620006 /* WeeeklyDefaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF60AC286F479000620006 /* WeeeklyDefaultView.swift */; };
+		DAD9716328D30FB0002CABAC /* WeeklyMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD9716128D30FB0002CABAC /* WeeklyMO+CoreDataClass.swift */; };
+		DAD9716428D30FB0002CABAC /* WeeklyMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD9716228D30FB0002CABAC /* WeeklyMO+CoreDataProperties.swift */; };
+		DAD9717328D3E4EF002CABAC /* Formkdiary.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DAD9717128D3E4EF002CABAC /* Formkdiary.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,7 +46,33 @@
 		DA53F3B028645AF7003D02EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA53F3B328645AF7003D02EF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DA53F3B528645AF7003D02EF /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		DA53F3B828645AF7003D02EF /* Formkdiary.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Formkdiary.xcdatamodel; sourceTree = "<group>"; };
+		DA53F3BF28645E05003D02EF /* PageMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PageMO+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA53F3C028645E05003D02EF /* PageMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PageMO+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DA53F3C128645E05003D02EF /* NoteMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteMO+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA53F3C228645E05003D02EF /* NoteMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteMO+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DA53F3C7286462C4003D02EF /* DailyMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DailyMO+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA53F3C8286462C4003D02EF /* DailyMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DailyMO+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DA53F3CB286462C4003D02EF /* MonthlyMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MonthlyMO+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA53F3CC286462C4003D02EF /* MonthlyMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MonthlyMO+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DA53F3CD286462C4003D02EF /* MemoMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemoMO+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA53F3CE286462C4003D02EF /* MemoMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemoMO+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DA53F3D7286472EE003D02EF /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		DA53F3D9286474E1003D02EF /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
+		DA53F3DB28647575003D02EF /* NoteAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteAddView.swift; sourceTree = "<group>"; };
+		DA53F3DD28649ACA003D02EF /* PageAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageAddView.swift; sourceTree = "<group>"; };
+		DA53F3DF286EE2D8003D02EF /* TestS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestS.swift; sourceTree = "<group>"; };
+		DA53F3E1286EE3F8003D02EF /* PageSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageSelectView.swift; sourceTree = "<group>"; };
+		DA53F3E3286EE673003D02EF /* MonthlyDefaultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyDefaultView.swift; sourceTree = "<group>"; };
+		DA53F3E5286EFB63003D02EF /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		DAABCBB328D1AA7600F8244E /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
+		DABF60A8286F148900620006 /* DailyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyView.swift; sourceTree = "<group>"; };
+		DABF60AA286F424100620006 /* PageAddWeeeklyCalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageAddWeeeklyCalView.swift; sourceTree = "<group>"; };
+		DABF60AC286F479000620006 /* WeeeklyDefaultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeeklyDefaultView.swift; sourceTree = "<group>"; };
+		DAD9715F28D30DBC002CABAC /* Formkdiary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Formkdiary.entitlements; sourceTree = "<group>"; };
+		DAD9716028D30E7D002CABAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		DAD9716128D30FB0002CABAC /* WeeklyMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeeklyMO+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DAD9716228D30FB0002CABAC /* WeeklyMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeeklyMO+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DAD9717228D3E4EF002CABAC /* Formkdiary.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Formkdiary.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +89,18 @@
 		DA53F3A028645AF6003D02EF = {
 			isa = PBXGroup;
 			children = (
+				DAD9716128D30FB0002CABAC /* WeeklyMO+CoreDataClass.swift */,
+				DAD9716228D30FB0002CABAC /* WeeklyMO+CoreDataProperties.swift */,
+				DA53F3C7286462C4003D02EF /* DailyMO+CoreDataClass.swift */,
+				DA53F3C8286462C4003D02EF /* DailyMO+CoreDataProperties.swift */,
+				DA53F3CB286462C4003D02EF /* MonthlyMO+CoreDataClass.swift */,
+				DA53F3CC286462C4003D02EF /* MonthlyMO+CoreDataProperties.swift */,
+				DA53F3CD286462C4003D02EF /* MemoMO+CoreDataClass.swift */,
+				DA53F3CE286462C4003D02EF /* MemoMO+CoreDataProperties.swift */,
+				DA53F3BF28645E05003D02EF /* PageMO+CoreDataClass.swift */,
+				DA53F3C028645E05003D02EF /* PageMO+CoreDataProperties.swift */,
+				DA53F3C128645E05003D02EF /* NoteMO+CoreDataClass.swift */,
+				DA53F3C228645E05003D02EF /* NoteMO+CoreDataProperties.swift */,
 				DA53F3AB28645AF6003D02EF /* Formkdiary */,
 				DA53F3AA28645AF6003D02EF /* Products */,
 			);
@@ -55,11 +117,25 @@
 		DA53F3AB28645AF6003D02EF /* Formkdiary */ = {
 			isa = PBXGroup;
 			children = (
+				DAD9716028D30E7D002CABAC /* Info.plist */,
+				DAD9715F28D30DBC002CABAC /* Formkdiary.entitlements */,
+				DA53F3E5286EFB63003D02EF /* Extensions.swift */,
 				DA53F3AC28645AF6003D02EF /* FormkdiaryApp.swift */,
 				DA53F3AE28645AF6003D02EF /* ContentView.swift */,
+				DA53F3D7286472EE003D02EF /* MainView.swift */,
+				DA53F3DB28647575003D02EF /* NoteAddView.swift */,
+				DA53F3D9286474E1003D02EF /* NoteView.swift */,
+				DA53F3E3286EE673003D02EF /* MonthlyDefaultView.swift */,
+				DABF60A8286F148900620006 /* DailyView.swift */,
+				DA53F3E1286EE3F8003D02EF /* PageSelectView.swift */,
+				DA53F3DD28649ACA003D02EF /* PageAddView.swift */,
+				DAABCBB328D1AA7600F8244E /* PageView.swift */,
+				DABF60AA286F424100620006 /* PageAddWeeeklyCalView.swift */,
+				DABF60AC286F479000620006 /* WeeeklyDefaultView.swift */,
+				DA53F3DF286EE2D8003D02EF /* TestS.swift */,
 				DA53F3B028645AF7003D02EF /* Assets.xcassets */,
 				DA53F3B528645AF7003D02EF /* Persistence.swift */,
-				DA53F3B728645AF7003D02EF /* Formkdiary.xcdatamodeld */,
+				DAD9717128D3E4EF002CABAC /* Formkdiary.xcdatamodeld */,
 				DA53F3B228645AF7003D02EF /* Preview Content */,
 			);
 			path = Formkdiary;
@@ -143,10 +219,34 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAD9716428D30FB0002CABAC /* WeeklyMO+CoreDataProperties.swift in Sources */,
+				DABF60AB286F424100620006 /* PageAddWeeeklyCalView.swift in Sources */,
+				DA53F3E2286EE3F8003D02EF /* PageSelectView.swift in Sources */,
+				DA53F3D0286462C4003D02EF /* DailyMO+CoreDataProperties.swift in Sources */,
+				DA53F3D5286462C4003D02EF /* MemoMO+CoreDataClass.swift in Sources */,
+				DA53F3C428645E05003D02EF /* PageMO+CoreDataProperties.swift in Sources */,
+				DAABCBB428D1AA7600F8244E /* PageView.swift in Sources */,
 				DA53F3B628645AF7003D02EF /* Persistence.swift in Sources */,
 				DA53F3AF28645AF6003D02EF /* ContentView.swift in Sources */,
+				DA53F3C328645E05003D02EF /* PageMO+CoreDataClass.swift in Sources */,
+				DA53F3D3286462C4003D02EF /* MonthlyMO+CoreDataClass.swift in Sources */,
+				DA53F3DA286474E1003D02EF /* NoteView.swift in Sources */,
+				DA53F3D4286462C4003D02EF /* MonthlyMO+CoreDataProperties.swift in Sources */,
+				DA53F3E6286EFB63003D02EF /* Extensions.swift in Sources */,
+				DABF60AD286F479000620006 /* WeeeklyDefaultView.swift in Sources */,
 				DA53F3AD28645AF6003D02EF /* FormkdiaryApp.swift in Sources */,
-				DA53F3B928645AF7003D02EF /* Formkdiary.xcdatamodeld in Sources */,
+				DA53F3DC28647575003D02EF /* NoteAddView.swift in Sources */,
+				DA53F3DE28649ACA003D02EF /* PageAddView.swift in Sources */,
+				DA53F3D8286472EE003D02EF /* MainView.swift in Sources */,
+				DAD9716328D30FB0002CABAC /* WeeklyMO+CoreDataClass.swift in Sources */,
+				DA53F3C528645E05003D02EF /* NoteMO+CoreDataClass.swift in Sources */,
+				DABF60A9286F148900620006 /* DailyView.swift in Sources */,
+				DA53F3E4286EE673003D02EF /* MonthlyDefaultView.swift in Sources */,
+				DAD9717328D3E4EF002CABAC /* Formkdiary.xcdatamodeld in Sources */,
+				DA53F3E0286EE2D8003D02EF /* TestS.swift in Sources */,
+				DA53F3CF286462C4003D02EF /* DailyMO+CoreDataClass.swift in Sources */,
+				DA53F3C628645E05003D02EF /* NoteMO+CoreDataProperties.swift in Sources */,
+				DA53F3D6286462C4003D02EF /* MemoMO+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,27 +372,32 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Formkdiary/Formkdiary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Formkdiary/Preview Content\"";
 				DEVELOPMENT_TEAM = P6Z9B6CV2H;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Formkdiary/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "다이어리";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = cch.Formkdiary;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cch.Formkdiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -301,27 +406,32 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Formkdiary/Formkdiary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Formkdiary/Preview Content\"";
 				DEVELOPMENT_TEAM = P6Z9B6CV2H;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Formkdiary/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "다이어리";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = cch.Formkdiary;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cch.Formkdiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -349,12 +459,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		DA53F3B728645AF7003D02EF /* Formkdiary.xcdatamodeld */ = {
+		DAD9717128D3E4EF002CABAC /* Formkdiary.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				DA53F3B828645AF7003D02EF /* Formkdiary.xcdatamodel */,
+				DAD9717228D3E4EF002CABAC /* Formkdiary.xcdatamodel */,
 			);
-			currentVersion = DA53F3B828645AF7003D02EF /* Formkdiary.xcdatamodel */;
+			currentVersion = DAD9717228D3E4EF002CABAC /* Formkdiary.xcdatamodel */;
 			path = Formkdiary.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

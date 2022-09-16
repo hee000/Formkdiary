@@ -1,9 +1,63 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="true" userDefinedModelVersionIdentifier="">
-    <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
-        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21279" systemVersion="21G83" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Daily" representedClassName="DailyMO" syncable="YES">
+        <attribute name="dailyId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="layout" optional="YES" attributeType="String"/>
+        <attribute name="text" optional="YES" attributeType="String"/>
+        <relationship name="monthly" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Monthly" inverseName="dailies" inverseEntity="Monthly"/>
+        <relationship name="page" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Page" inverseName="daily" inverseEntity="Page"/>
+        <relationship name="weekly" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Weekly" inverseName="dailies" inverseEntity="Weekly"/>
     </entity>
-    <elements>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="44"/>
-    </elements>
+    <entity name="Memo" representedClassName="MemoMO" syncable="YES">
+        <attribute name="memoId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="text" optional="YES" attributeType="String"/>
+        <relationship name="page" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Page" inverseName="memo" inverseEntity="Page"/>
+    </entity>
+    <entity name="Monthly" representedClassName="MonthlyMO" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="layout" optional="YES" attributeType="String"/>
+        <attribute name="monthlyId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="dailies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Daily" inverseName="monthly" inverseEntity="Daily"/>
+        <relationship name="page" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Page" inverseName="monthly" inverseEntity="Page"/>
+    </entity>
+    <entity name="Note" representedClassName="NoteMO" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="noteId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="pages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Page" inverseName="note" inverseEntity="Page"/>
+    </entity>
+    <entity name="Page" representedClassName="PageMO" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="index" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="pageId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="daily" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Daily" inverseName="page" inverseEntity="Daily"/>
+        <relationship name="memo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Memo" inverseName="page" inverseEntity="Memo"/>
+        <relationship name="monthly" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Monthly" inverseName="page" inverseEntity="Monthly"/>
+        <relationship name="note" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Note" inverseName="pages" inverseEntity="Note"/>
+        <relationship name="weekly" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Weekly" inverseName="page" inverseEntity="Weekly"/>
+    </entity>
+    <entity name="Weekly" representedClassName="WeeklyMO" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="layout" optional="YES" attributeType="String"/>
+        <attribute name="weeklyId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="dailies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Daily" inverseName="weekly" inverseEntity="Daily"/>
+        <relationship name="page" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Page" inverseName="weekly" inverseEntity="Page"/>
+    </entity>
+    <configuration name="Cloud" usedWithCloudKit="YES">
+        <memberEntity name="Daily"/>
+        <memberEntity name="Memo"/>
+        <memberEntity name="Monthly"/>
+        <memberEntity name="Note"/>
+        <memberEntity name="Page"/>
+        <memberEntity name="Weekly"/>
+    </configuration>
+    <configuration name="Local">
+        <memberEntity name="Daily"/>
+        <memberEntity name="Memo"/>
+        <memberEntity name="Monthly"/>
+        <memberEntity name="Note"/>
+        <memberEntity name="Page"/>
+        <memberEntity name="Weekly"/>
+    </configuration>
 </model>
