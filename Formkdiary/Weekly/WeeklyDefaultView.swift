@@ -8,11 +8,11 @@
 import SwiftUI
 import CoreData
 
-struct WeeeklyDefaultView: View {
+struct WeeklyDefaultView: View {
   @Environment(\.managedObjectContext) private var viewContext
   @Environment(\.presentationMode) var presentationMode
 
-  @ObservedObject var weeekly: WeeklyMO
+  @ObservedObject var weekly: WeeklyMO
 
   let week = ["일", "월", "화", "수", "목", "금", "토"]
   var day: Int
@@ -33,14 +33,14 @@ struct WeeeklyDefaultView: View {
     let calendar = Calendar.current
     var dateComponent: DateComponents
     
-      if let weeekly = try? context.existingObject(with: objectID) as? WeeklyMO {
-        dateComponent = calendar.dateComponents([.year, .month, .day, .weekOfMonth], from: weeekly.date)
-        self.weeekly = weeekly
+      if let weekly = try? context.existingObject(with: objectID) as? WeeklyMO {
+        dateComponent = calendar.dateComponents([.year, .month, .day, .weekOfMonth], from: weekly.date)
+        self.weekly = weekly
       } else {
         // if there is no object with that id, create new one
-        let newWeeekly = WeeklyMO(context: context)
-        dateComponent = calendar.dateComponents([.year, .month, .day, .weekOfMonth], from: newWeeekly.date)
-        self.weeekly = newWeeekly
+        let newWeekly = WeeklyMO(context: context)
+        dateComponent = calendar.dateComponents([.year, .month, .day, .weekOfMonth], from: newWeekly.date)
+        self.weekly = newWeekly
         try? context.save()
       }
     
@@ -52,6 +52,7 @@ struct WeeeklyDefaultView: View {
     day = calendar.component(.day, from: month)
     
     last = calendar.range(of: .day, in: .month, for: month)?.last ?? 30
+    
   }
   
     var body: some View {
@@ -66,7 +67,7 @@ struct WeeeklyDefaultView: View {
           
 //          Divider()
           
-          let dailes = weeekly.dailies.allObjects as! [DailyMO]
+          let dailes = weekly.dailies.allObjects as! [DailyMO]
           let calendar = Calendar.current
           if dailyActive {
             NavigationLink(destination: DailyView(id: dailyObjectID, in: viewContext), isActive: $dailyActive) {}
@@ -76,14 +77,14 @@ struct WeeeklyDefaultView: View {
             ForEach(0..<7, id:\.self) { index in
               Button{
                 if let daily = dailes.first(where: { DailyMO in
-                  calendar.component(.day, from: DailyMO.date) == calendar.component(.day, from: calendar.date(byAdding: DateComponents(day: index - self.start), to: self.weeekly.date)!)
+                  calendar.component(.day, from: DailyMO.date) == calendar.component(.day, from: calendar.date(byAdding: DateComponents(day: index - self.start), to: self.weekly.date)!)
                 }) { // 있으면
                   dailyObjectID = daily.objectID
                   dailyActive = true
                 } else { // 없으면
                   let newdaily = DailyMO(context: viewContext)
-                  newdaily.date = calendar.date(byAdding: DateComponents(day: index - self.start), to: self.weeekly.date)!
-                  newdaily.weekly = self.weeekly
+                  newdaily.date = calendar.date(byAdding: DateComponents(day: index - self.start), to: self.weekly.date)!
+                  newdaily.weekly = self.weekly
                   CoreDataSave()
                   dailyObjectID = newdaily.objectID
                   dailyActive = true
@@ -95,7 +96,7 @@ struct WeeeklyDefaultView: View {
 //                    .frame(maxWidth: .infinity, alignment: .leading)
 
                   if let daily = dailes.first { DailyMO in
-                    calendar.component(.day, from: DailyMO.date) == calendar.component(.day, from: calendar.date(byAdding: DateComponents(day: index - self.start), to: self.weeekly.date)!)
+                    calendar.component(.day, from: DailyMO.date) == calendar.component(.day, from: calendar.date(byAdding: DateComponents(day: index - self.start), to: self.weekly.date)!)
                   } {
                     Text(daily.text)
                       .font(.system(size: 10, weight: .regular))
@@ -117,18 +118,6 @@ struct WeeeklyDefaultView: View {
         } //scroll
       } //geo
       .navigationTitle(title)
-      .navigationBarBackButtonHidden(true)
-      .toolbar {
-        ToolbarItem(placement: .navigationBarLeading) {
-          Button {
-            presentationMode.wrappedValue.dismiss()
-          } label: {
-            Image(systemName: "chevron.left")
-              .foregroundColor(.black)
-          }
-        }
-      }//toolbar
-
     }
 }
 

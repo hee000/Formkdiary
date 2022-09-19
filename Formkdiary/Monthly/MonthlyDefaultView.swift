@@ -12,7 +12,8 @@ struct MonthlyDefaultView: View {
   @Environment(\.managedObjectContext) private var viewContext
   @Environment(\.presentationMode) var presentationMode
 
-
+  @AppStorage("StartMonday") var startMonday: Bool = UserDefaults.standard.bool(forKey: "StartMonday")
+  
   @ObservedObject var montly: MonthlyMO
   
   var before: Int
@@ -45,7 +46,13 @@ struct MonthlyDefaultView: View {
     title = "\(dateComponent.year!), \(dateComponent.month!)월"
     let month = calendar.date(from: dateComponent)!
     
-    start = calendar.component(.weekday, from: month)
+    if !UserDefaults.standard.bool(forKey: "StartMonday") {
+      start = calendar.component(.weekday, from: month)
+    } else {
+      start = (calendar.component(.weekday, from: month) - 1) < 0 ? 7 : calendar.component(.weekday, from: month) - 1
+    }
+    
+//    start = calendar.component(.weekday, from: month)
     last = calendar.range(of: .day, in: .month, for: month)?.last ?? 30
     
     let beforeMonthLastDay = calendar.date(byAdding: DateComponents(day: -1), to: month) ?? Date()
@@ -66,10 +73,10 @@ struct MonthlyDefaultView: View {
       GeometryReader { geo in
         VStack(spacing: 0) {
           HStack {
-            ForEach(0..<7){ index in
-              Text(week[index])
+            ForEach((startMonday ? monWeek : sunWeek), id:\.self){ day in
+              Text(day)
 //                .foregroundColor(.black)
-                .foregroundColor(week[index] == "일" ? .red : week[index] == "토" ? .blue : .black)
+                .foregroundColor(day == "일" ? .red : day == "토" ? .blue : .black)
 //                .foregroundColor(week[index] == "토" ? .blue : .black)
                 .frame(minWidth: 0, maxWidth: .infinity)
                 .frame(height: 50)
@@ -164,16 +171,5 @@ struct MonthlyDefaultView: View {
         } //v
       } //geo
       .navigationTitle(title)
-//      .navigationBarBackButtonHidden(true)
-//      .toolbar {
-//        ToolbarItem(placement: .navigationBarLeading) {
-//          Button {
-//            presentationMode.wrappedValue.dismiss()
-//          } label: {
-//            Image(systemName: "chevron.left")
-//              .foregroundColor(.black)
-//          }
-//        }
-//      }//toolbar
     }
 }

@@ -14,7 +14,6 @@ struct PersistenceController {
 
     let container: NSPersistentCloudKitContainer = {
       let container = NSPersistentCloudKitContainer(name: "Formkdiary")
-      
 
       let storeDirectory = NSPersistentContainer.defaultDirectoryURL()
 
@@ -57,6 +56,7 @@ struct PersistenceController {
           print(error)
         }
       }
+      
       
       return container
   }()

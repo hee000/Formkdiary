@@ -35,10 +35,12 @@ struct NoteAddView: View {
             .onReceive(Just(title)) { _ in limitText(textLimit) }
 
           Button{
-            let newNote = NoteMO(context: viewContext)
-            newNote.title = self.title
-            CoreDataSave()
-            presentationMode.wrappedValue.dismiss()
+            if title != "" {
+              let newNote = NoteMO(context: viewContext)
+              newNote.title = self.title
+              CoreDataSave()
+              presentationMode.wrappedValue.dismiss()
+            }
           } label: {
             Text("만들기")
               .foregroundColor(.white)

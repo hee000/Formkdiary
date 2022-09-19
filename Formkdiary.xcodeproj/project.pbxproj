@@ -33,7 +33,10 @@
 		DAABCBB428D1AA7600F8244E /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAABCBB328D1AA7600F8244E /* PageView.swift */; };
 		DABF60A9286F148900620006 /* DailyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF60A8286F148900620006 /* DailyView.swift */; };
 		DABF60AB286F424100620006 /* PageAddWeeeklyCalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF60AA286F424100620006 /* PageAddWeeeklyCalView.swift */; };
-		DABF60AD286F479000620006 /* WeeeklyDefaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF60AC286F479000620006 /* WeeeklyDefaultView.swift */; };
+		DABF60AD286F479000620006 /* WeeklyDefaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF60AC286F479000620006 /* WeeklyDefaultView.swift */; };
+		DAD7226928D5C45A00CB0B7E /* NoteSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD7226828D5C45A00CB0B7E /* NoteSettingView.swift */; };
+		DAD7227A28D600BA00CB0B7E /* ConstantData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD7227928D600BA00CB0B7E /* ConstantData.swift */; };
+		DAD7227C28D60D7D00CB0B7E /* TSETss.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD7227B28D60D7D00CB0B7E /* TSETss.swift */; };
 		DAD9716328D30FB0002CABAC /* WeeklyMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD9716128D30FB0002CABAC /* WeeklyMO+CoreDataClass.swift */; };
 		DAD9716428D30FB0002CABAC /* WeeklyMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD9716228D30FB0002CABAC /* WeeklyMO+CoreDataProperties.swift */; };
 		DAD9717328D3E4EF002CABAC /* Formkdiary.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DAD9717128D3E4EF002CABAC /* Formkdiary.xcdatamodeld */; };
@@ -67,7 +70,10 @@
 		DAABCBB328D1AA7600F8244E /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
 		DABF60A8286F148900620006 /* DailyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyView.swift; sourceTree = "<group>"; };
 		DABF60AA286F424100620006 /* PageAddWeeeklyCalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageAddWeeeklyCalView.swift; sourceTree = "<group>"; };
-		DABF60AC286F479000620006 /* WeeeklyDefaultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeeklyDefaultView.swift; sourceTree = "<group>"; };
+		DABF60AC286F479000620006 /* WeeklyDefaultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyDefaultView.swift; sourceTree = "<group>"; };
+		DAD7226828D5C45A00CB0B7E /* NoteSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSettingView.swift; sourceTree = "<group>"; };
+		DAD7227928D600BA00CB0B7E /* ConstantData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantData.swift; sourceTree = "<group>"; };
+		DAD7227B28D60D7D00CB0B7E /* TSETss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSETss.swift; sourceTree = "<group>"; };
 		DAD9715F28D30DBC002CABAC /* Formkdiary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Formkdiary.entitlements; sourceTree = "<group>"; };
 		DAD9716028D30E7D002CABAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DAD9716128D30FB0002CABAC /* WeeklyMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeeklyMO+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -117,22 +123,20 @@
 		DA53F3AB28645AF6003D02EF /* Formkdiary */ = {
 			isa = PBXGroup;
 			children = (
+				DAD7227B28D60D7D00CB0B7E /* TSETss.swift */,
 				DAD9716028D30E7D002CABAC /* Info.plist */,
 				DAD9715F28D30DBC002CABAC /* Formkdiary.entitlements */,
 				DA53F3E5286EFB63003D02EF /* Extensions.swift */,
 				DA53F3AC28645AF6003D02EF /* FormkdiaryApp.swift */,
 				DA53F3AE28645AF6003D02EF /* ContentView.swift */,
-				DA53F3D7286472EE003D02EF /* MainView.swift */,
-				DA53F3DB28647575003D02EF /* NoteAddView.swift */,
-				DA53F3D9286474E1003D02EF /* NoteView.swift */,
-				DA53F3E3286EE673003D02EF /* MonthlyDefaultView.swift */,
-				DABF60A8286F148900620006 /* DailyView.swift */,
-				DA53F3E1286EE3F8003D02EF /* PageSelectView.swift */,
-				DA53F3DD28649ACA003D02EF /* PageAddView.swift */,
-				DAABCBB328D1AA7600F8244E /* PageView.swift */,
-				DABF60AA286F424100620006 /* PageAddWeeeklyCalView.swift */,
-				DABF60AC286F479000620006 /* WeeeklyDefaultView.swift */,
+				DAD7226B28D5E84C00CB0B7E /* Home */,
+				DAD7226A28D5E83600CB0B7E /* Note */,
+				DAD7226D28D5E85E00CB0B7E /* Page */,
+				DAD7226C28D5E85700CB0B7E /* Monthly */,
+				DAD7226F28D5E88E00CB0B7E /* Weekly */,
+				DAD7227028D5E8AF00CB0B7E /* Daily */,
 				DA53F3DF286EE2D8003D02EF /* TestS.swift */,
+				DAD7227928D600BA00CB0B7E /* ConstantData.swift */,
 				DA53F3B028645AF7003D02EF /* Assets.xcassets */,
 				DA53F3B528645AF7003D02EF /* Persistence.swift */,
 				DAD9717128D3E4EF002CABAC /* Formkdiary.xcdatamodeld */,
@@ -147,6 +151,67 @@
 				DA53F3B328645AF7003D02EF /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		DAD7226A28D5E83600CB0B7E /* Note */ = {
+			isa = PBXGroup;
+			children = (
+				DA53F3D9286474E1003D02EF /* NoteView.swift */,
+				DAD7226828D5C45A00CB0B7E /* NoteSettingView.swift */,
+			);
+			path = Note;
+			sourceTree = "<group>";
+		};
+		DAD7226B28D5E84C00CB0B7E /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				DA53F3D7286472EE003D02EF /* MainView.swift */,
+				DA53F3DB28647575003D02EF /* NoteAddView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		DAD7226C28D5E85700CB0B7E /* Monthly */ = {
+			isa = PBXGroup;
+			children = (
+				DA53F3E3286EE673003D02EF /* MonthlyDefaultView.swift */,
+			);
+			path = Monthly;
+			sourceTree = "<group>";
+		};
+		DAD7226D28D5E85E00CB0B7E /* Page */ = {
+			isa = PBXGroup;
+			children = (
+				DA53F3E1286EE3F8003D02EF /* PageSelectView.swift */,
+				DAD7226E28D5E87200CB0B7E /* PageAdd */,
+				DAABCBB328D1AA7600F8244E /* PageView.swift */,
+			);
+			path = Page;
+			sourceTree = "<group>";
+		};
+		DAD7226E28D5E87200CB0B7E /* PageAdd */ = {
+			isa = PBXGroup;
+			children = (
+				DA53F3DD28649ACA003D02EF /* PageAddView.swift */,
+				DABF60AA286F424100620006 /* PageAddWeeeklyCalView.swift */,
+			);
+			path = PageAdd;
+			sourceTree = "<group>";
+		};
+		DAD7226F28D5E88E00CB0B7E /* Weekly */ = {
+			isa = PBXGroup;
+			children = (
+				DABF60AC286F479000620006 /* WeeklyDefaultView.swift */,
+			);
+			path = Weekly;
+			sourceTree = "<group>";
+		};
+		DAD7227028D5E8AF00CB0B7E /* Daily */ = {
+			isa = PBXGroup;
+			children = (
+				DABF60A8286F148900620006 /* DailyView.swift */,
+			);
+			path = Daily;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,6 +285,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAD9716428D30FB0002CABAC /* WeeklyMO+CoreDataProperties.swift in Sources */,
+				DAD7227A28D600BA00CB0B7E /* ConstantData.swift in Sources */,
 				DABF60AB286F424100620006 /* PageAddWeeeklyCalView.swift in Sources */,
 				DA53F3E2286EE3F8003D02EF /* PageSelectView.swift in Sources */,
 				DA53F3D0286462C4003D02EF /* DailyMO+CoreDataProperties.swift in Sources */,
@@ -232,8 +298,9 @@
 				DA53F3D3286462C4003D02EF /* MonthlyMO+CoreDataClass.swift in Sources */,
 				DA53F3DA286474E1003D02EF /* NoteView.swift in Sources */,
 				DA53F3D4286462C4003D02EF /* MonthlyMO+CoreDataProperties.swift in Sources */,
+				DAD7227C28D60D7D00CB0B7E /* TSETss.swift in Sources */,
 				DA53F3E6286EFB63003D02EF /* Extensions.swift in Sources */,
-				DABF60AD286F479000620006 /* WeeeklyDefaultView.swift in Sources */,
+				DABF60AD286F479000620006 /* WeeklyDefaultView.swift in Sources */,
 				DA53F3AD28645AF6003D02EF /* FormkdiaryApp.swift in Sources */,
 				DA53F3DC28647575003D02EF /* NoteAddView.swift in Sources */,
 				DA53F3DE28649ACA003D02EF /* PageAddView.swift in Sources */,
@@ -246,6 +313,7 @@
 				DA53F3E0286EE2D8003D02EF /* TestS.swift in Sources */,
 				DA53F3CF286462C4003D02EF /* DailyMO+CoreDataClass.swift in Sources */,
 				DA53F3C628645E05003D02EF /* NoteMO+CoreDataProperties.swift in Sources */,
+				DAD7226928D5C45A00CB0B7E /* NoteSettingView.swift in Sources */,
 				DA53F3D6286462C4003D02EF /* MemoMO+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -395,9 +463,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cch.Formkdiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -429,9 +500,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cch.Formkdiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

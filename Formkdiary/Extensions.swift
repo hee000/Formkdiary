@@ -9,6 +9,42 @@ import Foundation
 import SwiftUI
 import UIKit
 
+
+extension Date {
+    
+    func toString( dateFormat format: String ) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        dateFormatter.timeZone = TimeZone.autoupdatingCurrent
+        dateFormatter.locale = Locale.current
+        return dateFormatter.string(from: self)
+    }
+    
+    func toStringKST( dateFormat format: String ) -> String {
+        return self.toString(dateFormat: format)
+    }
+    
+    func toStringUTC( dateFormat format: String ) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        return dateFormatter.string(from: self)
+    }
+}
+
+
+extension NSSet {
+//  func toArray<T>() -> [T] {
+//    let array = self.map({ $0 as! T})
+//    return array
+//  }
+  
+  func toArray<T>() -> [T] {
+    return self.allObjects as! [T]
+  }
+}
+
+
 extension UINavigationController: ObservableObject, UIGestureRecognizerDelegate {
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -63,7 +99,7 @@ extension UIView {
 
 extension UIPickerView {
    open override var intrinsicContentSize: CGSize {
-      return CGSize(width: UIView.noIntrinsicMetric, height: super.intrinsicContentSize.height)}
+      return CGSize(width: UIView.noIntrinsicMetric, height: UIView.noIntrinsicMetric)}
 }
 
 
@@ -140,12 +176,12 @@ struct DragRelocateDelegate: DropDelegate {
 //              let fromGrid = gridData.gridItems[fromIndex]
 //              gridData.gridItems[fromIndex] = gridData.gridItems[toIndex]
 //              gridData.gridItems[toIndex] = fromGrid
-            
+            print("읻겟스 바꿈")
             gridData.gridItems.move(fromOffsets: IndexSet(integer: fromIndex),
                       toOffset: toIndex > fromIndex ? toIndex + 1 : toIndex)
 //          }
         for (idx, item) in gridData.gridItems.enumerated() {
-          item.gridPage.index = Int16(idx)
+          item.gridPage.index = Int32(idx)
         }
       }
 

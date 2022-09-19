@@ -2,7 +2,7 @@
 //  PageMO+CoreDataProperties.swift
 //  Formkdiary
 //
-//  Created by cch on 2022/09/15.
+//  Created by cch on 2022/09/17.
 //
 //
 
@@ -18,7 +18,7 @@ extension PageMO {
 
   @NSManaged public var pageId: UUID
   @NSManaged public var createdAt: Date
-  @NSManaged public var index: Int16
+  @NSManaged public var index: Int32
   @NSManaged public var note: NoteMO?
   @NSManaged public var monthly: MonthlyMO?
   @NSManaged public var weekly: WeeklyMO?
@@ -29,20 +29,11 @@ extension PageMO {
       super.awakeFromInsert()
     pageId = UUID()
     createdAt = Date()
-    index = 0
   }
+
 
 }
 
 extension PageMO : Identifiable {
 
 }
-
-
-//
-//  PageMO+CoreDataProperties.swift
-//  Formkdiary
-//
-//  Created by cch on 2022/06/23.
-//
-//

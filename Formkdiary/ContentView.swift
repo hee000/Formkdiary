@@ -27,11 +27,13 @@ private let itemFormatter: DateFormatter = {
 
 
 struct ContentView: View {
-  
+  @Environment(\.calendar) var calendar
+
   var body: some View {
     
     MainView()
+
+    
     
   }
 }
-

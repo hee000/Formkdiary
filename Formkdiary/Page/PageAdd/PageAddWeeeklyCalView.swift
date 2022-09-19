@@ -81,7 +81,7 @@ struct PageAddWeeeklyCalView: View {
   //                  dateComponent.day = index - self.start + 1
                     
                     let month = calendar.date(from: dateComponent)!
-                    
+                    print("선택", index - self.start + 1)
                     print(calendar.component(.weekOfMonth, from: month))
                   } label:{
                     VStack(alignment: .leading, spacing: 0) {

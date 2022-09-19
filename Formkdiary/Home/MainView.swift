@@ -20,7 +20,7 @@ struct MainView: View {
   @State var noteAdd = false
   
   @State var delete = false
-  @State var slideMenu = false
+  @State var isSlideMenu = false
   
   
     var body: some View {
@@ -33,7 +33,7 @@ struct MainView: View {
               LazyVStack(spacing: 10) {
                 ForEach(notes) { note in
                   HStack{
-                    NavigationLink(destination: NoteView(id: note.objectID, in: viewContext)) {
+                    NavigationLink(destination: NoteView(note: note)) {
                       Text(note.title)
                         .foregroundColor( .black)
                         .onAppear{
@@ -59,7 +59,7 @@ struct MainView: View {
           } //scoll
           
           SideMenu(width: 270,
-                   isOpen: self.slideMenu,
+                   isOpen: self.isSlideMenu,
                    menuClose: self.openMenu,
                    noteDelte: self.noteDelete)
         }//z
@@ -100,6 +100,7 @@ struct MainView: View {
           
         } //toolbar
       }//navi
+      .navigationViewStyle(StackNavigationViewStyle())
       .fullScreenCover(isPresented: $noteAdd) {
         NoteAddView()
       }
@@ -113,7 +114,7 @@ struct MainView: View {
   
   func openMenu() {
     withAnimation {
-      self.slideMenu.toggle()
+      self.isSlideMenu.toggle()
     }
   }
 }
@@ -123,6 +124,9 @@ struct MainView: View {
 struct MenuContent: View {
   let menuClose: () -> Void
   let noteDelte: () -> Void
+  
+  @AppStorage("StartMonday") var startMonday: Bool = UserDefaults.standard.bool(forKey: "StartMonday")
+  @State var isDaySetting = false
   
     var body: some View {
       VStack{
@@ -134,7 +138,31 @@ struct MenuContent: View {
             Text("노트 지우기")
           }
   //        .listRowBackground(Color.pink)
-          Text("설정")
+//          Text("시작 요일 설정")
+          
+//
+          Button{
+            isDaySetting.toggle()
+          } label: {
+            Text("한 주의 시작")
+          }
+          .onChange(of: isDaySetting, perform: { newValue in
+            print(newValue, "바뀜")
+          })
+//
+          .confirmationDialog("현재 시작 요일: \(!startMonday ? "일요일" : "월요일")", isPresented: $isDaySetting, titleVisibility: .visible) {
+            Button("일요일", role: .destructive) {
+              startMonday = false
+            }
+            
+            Button("월요일") {
+              startMonday = true
+            }
+
+            Button("취소", role: .cancel) { }
+          }
+          
+          
         }
         .onAppear {
             // Set the default to clear

@@ -8,6 +8,36 @@
 import SwiftUI
 import CoreData
 
+func yearArray() -> [Date] {
+  let now = Date()
+  let cal = Calendar.current
+  var arr: [Date] = []
+  
+  for i in -10...10 {
+    arr.append(cal.date(byAdding: .year, value: i, to: now)!)
+  }
+
+  return arr
+}
+
+
+func monthArray() -> [Date] {
+  let now = Date()
+  let cal = Calendar.current
+  var arr: [Date] = []
+  
+  let year = cal.component(.year, from: now)
+
+  let yearDate1 = cal.date(from: DateComponents(year: year))!
+  let yearDate2 = cal.date(byAdding: .day, value: 1, to: yearDate1)!
+  
+  for i in 0...11 {
+    arr.append(cal.date(byAdding: .month, value: i, to: yearDate2)!)
+  }
+  
+  return arr
+}
+
 struct PageAddView: View {
   @Environment(\.presentationMode) var presentationMode
   @Environment(\.managedObjectContext) private var viewContext
@@ -28,15 +58,23 @@ struct PageAddView: View {
   
   @State private var DatePick = Date()
   
-  @State var monthIndex: Int = 0
+  @State var monthIndex: Int = (Calendar.current.component(.month, from: Date()) - 1)
   @State var yearIndex: Int = 10
   
   @State var weekIndex: Int = 0
-
   
+  @State var weekDate: Date = Date()
 
+  @State var date: Date = Date()
+
+  @State var isYear = false
+  @State var isMonth = false
+  
   let monthSymbols = Calendar.current.monthSymbols
-  let years = Array(Calendar.current.component(.year, from:Calendar.current.date(byAdding: DateComponents(year: -10), to: Date())!)..<Calendar.current.component(.year, from:Calendar.current.date(byAdding: DateComponents(year: 10), to: Date())!))
+//  let years = Array(Calendar.current.component(.year, from:Calendar.current.date(byAdding: DateComponents(year: -10), to: Date())!)..<Calendar.current.component(.year, from:Calendar.current.date(byAdding: DateComponents(year: 10), to: Date())!))
+  
+  let years = yearArray()
+  let months = monthArray()
   
     var body: some View {
       NavigationView{
@@ -79,26 +117,21 @@ struct PageAddView: View {
               
                 HStack(spacing: 0) {
                   Picker(selection: self.$yearIndex, label: Text("")) {
-                    ForEach(0..<self.years.count) { index in
-                      Text(String(self.years[index]))
+                    ForEach(years.indices, id:\.self) { index in
+                      Text(years[index].toString(dateFormat: "yyyy"))
                     }
                   }
+                  .frame(width: UIScreen.main.bounds.size.width / 2, height: 100)
                   .pickerStyle(WheelPickerStyle())
-                  .frame(width: UIScreen.main.bounds.size.width / 2, height: 80)
-                  .compositingGroup()
-                  .clipped(antialiased: true)
                   .contentShape(Rectangle())
-
+                  
                   Picker(selection: self.$monthIndex, label: Text("")) {
-                    ForEach(0..<self.monthSymbols.count) { index in
-                      Text(self.monthSymbols[index])
+                    ForEach(months.indices, id:\.self) { index in
+                      Text(months[index].toString(dateFormat: "MM"))
                     }
                   }
+                  .frame(width: UIScreen.main.bounds.size.width / 2, height: 100)
                   .pickerStyle(WheelPickerStyle())
-//                  .compositingGroup()
-                  .frame(width: UIScreen.main.bounds.size.width / 2, height: 80)
-                  .compositingGroup()
-                  .clipped(antialiased: true)
                   .contentShape(Rectangle())
                 }
           
@@ -108,16 +141,17 @@ struct PageAddView: View {
                 
                 let newPage = PageMO(context: viewContext)
                 let newMonthly = MonthlyMO(context: viewContext)
+//                
+//                let calendar = Calendar.current
+//                var dateComponent = DateComponents()
+//                dateComponent.year = years[yearIndex]
+//                dateComponent.month = monthIndex + 1
+//                
+                newMonthly.date = intToDate(year: yearIndex, month: monthIndex)
                 
-                let calendar = Calendar.current
-                var dateComponent = DateComponents()
-                dateComponent.year = years[yearIndex]
-                dateComponent.month = monthIndex + 1
-                
-                newMonthly.date = calendar.date(from: dateComponent)!
                 
                 newPage.monthly = newMonthly
-                newPage.index = Int16(note.pages.count)
+                newPage.index = Int32(note.pages.count)
 //                print("count", note.pages.count)
                 
                 note.addToPages(newPage)
@@ -133,47 +167,43 @@ struct PageAddView: View {
               Text("위클리 뷰")
               HStack(spacing: 0) {
                 Picker(selection: self.$yearIndex, label: Text("")) {
-                    ForEach(0..<self.years.count) { index in
-                        Text(String(self.years[index]))
-                    }
+                  ForEach(years.indices, id:\.self) { index in
+                    Text(years[index].toString(dateFormat: "yyyy"))
+                      .font(.system(size: 14, weight: .bold))
+                  }
                 }
-                  .pickerStyle(MenuPickerStyle())
-                  .accentColor(.black)
-                Text(",")
-                Picker(selection: self.$monthIndex, label: Text("")) {
-                    ForEach(0..<self.monthSymbols.count) { index in
-                        Text(self.monthSymbols[index])
-                    }
-                }
-                .pickerStyle(MenuPickerStyle())
-                .accentColor(.black)
+                .frame(width: 80,height: 200/6)
+                .pickerStyle(WheelPickerStyle())
                 
                 Spacer()
+                
+                Picker(selection: self.$monthIndex, label: Text("")) {
+                  ForEach(months.indices, id:\.self) { index in
+                    Text(months[index].toString(dateFormat: "MM"))
+                      .font(.system(size: 12, weight: .bold))
+                  }
+                }
+                .frame(width: 80,height: 200/6)
+                .pickerStyle(WheelPickerStyle())
               }
                 .frame(width:2*UIScreen.main.bounds.size.width/3)
               
               Divider()
                 .frame(width:2*UIScreen.main.bounds.size.width/3)
               
-              PageAddWeeeklyCalView(weekIndex: $weekIndex)
+              CalendarView(date: intToDate(year: yearIndex, month: monthIndex), weekDate: $weekDate)
                 .frame(width:2*UIScreen.main.bounds.size.width/3, height: 200)
-                
               
               Spacer()
+              
               Button{
                 let newPage = PageMO(context: viewContext)
                 let newWeekly = WeeklyMO(context: viewContext)
                 
-                let calendar = Calendar.current
-                var dateComponent = DateComponents()
-                dateComponent.year = 2022
-                dateComponent.month = 7
-                dateComponent.day = weekIndex
-                
-                newWeekly.date = calendar.date(from: dateComponent)!
+                newWeekly.date = weekDate
                 
                 newPage.weekly = newWeekly
-                newPage.index = Int16(note.pages.count)
+                newPage.index = Int32(note.pages.count)
                 
                 note.addToPages(newPage)
                   
@@ -208,4 +238,13 @@ struct PageAddView: View {
         }//tool
       }//navi
     }
+  
+  func intToDate(year: Int, month: Int) -> Date{
+    let calendar = Calendar.current
+    var dateComponent = DateComponents()
+    dateComponent.year = calendar.component(.year, from: years[year])
+    dateComponent.month = calendar.component(.month, from: months[month])
+//    dateComponent.date = calendar.component(.day, from: self.date)
+    return calendar.date(from: dateComponent)!
+  }
 }
