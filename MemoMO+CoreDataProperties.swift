@@ -16,10 +16,15 @@ extension MemoMO {
         return NSFetchRequest<MemoMO>(entityName: "Memo")
     }
 
-    @NSManaged public var memoId: UUID?
-    @NSManaged public var text: String?
+    @NSManaged public var memoId: UUID
+    @NSManaged public var text: String
     @NSManaged public var page: PageMO?
 
+  public override func awakeFromInsert() {
+      super.awakeFromInsert()
+    memoId = UUID()
+    text = ""
+  }
 }
 
 extension MemoMO : Identifiable {

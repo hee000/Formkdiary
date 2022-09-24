@@ -2,7 +2,7 @@
 //  NoteMO+CoreDataProperties.swift
 //  Formkdiary
 //
-//  Created by cch on 2022/09/17.
+//  Created by cch on 2022/09/23.
 //
 //
 
@@ -12,13 +12,14 @@ import CoreData
 
 extension NoteMO {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<NoteMO> {
-        return NSFetchRequest<NoteMO>(entityName: "Note")
-    }
-  
+  @nonobjc public class func fetchRequest() -> NSFetchRequest<NoteMO> {
+      return NSFetchRequest<NoteMO>(entityName: "Note")
+  }
+
   @NSManaged public var noteId: UUID
   @NSManaged public var createdAt: Date
   @NSManaged public var title: String
+  @NSManaged public var titleVisible: Bool
   @NSManaged public var column: Int16
   @NSManaged public var lastIndex: Int32
   @NSManaged public var isGird: Bool

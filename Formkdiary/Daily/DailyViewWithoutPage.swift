@@ -1,37 +1,30 @@
 //
-//  DailyView.swift
+//  DailyTest.swift
 //  Formkdiary
 //
-//  Created by cch on 2022/07/01.
+//  Created by cch on 2022/09/20.
 //
 
 import SwiftUI
-import CoreData
 
-struct DailyView: View {
+struct DailyViewWithoutPage: View {
   @Environment(\.presentationMode) var presentationMode
   @Environment(\.managedObjectContext) private var viewContext
   
+  @AppStorage("StartMonday") var startMonday: Bool = UserDefaults.standard.bool(forKey: "StartMonday")
   @ObservedObject var daily: DailyMO
   
-  let title: String
-  
-  
+  var calendar: Calendar
 
-  init(id objectID: NSManagedObjectID, in context: NSManagedObjectContext) {
-    let calendar = Calendar.current
-//    var dateComponent: DateComponents
-      if let daily = try? context.existingObject(with: objectID) as? DailyMO {
-        title = "\(calendar.component(.day, from: daily.date))일"
-        self.daily = daily
-          
-      } else {
-          // if there is no object with that id, create new one
-        let daily = DailyMO(context: context)
-        title = "\(calendar.component(.day, from: daily.date))일"
-        self.daily = daily
-        try? context.save()
-      }
+  init(daily: DailyMO) {
+    self.daily = daily
+    
+    self.calendar =  Calendar(identifier: .gregorian)
+    if UserDefaults.standard.bool(forKey: "StartMonday") {
+      self.calendar.firstWeekday = 2
+    } else {
+      self.calendar.firstWeekday = 1
+    }
   }
   
     var body: some View {
@@ -39,14 +32,14 @@ struct DailyView: View {
         TextEditor(text: $daily.text)
           .frame(maxWidth:.infinity)
           .frame(maxHeight:.infinity)
-          .padding(3)
+          .padding()
       }
       .onChange(of: daily.text, perform: { newValue in
         print(newValue)
         CoreDataSave()
       })
       
-      .navigationTitle(title)
+      .navigationTitle("\(calendar.component(.day, from: daily.date))일")
       .navigationBarBackButtonHidden(true)
       .toolbar {
         ToolbarItem(placement: .navigationBarLeading) {

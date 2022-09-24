@@ -12,4 +12,7 @@ import CoreData
 @objc(NoteMO)
 public class NoteMO: NSManagedObject {
 
+  deinit {
+      print("노트 deinit")
+  }
 }

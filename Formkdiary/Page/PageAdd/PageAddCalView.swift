@@ -21,7 +21,7 @@ extension Calendar {
   }
 }
 
-struct CalendarView: View {
+struct PageAddCalView: View {
   var calendar: Calendar
 
   @AppStorage("StartMonday") var startMonday: Bool = UserDefaults.standard.bool(forKey: "StartMonday")
@@ -29,10 +29,11 @@ struct CalendarView: View {
   let interval: DateInterval
 
   @State var selected: [Date] = []
-  @Binding var weekDate: Date
+  @Binding var weekDate: Date?
 
+  let pageType: PageType
 
-  init(date: Date, weekDate: Binding<Date>) {
+  init(date: Date, weekDate: Binding<Date?>, pageType: PageType = .weekly) {
     self.interval = DateInterval(start: date, end: date)
     _weekDate = weekDate
     print(date.toString(dateFormat: "yyyy-MM-dd"))
@@ -44,6 +45,8 @@ struct CalendarView: View {
     } else {
       calendar.firstWeekday = 1
     }
+    
+    self.pageType = pageType
   }
 
   var body: some View {
@@ -63,7 +66,17 @@ struct CalendarView: View {
 //                content(date)
                 Button{
                   weekDate = date
-                  selected = week(for: date)
+                  switch(pageType) {
+                  case.weekly:
+                    selected = week(for: date)
+                    
+                  case .daily:
+                    selected = [date]
+                    
+                  default:
+                    break
+                  }
+
                 } label: {
                   Text("\(date.toString(dateFormat: "dd"))")
                     .frame(height: geo.size.height/6)
@@ -82,9 +95,23 @@ struct CalendarView: View {
                   .overlay(selected.contains(date) ? Rectangle().fill(Color.black.opacity(0.4)).cornerRadius(10) : nil)
               }
             }
-          }
-        }
+          }//for
+        }//grid
+      }//geo
+    }//v
+    .onAppear{
+      guard let date = weekDate else { return }
+      switch(pageType) {
+      case.weekly:
+        selected = week(for: date)
+        
+      case .daily:
+        selected = [date]
+        
+      default:
+        break
       }
+      
     }
   }
 
@@ -109,11 +136,9 @@ struct CalendarView: View {
   }
   
   private func week(for day: Date) -> [Date] {
+    print("ddd")
     guard
       let dayInterval = calendar.dateInterval(of: .weekOfMonth, for: day)
-//      let dayInterval = DateInterval(start: day, duration: 60*60*24*7)
-//      let monthFirstWeek = calendar.dateInterval(of: .weekOfMonth, for: monthInterval.start),
-//      let monthLastWeek = calendar.dateInterval(of: .weekOfMonth, for: monthInterval.end)
     else { return [] }
     return calendar.generateDates(
       inside: DateInterval(start: dayInterval.start, end: dayInterval.end),

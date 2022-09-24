@@ -12,7 +12,8 @@ import CoreData
 struct NoteView: View {
   @Environment(\.presentationMode) var presentationMode
   @Environment(\.managedObjectContext) private var viewContext
-  
+  @EnvironmentObject var pageNavi: PageNavi
+
   @ObservedObject var note: NoteMO
   
   @State var isPageAdd = false
@@ -41,7 +42,7 @@ struct NoteView: View {
       PageAddView(id: note.objectID, in: viewContext)
     }
     .fullScreenCover(isPresented: $isNoteSetting) {
-      NoteSettingView(id: note.objectID, in: viewContext)
+      NoteSettingView(id: note.objectID, in: viewContext, pgid: pageNavi.pageObjectID)
     }
     .navigationTitle(note.title)
     .navigationBarTitleDisplayMode(.inline)

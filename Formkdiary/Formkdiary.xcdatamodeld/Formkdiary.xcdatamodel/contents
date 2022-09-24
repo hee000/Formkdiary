@@ -18,7 +18,7 @@
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="layout" optional="YES" attributeType="String"/>
         <attribute name="monthlyId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <relationship name="dailies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Daily" inverseName="monthly" inverseEntity="Daily"/>
+        <relationship name="dailies" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Daily" inverseName="monthly" inverseEntity="Daily"/>
         <relationship name="page" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Page" inverseName="monthly" inverseEntity="Page"/>
     </entity>
     <entity name="Note" representedClassName="NoteMO" syncable="YES">
@@ -28,23 +28,25 @@
         <attribute name="lastIndex" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="noteId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="pages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Page" inverseName="note" inverseEntity="Page"/>
+        <attribute name="titleVisible" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <relationship name="pages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Page" inverseName="note" inverseEntity="Page"/>
     </entity>
     <entity name="Page" representedClassName="PageMO" syncable="YES">
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="index" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="pageId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <relationship name="daily" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Daily" inverseName="page" inverseEntity="Daily"/>
-        <relationship name="memo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Memo" inverseName="page" inverseEntity="Memo"/>
-        <relationship name="monthly" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Monthly" inverseName="page" inverseEntity="Monthly"/>
-        <relationship name="note" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Note" inverseName="pages" inverseEntity="Note"/>
-        <relationship name="weekly" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Weekly" inverseName="page" inverseEntity="Weekly"/>
+        <attribute name="title" attributeType="String" defaultValueString=""/>
+        <relationship name="daily" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Daily" inverseName="page" inverseEntity="Daily"/>
+        <relationship name="memo" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Memo" inverseName="page" inverseEntity="Memo"/>
+        <relationship name="monthly" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Monthly" inverseName="page" inverseEntity="Monthly"/>
+        <relationship name="note" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Note" inverseName="pages" inverseEntity="Note"/>
+        <relationship name="weekly" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Weekly" inverseName="page" inverseEntity="Weekly"/>
     </entity>
     <entity name="Weekly" representedClassName="WeeklyMO" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="layout" optional="YES" attributeType="String"/>
         <attribute name="weeklyId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <relationship name="dailies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Daily" inverseName="weekly" inverseEntity="Daily"/>
+        <relationship name="dailies" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Daily" inverseName="weekly" inverseEntity="Daily"/>
         <relationship name="page" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Page" inverseName="weekly" inverseEntity="Page"/>
     </entity>
     <configuration name="Cloud" usedWithCloudKit="YES">

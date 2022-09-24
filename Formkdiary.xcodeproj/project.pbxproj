@@ -26,20 +26,23 @@
 		DA53F3DA286474E1003D02EF /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3D9286474E1003D02EF /* NoteView.swift */; };
 		DA53F3DC28647575003D02EF /* NoteAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3DB28647575003D02EF /* NoteAddView.swift */; };
 		DA53F3DE28649ACA003D02EF /* PageAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3DD28649ACA003D02EF /* PageAddView.swift */; };
-		DA53F3E0286EE2D8003D02EF /* TestS.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3DF286EE2D8003D02EF /* TestS.swift */; };
 		DA53F3E2286EE3F8003D02EF /* PageSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3E1286EE3F8003D02EF /* PageSelectView.swift */; };
 		DA53F3E4286EE673003D02EF /* MonthlyDefaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3E3286EE673003D02EF /* MonthlyDefaultView.swift */; };
 		DA53F3E6286EFB63003D02EF /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3E5286EFB63003D02EF /* Extensions.swift */; };
 		DAABCBB428D1AA7600F8244E /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAABCBB328D1AA7600F8244E /* PageView.swift */; };
-		DABF60A9286F148900620006 /* DailyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF60A8286F148900620006 /* DailyView.swift */; };
-		DABF60AB286F424100620006 /* PageAddWeeeklyCalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF60AA286F424100620006 /* PageAddWeeeklyCalView.swift */; };
-		DABF60AD286F479000620006 /* WeeklyDefaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF60AC286F479000620006 /* WeeklyDefaultView.swift */; };
 		DAD7226928D5C45A00CB0B7E /* NoteSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD7226828D5C45A00CB0B7E /* NoteSettingView.swift */; };
 		DAD7227A28D600BA00CB0B7E /* ConstantData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD7227928D600BA00CB0B7E /* ConstantData.swift */; };
-		DAD7227C28D60D7D00CB0B7E /* TSETss.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD7227B28D60D7D00CB0B7E /* TSETss.swift */; };
+		DAD7227C28D60D7D00CB0B7E /* PageAddCalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD7227B28D60D7D00CB0B7E /* PageAddCalView.swift */; };
 		DAD9716328D30FB0002CABAC /* WeeklyMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD9716128D30FB0002CABAC /* WeeklyMO+CoreDataClass.swift */; };
 		DAD9716428D30FB0002CABAC /* WeeklyMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD9716228D30FB0002CABAC /* WeeklyMO+CoreDataProperties.swift */; };
 		DAD9717328D3E4EF002CABAC /* Formkdiary.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DAD9717128D3E4EF002CABAC /* Formkdiary.xcdatamodeld */; };
+		DAF4502128D8C026003C4900 /* WeeklyDefaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF4502028D8C026003C4900 /* WeeklyDefaultView.swift */; };
+		DAF4502328D8CA29003C4900 /* DailyViewWithoutPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF4502228D8CA29003C4900 /* DailyViewWithoutPage.swift */; };
+		DAF4502528D970C9003C4900 /* MonthlyStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF4502428D970C9003C4900 /* MonthlyStyle.swift */; };
+		DAF4502728DC40CD003C4900 /* PageNavi.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF4502628DC40CD003C4900 /* PageNavi.swift */; };
+		DAF4502928DF2620003C4900 /* DailyViewOnPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF4502828DF2620003C4900 /* DailyViewOnPage.swift */; };
+		DAF4502C28DF28FC003C4900 /* MemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF4502B28DF28FC003C4900 /* MemoView.swift */; };
+		DAF4502E28DF4645003C4900 /* TextFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF4502D28DF4645003C4900 /* TextFile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,22 +66,25 @@
 		DA53F3D9286474E1003D02EF /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
 		DA53F3DB28647575003D02EF /* NoteAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteAddView.swift; sourceTree = "<group>"; };
 		DA53F3DD28649ACA003D02EF /* PageAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageAddView.swift; sourceTree = "<group>"; };
-		DA53F3DF286EE2D8003D02EF /* TestS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestS.swift; sourceTree = "<group>"; };
 		DA53F3E1286EE3F8003D02EF /* PageSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageSelectView.swift; sourceTree = "<group>"; };
 		DA53F3E3286EE673003D02EF /* MonthlyDefaultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyDefaultView.swift; sourceTree = "<group>"; };
 		DA53F3E5286EFB63003D02EF /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		DAABCBB328D1AA7600F8244E /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
-		DABF60A8286F148900620006 /* DailyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyView.swift; sourceTree = "<group>"; };
-		DABF60AA286F424100620006 /* PageAddWeeeklyCalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageAddWeeeklyCalView.swift; sourceTree = "<group>"; };
-		DABF60AC286F479000620006 /* WeeklyDefaultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyDefaultView.swift; sourceTree = "<group>"; };
 		DAD7226828D5C45A00CB0B7E /* NoteSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSettingView.swift; sourceTree = "<group>"; };
 		DAD7227928D600BA00CB0B7E /* ConstantData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantData.swift; sourceTree = "<group>"; };
-		DAD7227B28D60D7D00CB0B7E /* TSETss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSETss.swift; sourceTree = "<group>"; };
+		DAD7227B28D60D7D00CB0B7E /* PageAddCalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageAddCalView.swift; sourceTree = "<group>"; };
 		DAD9715F28D30DBC002CABAC /* Formkdiary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Formkdiary.entitlements; sourceTree = "<group>"; };
 		DAD9716028D30E7D002CABAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DAD9716128D30FB0002CABAC /* WeeklyMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeeklyMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		DAD9716228D30FB0002CABAC /* WeeklyMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeeklyMO+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		DAD9717228D3E4EF002CABAC /* Formkdiary.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Formkdiary.xcdatamodel; sourceTree = "<group>"; };
+		DAF4502028D8C026003C4900 /* WeeklyDefaultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyDefaultView.swift; sourceTree = "<group>"; };
+		DAF4502228D8CA29003C4900 /* DailyViewWithoutPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyViewWithoutPage.swift; sourceTree = "<group>"; };
+		DAF4502428D970C9003C4900 /* MonthlyStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyStyle.swift; sourceTree = "<group>"; };
+		DAF4502628DC40CD003C4900 /* PageNavi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageNavi.swift; sourceTree = "<group>"; };
+		DAF4502828DF2620003C4900 /* DailyViewOnPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyViewOnPage.swift; sourceTree = "<group>"; };
+		DAF4502B28DF28FC003C4900 /* MemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoView.swift; sourceTree = "<group>"; };
+		DAF4502D28DF4645003C4900 /* TextFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,7 +129,6 @@
 		DA53F3AB28645AF6003D02EF /* Formkdiary */ = {
 			isa = PBXGroup;
 			children = (
-				DAD7227B28D60D7D00CB0B7E /* TSETss.swift */,
 				DAD9716028D30E7D002CABAC /* Info.plist */,
 				DAD9715F28D30DBC002CABAC /* Formkdiary.entitlements */,
 				DA53F3E5286EFB63003D02EF /* Extensions.swift */,
@@ -135,7 +140,7 @@
 				DAD7226C28D5E85700CB0B7E /* Monthly */,
 				DAD7226F28D5E88E00CB0B7E /* Weekly */,
 				DAD7227028D5E8AF00CB0B7E /* Daily */,
-				DA53F3DF286EE2D8003D02EF /* TestS.swift */,
+				DAF4502A28DF28F1003C4900 /* Memo */,
 				DAD7227928D600BA00CB0B7E /* ConstantData.swift */,
 				DA53F3B028645AF7003D02EF /* Assets.xcassets */,
 				DA53F3B528645AF7003D02EF /* Persistence.swift */,
@@ -166,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				DA53F3D7286472EE003D02EF /* MainView.swift */,
+				DAF4502D28DF4645003C4900 /* TextFile.swift */,
 				DA53F3DB28647575003D02EF /* NoteAddView.swift */,
 			);
 			path = Home;
@@ -185,6 +191,7 @@
 				DA53F3E1286EE3F8003D02EF /* PageSelectView.swift */,
 				DAD7226E28D5E87200CB0B7E /* PageAdd */,
 				DAABCBB328D1AA7600F8244E /* PageView.swift */,
+				DAF4502628DC40CD003C4900 /* PageNavi.swift */,
 			);
 			path = Page;
 			sourceTree = "<group>";
@@ -193,7 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				DA53F3DD28649ACA003D02EF /* PageAddView.swift */,
-				DABF60AA286F424100620006 /* PageAddWeeeklyCalView.swift */,
+				DAD7227B28D60D7D00CB0B7E /* PageAddCalView.swift */,
 			);
 			path = PageAdd;
 			sourceTree = "<group>";
@@ -201,7 +208,8 @@
 		DAD7226F28D5E88E00CB0B7E /* Weekly */ = {
 			isa = PBXGroup;
 			children = (
-				DABF60AC286F479000620006 /* WeeklyDefaultView.swift */,
+				DAF4502028D8C026003C4900 /* WeeklyDefaultView.swift */,
+				DAF4502428D970C9003C4900 /* MonthlyStyle.swift */,
 			);
 			path = Weekly;
 			sourceTree = "<group>";
@@ -209,9 +217,18 @@
 		DAD7227028D5E8AF00CB0B7E /* Daily */ = {
 			isa = PBXGroup;
 			children = (
-				DABF60A8286F148900620006 /* DailyView.swift */,
+				DAF4502228D8CA29003C4900 /* DailyViewWithoutPage.swift */,
+				DAF4502828DF2620003C4900 /* DailyViewOnPage.swift */,
 			);
 			path = Daily;
+			sourceTree = "<group>";
+		};
+		DAF4502A28DF28F1003C4900 /* Memo */ = {
+			isa = PBXGroup;
+			children = (
+				DAF4502B28DF28FC003C4900 /* MemoView.swift */,
+			);
+			path = Memo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -284,34 +301,37 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAF4502928DF2620003C4900 /* DailyViewOnPage.swift in Sources */,
 				DAD9716428D30FB0002CABAC /* WeeklyMO+CoreDataProperties.swift in Sources */,
 				DAD7227A28D600BA00CB0B7E /* ConstantData.swift in Sources */,
-				DABF60AB286F424100620006 /* PageAddWeeeklyCalView.swift in Sources */,
 				DA53F3E2286EE3F8003D02EF /* PageSelectView.swift in Sources */,
 				DA53F3D0286462C4003D02EF /* DailyMO+CoreDataProperties.swift in Sources */,
 				DA53F3D5286462C4003D02EF /* MemoMO+CoreDataClass.swift in Sources */,
+				DAF4502E28DF4645003C4900 /* TextFile.swift in Sources */,
 				DA53F3C428645E05003D02EF /* PageMO+CoreDataProperties.swift in Sources */,
 				DAABCBB428D1AA7600F8244E /* PageView.swift in Sources */,
 				DA53F3B628645AF7003D02EF /* Persistence.swift in Sources */,
 				DA53F3AF28645AF6003D02EF /* ContentView.swift in Sources */,
 				DA53F3C328645E05003D02EF /* PageMO+CoreDataClass.swift in Sources */,
+				DAF4502C28DF28FC003C4900 /* MemoView.swift in Sources */,
+				DAF4502528D970C9003C4900 /* MonthlyStyle.swift in Sources */,
 				DA53F3D3286462C4003D02EF /* MonthlyMO+CoreDataClass.swift in Sources */,
 				DA53F3DA286474E1003D02EF /* NoteView.swift in Sources */,
 				DA53F3D4286462C4003D02EF /* MonthlyMO+CoreDataProperties.swift in Sources */,
-				DAD7227C28D60D7D00CB0B7E /* TSETss.swift in Sources */,
+				DAD7227C28D60D7D00CB0B7E /* PageAddCalView.swift in Sources */,
+				DAF4502328D8CA29003C4900 /* DailyViewWithoutPage.swift in Sources */,
 				DA53F3E6286EFB63003D02EF /* Extensions.swift in Sources */,
-				DABF60AD286F479000620006 /* WeeklyDefaultView.swift in Sources */,
 				DA53F3AD28645AF6003D02EF /* FormkdiaryApp.swift in Sources */,
 				DA53F3DC28647575003D02EF /* NoteAddView.swift in Sources */,
 				DA53F3DE28649ACA003D02EF /* PageAddView.swift in Sources */,
 				DA53F3D8286472EE003D02EF /* MainView.swift in Sources */,
 				DAD9716328D30FB0002CABAC /* WeeklyMO+CoreDataClass.swift in Sources */,
 				DA53F3C528645E05003D02EF /* NoteMO+CoreDataClass.swift in Sources */,
-				DABF60A9286F148900620006 /* DailyView.swift in Sources */,
 				DA53F3E4286EE673003D02EF /* MonthlyDefaultView.swift in Sources */,
 				DAD9717328D3E4EF002CABAC /* Formkdiary.xcdatamodeld in Sources */,
-				DA53F3E0286EE2D8003D02EF /* TestS.swift in Sources */,
+				DAF4502728DC40CD003C4900 /* PageNavi.swift in Sources */,
 				DA53F3CF286462C4003D02EF /* DailyMO+CoreDataClass.swift in Sources */,
+				DAF4502128D8C026003C4900 /* WeeklyDefaultView.swift in Sources */,
 				DA53F3C628645E05003D02EF /* NoteMO+CoreDataProperties.swift in Sources */,
 				DAD7226928D5C45A00CB0B7E /* NoteSettingView.swift in Sources */,
 				DA53F3D6286462C4003D02EF /* MemoMO+CoreDataProperties.swift in Sources */,
@@ -441,8 +461,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Formkdiary/Formkdiary.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 1.0.0;
 				DEVELOPMENT_ASSET_PATHS = "\"Formkdiary/Preview Content\"";
 				DEVELOPMENT_TEAM = P6Z9B6CV2H;
 				ENABLE_PREVIEWS = YES;
@@ -460,9 +481,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cch.Formkdiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -478,8 +500,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Formkdiary/Formkdiary.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 1.0.0;
 				DEVELOPMENT_ASSET_PATHS = "\"Formkdiary/Preview Content\"";
 				DEVELOPMENT_TEAM = P6Z9B6CV2H;
 				ENABLE_PREVIEWS = YES;
@@ -497,9 +520,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cch.Formkdiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

@@ -14,22 +14,37 @@ let SettingColumnRange = [2, 3, 4]
 
 struct NoteSettingView: View {
   @Environment(\.presentationMode) var presentationMode
+  @EnvironmentObject var pageNavi: PageNavi
+
   
   @ObservedObject var note: NoteMO
   
+  @ObservedObject var page: PageMO
+  
+  
   @State var column: Int
   
-  init(id objectID: NSManagedObjectID, in context: NSManagedObjectContext) {
+  init(id objectID: NSManagedObjectID, in context: NSManagedObjectContext, pgid pageObjectID: NSManagedObjectID? = nil) {
     if let note = try? context.existingObject(with: objectID) as? NoteMO {
         self.note = note
         _column = State(initialValue: Int(note.column))
     } else {
         // if there is no object with that id, create new one
-      var note = NoteMO(context: context)
+      let note = NoteMO(context: context)
         self.note = note
         _column = State(initialValue: Int(note.column))
         try? context.save()
     }
+    
+    if let pid = pageObjectID, let page = try? context.existingObject(with: pid) as? PageMO {
+      self.page = page
+//      print(page)
+    } else {
+      self.page = PageMO(context: context)
+    }
+    
+//    print(_page)
+
   }
   
   var body: some View {
@@ -40,16 +55,13 @@ struct NoteSettingView: View {
             Text("페이지 그리드 보기")
               .bold()
           }
-            .toggleStyle(SwitchToggleStyle())
-            .tint(.gray)
-            .onChange(of: note.isGird) { _ in
-              withAnimation {
-                CoreDataSave()
-              }
-//              CoreDataSave()
-            }
-            .padding(.top)
-            .padding(.top)
+          .padding(.top)
+          .padding(.top)
+          .toggleStyle(SwitchToggleStyle())
+          .tint(.gray)
+          .onChange(of: note.isGird) { _ in
+            CoreDataSave()
+          }
           
           Divider()
             .padding([.top, .bottom])
@@ -69,10 +81,101 @@ struct NoteSettingView: View {
             
             Divider()
               .padding([.top, .bottom])
+            
+            Toggle(isOn: $note.titleVisible) {
+              Text("페이지 이름 보기")
+                .bold()
+            }
+            .toggleStyle(SwitchToggleStyle())
+            .tint(.gray)
+            .onChange(of: note.titleVisible) { _ in
+              CoreDataSave()
+            }
+            
+            Divider()
+              .padding([.top, .bottom])
           }
-  
+
           
-          Text("기타 설정 등")
+          if page.note != nil {
+            Text("페이지 설정")
+              .bold()
+              .font(.title)
+              .padding(.bottom)
+            
+            Text("이름")
+              .bold()
+//              .padding(.trailing)
+            
+            TextField("제목", text: $page.title)
+              .onChange(of: page.title) { newValue in
+                pageNavi.title = newValue
+                CoreDataSave()
+              }
+              .padding()
+              .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.gray.opacity(0.7), lineWidth: 1))
+              .padding(.bottom)
+            
+            
+            if let weekly = page.weekly {
+              Text("스타일")
+                .bold()
+              
+              HStack{
+                Button{
+                } label: {
+                  VStack{
+                    VStack{
+                      HStack{
+                        Rectangle()
+                          .fill(Color.gray)
+                          .cornerRadius(5)
+                        Rectangle()
+                          .fill(Color.gray)
+                          .cornerRadius(5)
+                      }
+                      HStack{
+                        Rectangle()
+                          .fill(Color.gray)
+                          .cornerRadius(5)
+                        Rectangle()
+                          .fill(Color.clear)
+                          .cornerRadius(5)
+                      }
+                    }
+                    .padding([.leading, .trailing])
+                    .padding([.leading, .trailing])
+                    Text("두줄보기")
+                  }
+                }
+                .frame(height: 60)
+                
+                Button{
+//                  monthlyStyle = "twoColumnStyle"
+                } label: {
+                  VStack{
+                    VStack{
+                      Rectangle()
+                        .fill(Color.gray)
+                        .cornerRadius(5)
+                      Rectangle()
+                        .fill(Color.gray)
+                        .cornerRadius(5)
+                      Rectangle()
+                        .fill(Color.gray)
+                        .cornerRadius(5)
+                    }
+                      .padding([.leading, .trailing])
+                      .padding([.leading, .trailing])
+                    Text("한줄보기")
+                  }
+                }
+              }
+              .frame(height: 60)
+              .frame(width:2*UIScreen.main.bounds.size.width/3)
+              
+            }
+          }
           
         }
         .padding([.leading, .trailing])

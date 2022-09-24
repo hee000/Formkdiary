@@ -2,7 +2,7 @@
 //  PageMO+CoreDataProperties.swift
 //  Formkdiary
 //
-//  Created by cch on 2022/09/17.
+//  Created by cch on 2022/09/22.
 //
 //
 
@@ -15,11 +15,12 @@ extension PageMO {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<PageMO> {
         return NSFetchRequest<PageMO>(entityName: "Page")
     }
-
+  
   @NSManaged public var pageId: UUID
   @NSManaged public var createdAt: Date
   @NSManaged public var index: Int32
   @NSManaged public var note: NoteMO?
+  @NSManaged public var title: String
   @NSManaged public var monthly: MonthlyMO?
   @NSManaged public var weekly: WeeklyMO?
   @NSManaged public var daily: DailyMO?
@@ -29,8 +30,8 @@ extension PageMO {
       super.awakeFromInsert()
     pageId = UUID()
     createdAt = Date()
+    title = ""
   }
-
 
 }
 

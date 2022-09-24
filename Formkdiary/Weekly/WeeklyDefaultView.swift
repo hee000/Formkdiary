@@ -1,123 +1,128 @@
 //
-//  WeeeklyDefaultView.swift
+//  WeeklyTest.swift
 //  Formkdiary
 //
-//  Created by cch on 2022/07/02.
+//  Created by cch on 2022/09/20.
 //
 
 import SwiftUI
-import CoreData
 
 struct WeeklyDefaultView: View {
   @Environment(\.managedObjectContext) private var viewContext
-  @Environment(\.presentationMode) var presentationMode
+  @EnvironmentObject var pageNavi: PageNavi
 
   @ObservedObject var weekly: WeeklyMO
-
-  let week = ["일", "월", "화", "수", "목", "금", "토"]
-  var day: Int
-  var start: Int
-  var last: Int
-  let columns = [
-      GridItem(.flexible(), spacing: 1),
-      GridItem(.flexible(), spacing: 1)
-      ]
-  var cal = Calendar.current
-  let title: String
+  @AppStorage("StartMonday") var startMonday: Bool = UserDefaults.standard.bool(forKey: "StartMonday")
+  var calendar: Calendar
+  var column: Int
+  var week: [Date]
+  
+  let titleVisible: Bool
   
   @State var dailyActive = false
-  @State var dailyObjectID: NSManagedObjectID = NSManagedObjectID()
-
+  @State var dailyObj: DailyMO = DailyMO()
   
-  init(id objectID: NSManagedObjectID, in context: NSManagedObjectContext) {
-    let calendar = Calendar.current
-    var dateComponent: DateComponents
+  init(weekly: WeeklyMO, titleVisible: Bool = false) {
+    self.weekly = weekly
     
-      if let weekly = try? context.existingObject(with: objectID) as? WeeklyMO {
-        dateComponent = calendar.dateComponents([.year, .month, .day, .weekOfMonth], from: weekly.date)
-        self.weekly = weekly
-      } else {
-        // if there is no object with that id, create new one
-        let newWeekly = WeeklyMO(context: context)
-        dateComponent = calendar.dateComponents([.year, .month, .day, .weekOfMonth], from: newWeekly.date)
-        self.weekly = newWeekly
-        try? context.save()
-      }
-    
-    title = "\(dateComponent.year!), \(dateComponent.month!)월, \(dateComponent.weekOfMonth!)주"
-    let month = calendar.date(from: dateComponent)!
+    self.column = layoutToMonthlyStyle(weekly.layout).rawValue
+    self.titleVisible = titleVisible
 
     
-    start = calendar.component(.weekday, from: month)
-    day = calendar.component(.day, from: month)
+    self.calendar =  Calendar(identifier: .gregorian)
+    if UserDefaults.standard.bool(forKey: "StartMonday") {
+      self.calendar.firstWeekday = 2
+    } else {
+      self.calendar.firstWeekday = 1
+    }
     
-    last = calendar.range(of: .day, in: .month, for: month)?.last ?? 30
+    let dateComponent = calendar.dateComponents([.year, .month, .weekOfMonth], from: weekly.date)
     
+    let dayInterval = calendar.dateInterval(of: .weekOfMonth, for: weekly.date)!
+    self.week = calendar.generateDates(
+      inside: DateInterval(start: dayInterval.start, end: dayInterval.end),
+      matching: DateComponents(hour: 0, minute: 0, second: 0)
+    )
   }
   
     var body: some View {
       GeometryReader { geo in
         ScrollView{
-//          HStack {
-//            ForEach(0..<7){ index in
-//              Text(week[index])
-//                .frame(minWidth: 0, maxWidth: .infinity)
-//            }
-//          }
-          
-//          Divider()
-          
           let dailes = weekly.dailies.allObjects as! [DailyMO]
-          let calendar = Calendar.current
           if dailyActive {
-            NavigationLink(destination: DailyView(id: dailyObjectID, in: viewContext), isActive: $dailyActive) {}
+            NavigationLink(destination: DailyViewWithoutPage(daily: dailyObj), isActive: $dailyActive) {}
           }
           
-          LazyVGrid(columns: self.columns, spacing: 2){
-            ForEach(0..<7, id:\.self) { index in
+          LazyVGrid(columns: Array(repeating: GridItem(), count: column)) {
+            ForEach(Array(zip(week.indices, week)), id: \.1) { index, date in
               Button{
-                if let daily = dailes.first(where: { DailyMO in
-                  calendar.component(.day, from: DailyMO.date) == calendar.component(.day, from: calendar.date(byAdding: DateComponents(day: index - self.start), to: self.weekly.date)!)
-                }) { // 있으면
-                  dailyObjectID = daily.objectID
-                  dailyActive = true
-                } else { // 없으면
-                  let newdaily = DailyMO(context: viewContext)
-                  newdaily.date = calendar.date(byAdding: DateComponents(day: index - self.start), to: self.weekly.date)!
-                  newdaily.weekly = self.weekly
-                  CoreDataSave()
-                  dailyObjectID = newdaily.objectID
-                  dailyActive = true
-                }
-                
-              } label: {
-                VStack(alignment: .leading, spacing: 1) {
-                  Text("\(day + index)일 \(week[(start + index) % 7])요일")
-//                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                  if let daily = dailes.first { DailyMO in
-                    calendar.component(.day, from: DailyMO.date) == calendar.component(.day, from: calendar.date(byAdding: DateComponents(day: index - self.start), to: self.weekly.date)!)
-                  } {
-                    Text(daily.text)
-                      .font(.system(size: 10, weight: .regular))
-                      .lineLimit(nil)
-                      .multilineTextAlignment(.leading)
-                      .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                  } else {
-                    Text("")
-                      .frame(maxWidth: .infinity, maxHeight: .infinity)
+                  if let daily = dailes.first(where: { DailyMO in
+                    calendar.component(.day, from: DailyMO.date) == calendar.component(.day, from: date)
+                  }) { // 있으면
+                    print("aa")
+                    dailyObj = daily
+                    dailyActive = true
+                  } else { // 없으면
+                    print("bb")
+                    let newdaily = DailyMO(context: viewContext)
+                    newdaily.date = date
+                    newdaily.weekly = self.weekly
+                    CoreDataSave()
+                    dailyObj = newdaily
+                    dailyActive = true
                   }
-                }
+                } label: {
+                  VStack{
+                    Text("\(date.toString(dateFormat: "dd"))일 \(startMonday ? monWeek[index] : sunWeek[index])요일")
+                      .padding(.top)
+                    
+                    if let daily = dailes.first(where: { DailyMO in
+                      calendar.component(.day, from: DailyMO.date) == calendar.component(.day, from: date)
+                    }) { // 있으면
+                      Text(daily.text)
+                        .font(.system(size: 10, weight: .regular))
+                        .lineLimit(nil)
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                        .padding()
+                    } else { // 없으면
+                      Text("")
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
+                  }//v
+                } //button label
                 .frame(height: UIScreen.main.bounds.size.height / 3)
                 .background(Color.white)
                 .foregroundColor(.black)
-              }
-            }//for
+                .cornerRadius(5)
+                .clipped()
+                .shadow(color: Color.black.opacity(0.2), radius: 2)
+            } //for
           } //grid
-          .background(Color.gray)
-        } //scroll
+          .padding()
+        }//scroll
       } //geo
-      .navigationTitle(title)
+      .onAppear{
+        if (titleVisible) {
+          pageNavi.title = self.weekly.page!.title
+          pageNavi.pageObjectID = self.weekly.page!.objectID
+        }
+      }
+      .onChange(of: titleVisible) { V in
+        if V {
+          pageNavi.title = self.weekly.page!.title
+          pageNavi.pageObjectID = self.weekly.page!.objectID
+        }
+      }
     }
+  
+  private func dateToWeek(for day: Date) -> [Date] {
+    guard
+      let dayInterval = calendar.dateInterval(of: .weekOfMonth, for: day)
+    else { return [] }
+    return calendar.generateDates(
+      inside: DateInterval(start: dayInterval.start, end: dayInterval.end),
+      matching: DateComponents(hour: 0, minute: 0, second: 0)
+    )
+  }
 }
-

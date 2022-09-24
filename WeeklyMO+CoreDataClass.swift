@@ -11,5 +11,7 @@ import CoreData
 
 @objc(WeeklyMO)
 public class WeeklyMO: NSManagedObject {
-
+  deinit {
+      print("위클리 deinit")
+  }
 }

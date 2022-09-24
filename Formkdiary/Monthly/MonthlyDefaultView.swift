@@ -11,6 +11,7 @@ import CoreData
 struct MonthlyDefaultView: View {
   @Environment(\.managedObjectContext) private var viewContext
   @Environment(\.presentationMode) var presentationMode
+  @EnvironmentObject var pageNavi: PageNavi
 
   @AppStorage("StartMonday") var startMonday: Bool = UserDefaults.standard.bool(forKey: "StartMonday")
   
@@ -23,27 +24,32 @@ struct MonthlyDefaultView: View {
   let week = ["일", "월", "화", "수", "목", "금", "토"]
   
   let height = (UIScreen.main.bounds.size.height / 8)
-  let title: String
+  let titleVisible: Bool
   
   @State var dailyActive = false
-  @State var dailyObjectID: NSManagedObjectID = NSManagedObjectID()
+  @State var dailyObjectID: DailyMO = DailyMO()
   
-  init(id objectID: NSManagedObjectID, in context: NSManagedObjectContext) {
+  init(_monthly: MonthlyMO, titleVisible: Bool = false) {
+    self.titleVisible = titleVisible
     let calendar = Calendar.current
     var dateComponent: DateComponents
     
-      if let montly = try? context.existingObject(with: objectID) as? MonthlyMO {
-        dateComponent = calendar.dateComponents([.year, .month], from: montly.date)
-        self.montly = montly
-      } else {
-        // if there is no object with that id, create new one
-        let newMonthly = MonthlyMO(context: context)
-        dateComponent = calendar.dateComponents([.year, .month], from: newMonthly.date)
-        self.montly = newMonthly
-        try? context.save()
-      }
+//      if let montly = try? context.existingObject(with: objectID) as? MonthlyMO {
+//        dateComponent = calendar.dateComponents([.year, .month], from: montly.date)
+//        self.montly = montly
+//      } else {
+//        // if there is no object with that id, create new one
+//        let newMonthly = MonthlyMO(context: context)
+//        dateComponent = calendar.dateComponents([.year, .month], from: newMonthly.date)
+//        self.montly = newMonthly
+//        try? context.save()
+//      }
+    dateComponent = calendar.dateComponents([.year, .month], from: _monthly.date)
+    self.montly = _monthly
+//    dateComponent = calendar.dateComponents([.year, .month], from: montly.date)
+//    self
     
-    title = "\(dateComponent.year!), \(dateComponent.month!)월"
+    
     let month = calendar.date(from: dateComponent)!
     
     if !UserDefaults.standard.bool(forKey: "StartMonday") {
@@ -89,7 +95,7 @@ struct MonthlyDefaultView: View {
           let dailes = montly.dailies.allObjects as! [DailyMO]
           let calendar = Calendar.current
           if dailyActive {
-            NavigationLink(destination: DailyView(id: dailyObjectID, in: viewContext), isActive: $dailyActive) {}
+            NavigationLink(destination: DailyViewWithoutPage(daily: dailyObjectID), isActive: $dailyActive) {}
           }
 //          NavigationLink(destination: DailyView(id: dailyObjectID, in: viewContext, monthly: montly), isActive: $dailyActive) {}
           
@@ -113,14 +119,14 @@ struct MonthlyDefaultView: View {
                     if let daily = dailes.first(where: { DailyMO in
                       calendar.component(.day, from: DailyMO.date) == calendar.component(.day, from: calendar.date(byAdding: DateComponents(day: index - self.start), to: self.montly.date)!)
                     }) { // 있으면
-                      dailyObjectID = daily.objectID
+                      dailyObjectID = daily
                       dailyActive = true
                     } else { // 없으면
                       let newdaily = DailyMO(context: viewContext)
                       newdaily.date = calendar.date(byAdding: DateComponents(day: index - self.start), to: self.montly.date)!
                       newdaily.monthly = montly
                       CoreDataSave()
-                      dailyObjectID = newdaily.objectID
+                      dailyObjectID = newdaily
                       dailyActive = true
                     }
                     
@@ -170,6 +176,23 @@ struct MonthlyDefaultView: View {
 
         } //v
       } //geo
-      .navigationTitle(title)
+      .onAppear{
+        if (titleVisible) {
+          pageNavi.title = self.montly.page!.title
+          pageNavi.pageObjectID = self.montly.page!.objectID
+        }
+      }
+      .onChange(of: titleVisible) { V in
+        if V {
+          pageNavi.title = self.montly.page!.title
+          pageNavi.pageObjectID = self.montly.page!.objectID
+        }
+      }
+      .onChange(of: montly.page!.title) { V in
+        print(V)
+        pageNavi.title = self.montly.page!.title
+        pageNavi.pageObjectID = self.montly.page!.objectID
+      }
+//      .navigationTitle(title)
     }
 }
