@@ -13,7 +13,7 @@ struct WeeklyDefaultView: View {
 
   @ObservedObject var weekly: WeeklyMO
   @AppStorage("StartMonday") var startMonday: Bool = UserDefaults.standard.bool(forKey: "StartMonday")
-  var calendar: Calendar
+  var calendar: Calendar = CalendarModel.shared.calendar
   var column: Int
   var week: [Date]
   
@@ -29,12 +29,12 @@ struct WeeklyDefaultView: View {
     self.titleVisible = titleVisible
 
     
-    self.calendar =  Calendar(identifier: .gregorian)
-    if UserDefaults.standard.bool(forKey: "StartMonday") {
-      self.calendar.firstWeekday = 2
-    } else {
-      self.calendar.firstWeekday = 1
-    }
+//    self.calendar =  Calendar(identifier: .gregorian)
+//    if UserDefaults.standard.bool(forKey: "StartMonday") {
+//      self.calendar.firstWeekday = 2
+//    } else {
+//      self.calendar.firstWeekday = 1
+//    }
     
     let dateComponent = calendar.dateComponents([.year, .month, .weekOfMonth], from: weekly.date)
     
@@ -100,10 +100,10 @@ struct WeeklyDefaultView: View {
             } //for
           } //grid
           .padding()
-        }//scroll
-      } //geo
-      .onAppear{
-        if (titleVisible) {
+        } // scroll
+      } // geo
+      .onAppear {
+        if titleVisible {
           pageNavi.title = self.weekly.page!.title
           pageNavi.pageObjectID = self.weekly.page!.objectID
         }

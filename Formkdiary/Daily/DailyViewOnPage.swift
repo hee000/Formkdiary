@@ -23,12 +23,12 @@ struct DailyViewOnPage: View {
     var body: some View {
       GeometryReader { geo in
         TextEditor(text: $daily.text)
-          .frame(maxWidth:.infinity)
-          .frame(maxHeight:.infinity)
+          .frame(maxWidth:.infinity, maxHeight:.infinity)
           .padding()
       }
       .onChange(of: daily.text, perform: { newValue in
 //        print(newValue)
+        daily.editedAt = Date()
         CoreDataSave()
       })
       .onAppear{

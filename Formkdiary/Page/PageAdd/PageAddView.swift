@@ -113,23 +113,14 @@ struct PageAddView: View {
                   .bold()
                 
                 HStack(spacing: 0) {
-                  Picker(selection: self.$yearIndex, label: Text("")) {
-                    ForEach(years.indices, id:\.self) { index in
-                      Text(years[index].toString(dateFormat: "yyyy"))
-                    }
-                  }
-                  .frame(width: UIScreen.main.bounds.size.width / 2, height: 100)
-                  .pickerStyle(WheelPickerStyle())
-                  .contentShape(Rectangle())
-                  
-                  Picker(selection: self.$monthIndex, label: Text("")) {
-                    ForEach(months.indices, id:\.self) { index in
-                      Text(months[index].toString(dateFormat: "MM"))
-                    }
-                  }
-                  .frame(width: UIScreen.main.bounds.size.width / 2, height: 100)
-                  .pickerStyle(WheelPickerStyle())
-                  .contentShape(Rectangle())
+                  YearSelect(20)
+                    .frame(width: UIScreen.main.bounds.size.width / 2, height: 100)
+                  MonthSelect(20)
+                    .frame(width: UIScreen.main.bounds.size.width / 2, height: 100)
+                  crashX2
+                    .opacity(0)
+                  crashX
+                    .opacity(0)
                 }
                 
                 Spacer()
@@ -138,12 +129,7 @@ struct PageAddView: View {
                   
                   let newPage = PageMO(context: viewContext)
                   let newMonthly = MonthlyMO(context: viewContext)
-                  //
-                  //                let calendar = Calendar.current
-                  //                var dateComponent = DateComponents()
-                  //                dateComponent.year = years[yearIndex]
-                  //                dateComponent.month = monthIndex + 1
-                  //
+
                   newMonthly.date = intToDate(year: yearIndex, month: monthIndex)
                   
                   
@@ -166,25 +152,26 @@ struct PageAddView: View {
                   .bold()
                 
                 HStack(spacing: 0) {
-                  Picker(selection: self.$yearIndex, label: Text("")) {
-                    ForEach(years.indices, id:\.self) { index in
-                      Text(years[index].toString(dateFormat: "yyyy"))
-                        .font(.system(size: 14, weight: .bold))
-                    }
-                  }
-                  .frame(width: 80,height: 200/6)
-                  .pickerStyle(WheelPickerStyle())
+                  
+                  YearSelect(14)
+                    .frame(width: 80,height: 200/6)
+                    .id(0)
                   
                   Spacer()
                   
-                  Picker(selection: self.$monthIndex, label: Text("")) {
-                    ForEach(months.indices, id:\.self) { index in
-                      Text(months[index].toString(dateFormat: "MM"))
-                        .font(.system(size: 12, weight: .bold))
-                    }
-                  }
-                  .frame(width: 80,height: 200/6)
-                  .pickerStyle(WheelPickerStyle())
+                  MonthSelect(12)
+                    .frame(width: 80,height: 200/6)
+                    .id(0)
+                  
+                  crashX2
+                    .opacity(0)
+                    .id(0)
+                    .frame(width: 0, height: 0)
+                  
+                  crashX
+                    .opacity(0)
+                    .id(0)
+                    .frame(width: 0, height: 0)
                 }
                 .frame(width:2*UIScreen.main.bounds.size.width/3)
                 
@@ -192,14 +179,14 @@ struct PageAddView: View {
                   .frame(width:2*UIScreen.main.bounds.size.width/3)
                 
                 PageAddCalView(date: intToDate(year: yearIndex, month: monthIndex), weekDate: $weekDate)
-                  .frame(width:2*UIScreen.main.bounds.size.width/3, height: 200)
+                  .frame(width:2*UIScreen.main.bounds.size.width/3)
                 
                 Divider()
                   .frame(width:2*UIScreen.main.bounds.size.width/3)
                 
                 Text("스타일 설정")
                   .bold()
-                  .frame(width:2*UIScreen.main.bounds.size.width/3, alignment: .leading)
+                  .frame(width:2*UIScreen.main.bounds.size.width/3, alignment: .center)
                   .padding([.top, .bottom])
                   .padding(.top)
                 
@@ -284,25 +271,25 @@ struct PageAddView: View {
                   .bold()
                 
                 HStack(spacing: 0) {
-                  Picker(selection: self.$yearIndex, label: Text("")) {
-                    ForEach(years.indices, id:\.self) { index in
-                      Text(years[index].toString(dateFormat: "yyyy"))
-                        .font(.system(size: 14, weight: .bold))
-                    }
-                  }
-                  .frame(width: 80,height: 200/6)
-                  .pickerStyle(WheelPickerStyle())
+                  YearSelect(14)
+                    .frame(width: 80,height: 200/6)
+                    .id(1)
                   
                   Spacer()
                   
-                  Picker(selection: self.$monthIndex, label: Text("")) {
-                    ForEach(months.indices, id:\.self) { index in
-                      Text(months[index].toString(dateFormat: "MM"))
-                        .font(.system(size: 12, weight: .bold))
-                    }
-                  }
-                  .frame(width: 80,height: 200/6)
-                  .pickerStyle(WheelPickerStyle())
+                  MonthSelect(12)
+                    .frame(width: 80,height: 200/6)
+                    .id(1)
+                  
+                  crashX2
+                    .opacity(0)
+                    .id(1)
+                    .frame(width: 0, height: 0)
+                  
+                  crashX
+                    .opacity(0)
+                    .id(1)
+                    .frame(width: 0, height: 0)
                 }
                 .frame(width:2*UIScreen.main.bounds.size.width/3)
                 
@@ -310,7 +297,7 @@ struct PageAddView: View {
                   .frame(width:2*UIScreen.main.bounds.size.width/3)
                 
                 PageAddCalView(date: intToDate(year: yearIndex, month: monthIndex), weekDate: $date, pageType: .daily)
-                  .frame(width:2*UIScreen.main.bounds.size.width/3, height: 200)
+                  .frame(width:2*UIScreen.main.bounds.size.width/3)
                 
                 Divider()
                   .frame(width:2*UIScreen.main.bounds.size.width/3)
@@ -394,12 +381,63 @@ struct PageAddView: View {
       }//navi
     }
   
+  @ViewBuilder
+  var crashX: some View {
+    Menu {
+      ForEach(years.indices, id:\.self) { index in
+        Button{
+         yearIndex = index
+        } label: {
+          Text(years[index].toString(dateFormat: "yyyy"))
+        }
+      }
+    } label: {
+      Text(years[yearIndex].toString(dateFormat: "yyyy"))
+    }
+  }
+  
+  @ViewBuilder
+  var crashX2: some View {
+    Menu {
+      ForEach(months.indices, id:\.self) { index in
+        Button{
+          monthIndex = index
+        } label: {
+          Text(months[index].toString(dateFormat: "MM"))
+        }
+      }
+    } label: {
+      Text(months[monthIndex].toString(dateFormat: "MM"))
+    }
+  }
+  
+  @ViewBuilder
+  func YearSelect(_ fontsize: Int) -> some View {
+      Picker(selection: self.$yearIndex, label: Text("")) {
+        ForEach(years.indices, id:\.self) { index in
+          Text(years[index].toString(dateFormat: "yyyy"))
+            .font(.system(size: CGFloat(fontsize), weight: .bold))
+        }
+      }
+      .pickerStyle(WheelPickerStyle())
+  }
+  
+  @ViewBuilder
+  func MonthSelect(_ fontsize: Int) -> some View {
+    Picker(selection: self.$monthIndex, label: Text("")) {
+      ForEach(months.indices, id:\.self) { index in
+        Text(months[index].toString(dateFormat: "MM"))
+          .font(.system(size: CGFloat(fontsize), weight: .bold))
+      }
+    }
+    .pickerStyle(WheelPickerStyle())
+  }
+  
   func intToDate(year: Int, month: Int) -> Date{
     let calendar = Calendar.current
     var dateComponent = DateComponents()
     dateComponent.year = calendar.component(.year, from: years[year])
     dateComponent.month = calendar.component(.month, from: months[month])
-//    dateComponent.date = calendar.component(.day, from: self.date)
     return calendar.date(from: dateComponent)!
   }
   

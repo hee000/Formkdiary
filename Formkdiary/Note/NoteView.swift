@@ -29,6 +29,9 @@ struct NoteView: View {
         } else if note.isGird {
           if let pages = note.pages.allObjects.sorted(by: {($0 as! PageMO).index < ($1 as! PageMO).index}) as? [PageMO] {
             PageSelectView(note: note, pages: pages)
+              .onAppear{
+                pageNavi.pageObjectID = nil
+              }
           }
 
         } else if !note.isGird {
@@ -67,6 +70,7 @@ struct NoteView: View {
           
           Button {
             print("asdasdda")
+            print(pageNavi)
             isNoteSetting.toggle()
           } label: {
             Image(systemName: "gearshape")

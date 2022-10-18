@@ -22,7 +22,7 @@ extension Calendar {
 }
 
 struct PageAddCalView: View {
-  var calendar: Calendar
+  var calendar: Calendar = CalendarModel.shared.calendar
 
   @AppStorage("StartMonday") var startMonday: Bool = UserDefaults.standard.bool(forKey: "StartMonday")
   
@@ -38,27 +38,28 @@ struct PageAddCalView: View {
     _weekDate = weekDate
     print(date.toString(dateFormat: "yyyy-MM-dd"))
     
-    calendar =  Calendar(identifier: .gregorian)
-    
-    if UserDefaults.standard.bool(forKey: "StartMonday") {
-      calendar.firstWeekday = 2
-    } else {
-      calendar.firstWeekday = 1
-    }
+//    calendar =  Calendar(identifier: .gregorian)
+//
+//    if UserDefaults.standard.bool(forKey: "StartMonday") {
+//      calendar.firstWeekday = 2
+//    } else {
+//      calendar.firstWeekday = 1
+//    }
     
     self.pageType = pageType
   }
 
   var body: some View {
-    VStack {
-      HStack {
-        ForEach((startMonday ? monWeek : sunWeek), id:\.self){ day in
-          Text(day)
-            .frame(minWidth: 0, maxWidth: .infinity)
+//    GeometryReader { geo in
+      VStack {
+        HStack {
+          ForEach((startMonday ? monWeek : sunWeek), id:\.self){ day in
+            Text(day)
+              .frame(minWidth: 0, maxWidth: .infinity)
+              .frame(height: 20)
+          }
         }
-      }
-      
-      GeometryReader { geo in
+        
         LazyVGrid(columns: Array(repeating: GridItem(), count: 7)) {
           ForEach(months, id: \.self) { month in
             ForEach(days(for: month), id: \.self) { date in
@@ -79,26 +80,26 @@ struct PageAddCalView: View {
 
                 } label: {
                   Text("\(date.toString(dateFormat: "dd"))")
-                    .frame(height: geo.size.height/6)
+                    .frame(height: 25)
                     .frame(maxWidth: .infinity)
                     .background(Color.white)
                     .foregroundColor(.black)
-                    .overlay(selected.contains(date) ? Rectangle().fill(Color.black.opacity(0.4)).cornerRadius(10) : nil)
+                    .overlay(selected.contains(date) ? Rectangle().fill(Color.black.opacity(0.4)).cornerRadius(5) : nil)
                 }
               } else {
                 Text("\(date.toString(dateFormat: "dd"))")
                   .disabled(true)
-                  .frame(height: geo.size.height/6)
+                  .frame(height: 25)
                   .frame(maxWidth: .infinity)
                   .background(Color.white)
                   .foregroundColor(.gray)
-                  .overlay(selected.contains(date) ? Rectangle().fill(Color.black.opacity(0.4)).cornerRadius(10) : nil)
+                  .overlay(selected.contains(date) ? Rectangle().fill(Color.black.opacity(0.4)).cornerRadius(5) : nil)
               }
             }
           }//for
         }//grid
-      }//geo
-    }//v
+      }//v
+//    }//geo
     .onAppear{
       guard let date = weekDate else { return }
       switch(pageType) {

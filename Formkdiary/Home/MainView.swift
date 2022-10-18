@@ -74,17 +74,31 @@ struct MainView: View {
           } //list
           .listStyle(.plain)
           .padding([.leading, .trailing])
-          .fileExporter(isPresented: $isDiaryExport, document: TextFile(), contentType: .plainText) { result in
-              switch result {
-              case .success(let url):
-                  print("Saved to \(url)")
-              case .failure(let error):
-                  print(error.localizedDescription)
+          .background(SharingViewController(isPresenting: $isDiaryExport) {
+            let text = exportDiary().text()
+            
+            let tempDir = FileManager.default.temporaryDirectory
+            let strFileName = exportDiary().textFileName()
+            let tempStrPath = tempDir.appendingPathComponent(strFileName)
+            
+            try? text.write(to: tempStrPath, atomically: true, encoding: String.Encoding.utf8)
+
+            
+            let av = UIActivityViewController(activityItems: [tempStrPath],  applicationActivities: nil)
+              
+              // For iPad
+              if UIDevice.current.userInterfaceIdiom == .pad {
+                 av.popoverPresentationController?.sourceView = UIView()
               }
-          }
+
+             av.completionWithItemsHandler = { _, _, _, _ in
+               isDiaryExport = false // required for re-open !!!
+                }
+                return av
+            })
 
           
-          SideMenu(width: 270,
+          SideMenu(width: UIScreen.main.bounds.size.width/3*2,
                    isOpen: self.isSlideMenu,
                    menuClose: self.openMenu,
                    diaryExport: self.diaryExport)
@@ -202,10 +216,19 @@ struct MenuContent: View {
     var body: some View {
       VStack{
         List{
+          Text("앱이름...")
+            .bold()
+            .font(.title)
+            .listRowSeparator(.hidden)
+          
+          Color.clear
+            .listRowSeparator(.hidden)
+          
           Button{
             isDaySetting.toggle()
           } label: {
             Text("한 주의 시작")
+              .font(.system(size: 15, weight: .bold))
           }
           .onChange(of: isDaySetting, perform: { newValue in
 //            print(newValue, "바뀜")
@@ -214,10 +237,12 @@ struct MenuContent: View {
           .confirmationDialog("현재 시작 요일: \(!startMonday ? "일요일" : "월요일")", isPresented: $isDaySetting, titleVisibility: .visible) {
             Button("일요일", role: .destructive) {
               startMonday = false
+              CalendarModel.shared.refeshCalFistWeekday()
             }
             
             Button("월요일") {
               startMonday = true
+              CalendarModel.shared.refeshCalFistWeekday()
             }
 
             Button("취소", role: .cancel) { }
@@ -227,42 +252,105 @@ struct MenuContent: View {
             diaryExport()
           } label: {
             Text("다이어리 내보내기")
+              .font(.system(size: 15, weight: .bold))
           }
           
+          Text("도움말")
+            .font(.system(size: 15, weight: .bold))
           
+          Text("기타메뉴")
+            .font(.system(size: 15, weight: .bold))
         }
         .listStyle(.plain)
+//        Spacer()
+        Text("version 1.0.0")
+          .font(.footnote)
+          .foregroundColor(.gray)
+          .bold()
+//        .padding([.leading, .trailing])
         
-        Text("For mk")
+//        Text("For mk")
       }
 
     }
 }
 
 struct SideMenu: View {
-    let width: CGFloat
-    let isOpen: Bool
-    let menuClose: () -> Void
-    let diaryExport: () -> Void
-    
-    var body: some View {
-        ZStack {
-            GeometryReader { _ in
-                EmptyView()
-            }
-            .background(Color.black.opacity(0.3))
-            .opacity(self.isOpen ? 1.0 : 0.0)
-            .onTapGesture {
-                self.menuClose()
-            }
-            
-            HStack {
-                MenuContent(diaryExport: diaryExport)
-                    .frame(width: self.width)
-                    .background(Color.white)
-                    .offset(x: self.isOpen ? 0 : -self.width)
-                Spacer()
-            }
+  let width: CGFloat
+  let isOpen: Bool
+  let menuClose: () -> Void
+  let diaryExport: () -> Void
+  @State private var offset = CGSize.zero
+
+
+  var body: some View {
+    ZStack {
+      GeometryReader { _ in
+          EmptyView()
+      }
+      .background(Color.black.opacity(0.3))
+      .opacity(self.isOpen ? 1.0 : 0.0)
+      .onChange(of: isOpen, perform: { newValue in
+        if newValue {
+          withAnimation {
+            offset = .zero
+          }
+//          offset = .zero
         }
+      })
+      .onTapGesture {
+        self.menuClose()
+      }
+      .gesture(
+        DragGesture()
+          .onChanged { gesture in
+            if gesture.translation.width < 0 {
+              withAnimation {
+                offset = gesture.translation
+              }
+            }
+          }
+          .onEnded { _ in
+            if offset.width < -self.width/2 {
+                // remove the card
+              self.menuClose()
+//              offset = .zero
+            } else {
+              withAnimation {
+                offset = .zero
+              }
+            }
+          }
+      )
+      
+      HStack {
+        MenuContent(diaryExport: diaryExport)
+          .frame(width: self.width)
+          .background(Color.white)
+          .offset(x: self.isOpen ? 0 + offset.width : -self.width)
+          .gesture(
+            DragGesture()
+              .onChanged { gesture in
+                if gesture.translation.width < 0 {
+                  withAnimation {
+                    offset = gesture.translation
+                  }
+                }
+              }
+              .onEnded { _ in
+                if offset.width < -self.width/2 {
+                    // remove the card
+                  self.menuClose()
+    //              offset = .zero
+                } else {
+                  withAnimation {
+                    offset = .zero
+                  }
+                }
+              }
+          )
+        Spacer()
+      }
     }
+  }
 }

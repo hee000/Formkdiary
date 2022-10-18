@@ -25,7 +25,7 @@ struct PageView: View {
       TabView(selection: $pageIndex) {
         ForEach(Array(pages.enumerated()), id: \.offset) { idx, page in
           if let monthly = page.monthly {
-            MonthlyDefaultView(_monthly: monthly, titleVisible: pageIndex == idx)
+            MonthlyDefaultView(monthly: monthly, titleVisible: pageIndex == idx)
               .tag(idx)
           } else if let weekly = page.weekly {
             WeeklyDefaultView(weekly: weekly, titleVisible: pageIndex == idx)

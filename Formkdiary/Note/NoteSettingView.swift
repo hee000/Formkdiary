@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import Photos
 
 let SettingColumn = (UserDefaults.standard.integer(forKey: "Setting-Column") != 0) ? UserDefaults.standard.integer(forKey: "Setting-Column") : 2
 
@@ -16,13 +17,16 @@ struct NoteSettingView: View {
   @Environment(\.presentationMode) var presentationMode
   @EnvironmentObject var pageNavi: PageNavi
 
-  
+  @State private var isToast = false
+  @State private var isToastMessage = ""
+
   @ObservedObject var note: NoteMO
-  
   @ObservedObject var page: PageMO
   
   
   @State var column: Int
+  @State var isDiaryExportText = false
+  @State var isDiaryExportImage = false
   
   init(id objectID: NSManagedObjectID, in context: NSManagedObjectContext, pgid pageObjectID: NSManagedObjectID? = nil) {
     if let note = try? context.existingObject(with: objectID) as? NoteMO {
@@ -42,9 +46,6 @@ struct NoteSettingView: View {
     } else {
       self.page = PageMO(context: context)
     }
-    
-//    print(_page)
-
   }
   
   var body: some View {
@@ -114,8 +115,9 @@ struct NoteSettingView: View {
               }
               .padding()
               .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.gray.opacity(0.7), lineWidth: 1))
-              .padding(.bottom)
-            
+
+            Divider()
+              .padding([.top, .bottom])
             
             if let weekly = page.weekly {
               Text("스타일")
@@ -174,8 +176,65 @@ struct NoteSettingView: View {
               .frame(height: 60)
               .frame(width:2*UIScreen.main.bounds.size.width/3)
               
+              Divider()
+                .padding([.top, .bottom])
+            } // style
+            
+            Menu{
+              Button {isDiaryExportText.toggle()
+                
+              } label: {
+                Label("텍스트 내보내기", systemImage: "doc.plaintext")
+              }
+//              Button("이미지 내보내기") {isDiaryExportImage.toggle()}
+              Button {
+                let image = exportDiary().image(page: page)
+                PHPhotoLibrary.shared().performChanges {
+                    _ = PHAssetChangeRequest.creationRequestForAsset(from: image)
+                } completionHandler: { (success, error) in
+                  if success {
+                    self.isToastMessage = "앨범에 저장되었습니다."
+                    self.isToast.toggle()
+                  } else {
+                    self.isToastMessage = "앨범 저장에 실패했습니다."
+                    self.isToast.toggle()
+                  }
+                }
+              } label: {
+                Label("이미지 저장하기", systemImage: "photo")
+              }
+            } label: {
+              Label("내보내기", systemImage: "square.and.arrow.up")
+//              Text("내보내기")
             }
-          }
+            .background(SharingViewController(isPresenting: $isDiaryExportText) {
+              let text = exportDiary().text(page: page)
+              
+              let tempDir = FileManager.default.temporaryDirectory
+              let strFileName = exportDiary().textFileName()
+              let tempStrPath = tempDir.appendingPathComponent(strFileName)
+              
+              try? text.write(to: tempStrPath, atomically: true, encoding: String.Encoding.utf8)
+
+              
+              let av = UIActivityViewController(activityItems: [tempStrPath],  applicationActivities: nil)
+                
+                // For iPad
+                if UIDevice.current.userInterfaceIdiom == .pad {
+                   av.popoverPresentationController?.sourceView = UIView()
+                }
+              
+
+               av.completionWithItemsHandler = { _, _, _, _ in
+                 isDiaryExportText = false // required for re-open !!!
+                  }
+                  return av
+              })
+            
+            Divider()
+              .padding([.top, .bottom])
+          } //page
+          
           
         }
         .padding([.leading, .trailing])
@@ -199,5 +258,6 @@ struct NoteSettingView: View {
         }
       }//toolbar
     } //navi
+    .toast(message: isToastMessage, isShowing: $isToast, duration: Toast.short)
   }
 }

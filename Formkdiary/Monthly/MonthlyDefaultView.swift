@@ -1,198 +1,254 @@
 //
-//  MonthlyDefaultView.swift
+//  MonthlyViewTest.swift
 //  Formkdiary
 //
-//  Created by cch on 2022/07/01.
+//  Created by hee on 2022/10/18.
 //
 
 import SwiftUI
-import CoreData
 
 struct MonthlyDefaultView: View {
   @Environment(\.managedObjectContext) private var viewContext
-  @Environment(\.presentationMode) var presentationMode
   @EnvironmentObject var pageNavi: PageNavi
-
   @AppStorage("StartMonday") var startMonday: Bool = UserDefaults.standard.bool(forKey: "StartMonday")
   
-  @ObservedObject var montly: MonthlyMO
-  
-  var before: Int
-  var start: Int
-  var last: Int
-
-  let week = ["일", "월", "화", "수", "목", "금", "토"]
-  
-  let height = (UIScreen.main.bounds.size.height / 8)
+  @ObservedObject var monthly: MonthlyMO
   let titleVisible: Bool
   
+  init(monthly: MonthlyMO, titleVisible: Bool = false) {
+    self.monthly = monthly
+    self.titleVisible = titleVisible
+  }
+  
+
+  @State var isDailyList = false
+  @State var dailyListDate = Date()
   @State var dailyActive = false
   @State var dailyObjectID: DailyMO = DailyMO()
-  
-  init(_monthly: MonthlyMO, titleVisible: Bool = false) {
-    self.titleVisible = titleVisible
-    let calendar = Calendar.current
-    var dateComponent: DateComponents
-    
-//      if let montly = try? context.existingObject(with: objectID) as? MonthlyMO {
-//        dateComponent = calendar.dateComponents([.year, .month], from: montly.date)
-//        self.montly = montly
-//      } else {
-//        // if there is no object with that id, create new one
-//        let newMonthly = MonthlyMO(context: context)
-//        dateComponent = calendar.dateComponents([.year, .month], from: newMonthly.date)
-//        self.montly = newMonthly
-//        try? context.save()
-//      }
-    dateComponent = calendar.dateComponents([.year, .month], from: _monthly.date)
-    self.montly = _monthly
-//    dateComponent = calendar.dateComponents([.year, .month], from: montly.date)
-//    self
-    
-    
-    let month = calendar.date(from: dateComponent)!
-    
-    if !UserDefaults.standard.bool(forKey: "StartMonday") {
-      start = calendar.component(.weekday, from: month)
-    } else {
-      start = (calendar.component(.weekday, from: month) - 1) < 0 ? 7 : calendar.component(.weekday, from: month) - 1
+  var calendar: Calendar = CalendarModel.shared.calendar
+
+  var body: some View {
+    VStack(spacing: 0) {
+      ZStack{
+        if dailyActive {
+          NavigationLink(destination: DailyViewWithoutPage(daily: dailyObjectID).onDisappear{
+            isDailyList = true
+          }, isActive: $dailyActive) {}
+        }
+        
+        HStack {
+          ForEach((startMonday ? monWeek : sunWeek), id:\.self){ day in
+            Text(day)
+              .frame(minWidth: 0, maxWidth: .infinity)
+              .frame(height: 50)
+//              .foregroundColor(day == "일" ? .red : day == "토" ? .blue : .black)
+              .bold()
+          }
+        }
+      }
+      
+      Divider()
+//        .padding(.top)
+      
+      
+      GeometryReader { geo in
+        LazyVGrid(columns: Array(repeating: GridItem(.adaptive(minimum: 100), spacing: 0), count: 7), spacing: 1) {
+          ForEach(months, id: \.self) { month in
+            ForEach(days(for: month), id: \.self) { date in
+              if calendar.isDate(date, equalTo: month, toGranularity: .month) {
+                Button{
+                  if let daily: DailyMO = monthly.dailies.toArray().first(where: { DailyMO in
+                    calendar.isDate(date, equalTo: DailyMO.date, toGranularity: .day)
+                  }) { // 있으면
+                    dailyListDate = date
+                    isDailyList.toggle()
+                  } else { // 없으면
+                    dailyListDate = date
+                    isDailyList.toggle()
+//                    let newdaily = DailyMO(context: viewContext)
+//                    newdaily.date = date
+//                    newdaily.monthly = monthly
+//                    CoreDataSave()
+//                    dailyObjectID = newdaily
+//                    dailyActive = true
+                  }
+
+                } label: {
+                  VStack(alignment: .leading, spacing: 1) {
+                    Text("\(date.toString(dateFormat: "dd"))")
+                      .frame(maxWidth: .infinity, alignment: .center)
+                      .bold()
+                    VStack(spacing: 3.5) {
+                      if let dailies: [DailyMO] = monthly.dailies.toArray().filter({ DailyMO in
+                        calendar.isDate(DailyMO.date, equalTo: date, toGranularity: .day)
+                      }).sorted(by: { $0.createdAt.compare($1.createdAt) == .orderedAscending }), !dailies.isEmpty {
+
+                        ForEach(dailies[0..<(dailies.count >= 5 ? 4 : dailies.count)]) { daily in
+                          Text(daily.text)
+                            .font(.system(size: 10, weight: .regular))
+                            .lineLimit(1)
+                            .padding(.leading, 3)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(Color.gray.opacity(0.5))
+                            .cornerRadius(3)
+                            .padding([.leading, .trailing], 5)
+//                            .cornerRadius(3)
+                        }
+                        
+                        if dailies.count >= 5 {
+//                          Text("+\(dailies.count - 4)")
+                          Text("...")
+                            .font(.system(size: 10, weight: .regular))
+                            .padding(.leading, 3)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding([.leading, .trailing], 5)
+                        }
+                      }
+                      Spacer()
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+                  }
+                  .frame(height: geo.size.height/6)
+                  .background(Color.white)
+                  .foregroundColor(.black)
+                }
+              } else {
+                VStack(alignment: .leading, spacing: 0) {
+                  Text("\(date.toString(dateFormat: "dd"))")
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .bold()
+                    .padding(.bottom)
+
+                  Spacer().frame(minWidth: 0, maxWidth: .infinity)
+                }
+                .frame(height: geo.size.height/6)
+                .background(Color.white)
+                .foregroundColor(.gray)
+              }
+            }
+          }//for
+        }//grid
+//        .frame(maxHeight: .infinity)
+        .background(.gray.opacity(0.2))
+//        .ignoresSafeArea()
+      }//geo
+//      .ignoresSafeArea()
+    }//v
+    .sheet(isPresented: $isDailyList) {
+      VStack(alignment: .leading) {
+        HStack{
+          Text("\(dailyListDate.toString(dateFormat: "d"))일. \(startMonday ? monWeek[calendar.dateComponents([.weekday], from: dailyListDate).weekday! - 1] : sunWeek[calendar.dateComponents([.weekday], from: dailyListDate).weekday! - 1])")
+            .bold()
+            .font(.title2)
+          Spacer()
+          Button{
+            let newdaily = DailyMO(context: viewContext)
+            newdaily.date = dailyListDate
+            newdaily.monthly = monthly
+            CoreDataSave()
+            dailyObjectID = newdaily
+            isDailyList = false
+            dailyActive = true
+          } label: {
+            Image(systemName: "plus.circle")
+          }
+        }
+        
+        VStack{
+          if let dailies: [DailyMO] = monthly.dailies.toArray().filter({ DailyMO in
+            calendar.isDate(DailyMO.date, equalTo: dailyListDate, toGranularity: .day)
+          }).sorted(by: { $0.createdAt.compare($1.createdAt) == .orderedAscending }), !dailies.isEmpty {
+            List{
+              ForEach(dailies) { daily in
+                Button{
+                  dailyObjectID = daily
+                  isDailyList = false
+                  dailyActive = true
+                } label: {
+                  HStack{
+                    Circle()
+                      .fill(Color.gray)
+                      .frame(width: 5, height: 5)
+                    Text(daily.text)
+                      .font(.system(size: 18, weight: .regular))
+                      .frame(maxWidth: .infinity, alignment: .leading)
+                      .bold()
+                  }
+                }
+                .listRowSeparator(.hidden)
+                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                  Button(role: .destructive) {
+                    viewContext.delete(daily)
+                    CoreDataSave()
+                    print("삭제")
+                  } label: {
+                    Label("Delete", systemImage: "trash.fill")
+                  }
+                }//swipe
+              }//for
+            }//list
+            .listStyle(.plain)
+            Spacer()
+          } else {
+            Text("데일리가 비었습니다.")
+          }
+        } //v
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+      }//v
+      .frame(maxWidth: .infinity, alignment: .leading)
+      .padding()
+      .ignoresSafeArea()
+      .presentationDetents([.fraction(0.4), .fraction(0.5), .fraction(0.6), .fraction(0.7), .fraction(0.8)])
+    }//sheet
+    .onAppear{
+      if (titleVisible) {
+        pageNavi.title = self.monthly.page!.title
+        pageNavi.pageObjectID = self.monthly.page!.objectID
+      }
     }
-    
-//    start = calendar.component(.weekday, from: month)
-    last = calendar.range(of: .day, in: .month, for: month)?.last ?? 30
-    
-    let beforeMonthLastDay = calendar.date(byAdding: DateComponents(day: -1), to: month) ?? Date()
-    before = calendar.component(.day, from: beforeMonthLastDay)
+    .onChange(of: titleVisible) { V in
+      if V {
+        pageNavi.title = self.monthly.page!.title
+        pageNavi.pageObjectID = self.monthly.page!.objectID
+      }
+    }
+    .onChange(of: monthly.page!.title) { V in
+      print(V)
+      pageNavi.title = self.monthly.page!.title
+      pageNavi.pageObjectID = self.monthly.page!.objectID
+    }
   }
 
-  let columns = [
-    GridItem(.adaptive(minimum: 100), spacing: 0),
-    GridItem(.adaptive(minimum: 100), spacing: 0),
-    GridItem(.adaptive(minimum: 100), spacing: 0),
-    GridItem(.adaptive(minimum: 100), spacing: 0),
-    GridItem(.adaptive(minimum: 100), spacing: 0),
-    GridItem(.adaptive(minimum: 100), spacing: 0),
-    GridItem(.adaptive(minimum: 100), spacing: 0)
-      ]
+  private var months: [Date] {
+    calendar.generateDates(
+      inside: DateInterval(start: monthly.date, end: monthly.date),
+      matching: DateComponents(day: 1, hour: 0, minute: 0, second: 0)
+    )
+  }
+
+
+  private func days(for month: Date) -> [Date] {
+    guard
+      let monthInterval = calendar.dateInterval(of: .month, for: month),
+      let monthFirstWeek = calendar.dateInterval(of: .weekOfMonth, for: monthInterval.start),
+      let monthLastWeek = calendar.dateInterval(of: .weekOfMonth, for: monthInterval.end)
+    else { return [] }
+    return calendar.generateDates(
+      inside: DateInterval(start: monthFirstWeek.start, end: monthLastWeek.end),
+      matching: DateComponents(hour: 0, minute: 0, second: 0)
+    )
+  }
   
-    var body: some View {
-      GeometryReader { geo in
-        VStack(spacing: 0) {
-          HStack {
-            ForEach((startMonday ? monWeek : sunWeek), id:\.self){ day in
-              Text(day)
-//                .foregroundColor(.black)
-                .foregroundColor(day == "일" ? .red : day == "토" ? .blue : .black)
-//                .foregroundColor(week[index] == "토" ? .blue : .black)
-                .frame(minWidth: 0, maxWidth: .infinity)
-                .frame(height: 50)
-            }
-          }
-          
-          Divider()
-          
-          
-          let dailes = montly.dailies.allObjects as! [DailyMO]
-          let calendar = Calendar.current
-          if dailyActive {
-            NavigationLink(destination: DailyViewWithoutPage(daily: dailyObjectID), isActive: $dailyActive) {}
-          }
-//          NavigationLink(destination: DailyView(id: dailyObjectID, in: viewContext, monthly: montly), isActive: $dailyActive) {}
-          
-          GeometryReader { calgeo in
-            LazyVGrid(columns: self.columns, spacing: 1){
-              ForEach(1..<43, id:\.self) { index in
-                if index < self.start {
-                  VStack(alignment: .leading, spacing: 0) {
-                    Text("\(self.before - self.start + 1 + index)")
-                      .frame(maxWidth: .infinity, alignment: .center)
-                      .padding(.bottom)
-                    
-                    Spacer().frame(minWidth: 0, maxWidth: .infinity)
-                  }
-                  .frame(height: calgeo.size.height/6)
-                  .background(Color.white)
-                  .foregroundColor(.gray)
-                  
-                } else if (index - self.start) < self.last {
-                  Button{
-                    if let daily = dailes.first(where: { DailyMO in
-                      calendar.component(.day, from: DailyMO.date) == calendar.component(.day, from: calendar.date(byAdding: DateComponents(day: index - self.start), to: self.montly.date)!)
-                    }) { // 있으면
-                      dailyObjectID = daily
-                      dailyActive = true
-                    } else { // 없으면
-                      let newdaily = DailyMO(context: viewContext)
-                      newdaily.date = calendar.date(byAdding: DateComponents(day: index - self.start), to: self.montly.date)!
-                      newdaily.monthly = montly
-                      CoreDataSave()
-                      dailyObjectID = newdaily
-                      dailyActive = true
-                    }
-                    
-                  } label: {
-                    VStack(alignment: .leading, spacing: 1) {
-                      Text("\(index - self.start + 1)")
-                        .frame(maxWidth: .infinity, alignment: .center)
-                      
-                      if let daily = dailes.first { DailyMO in
-                        calendar.component(.day, from: DailyMO.date) == calendar.component(.day, from: calendar.date(byAdding: DateComponents(day: index - self.start), to: self.montly.date)!)
-                      } {
-                        Text(daily.text)
-                          .font(.system(size: 10, weight: .regular))
-                          .lineLimit(nil)
-                          .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                      } else {
-                        Text("")
-                          .frame(maxWidth: .infinity, maxHeight: .infinity)
-                      }
-
-                    }
-                    .frame(height: calgeo.size.height/6)
-                    .background(Color.white)
-                    .foregroundColor(.black)
-                  }
-                } else {
-                  VStack(alignment: .leading, spacing: 0) {
-                    Text("\(index - last - start + 1)")
-                      .frame(maxWidth: .infinity, alignment: .center)
-                      .padding(.bottom)
-
-                    Spacer().frame(minWidth: 0, maxWidth: .infinity)
-                  }
-                  .frame(height: calgeo.size.height/6)
-                    .background(Color.white)
-                    .foregroundColor(.gray)
-
-                }
-
-              }
-            } //grid
-            .frame(maxHeight: .infinity)
-            .background(.gray.opacity(0.2))
-            .ignoresSafeArea()
-          } //calgeo
-          .ignoresSafeArea()
-
-        } //v
-      } //geo
-      .onAppear{
-        if (titleVisible) {
-          pageNavi.title = self.montly.page!.title
-          pageNavi.pageObjectID = self.montly.page!.objectID
-        }
-      }
-      .onChange(of: titleVisible) { V in
-        if V {
-          pageNavi.title = self.montly.page!.title
-          pageNavi.pageObjectID = self.montly.page!.objectID
-        }
-      }
-      .onChange(of: montly.page!.title) { V in
-        print(V)
-        pageNavi.title = self.montly.page!.title
-        pageNavi.pageObjectID = self.montly.page!.objectID
-      }
-//      .navigationTitle(title)
-    }
+  private func week(for day: Date) -> [Date] {
+    print("ddd")
+    guard
+      let dayInterval = calendar.dateInterval(of: .weekOfMonth, for: day)
+    else { return [] }
+    return calendar.generateDates(
+      inside: DateInterval(start: dayInterval.start, end: dayInterval.end),
+      matching: DateComponents(hour: 0, minute: 0, second: 0)
+    )
+  }
 }
+
