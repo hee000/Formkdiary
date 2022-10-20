@@ -9,12 +9,13 @@ import SwiftUI
 
 @main
 struct FormkdiaryApp: App {
-  let persistenceController = PersistenceController.shared
-
+//  let persistenceController = PersistenceController.shared
+  @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+  
   var body: some Scene {
     WindowGroup {
       ContentView()
-        .environment(\.managedObjectContext, persistenceController.container.viewContext)
+        .environment(\.managedObjectContext, PersistenceController.shared.context)
     }
   }
 }

@@ -139,6 +139,7 @@ struct PageAddView: View {
                   newPage.title = createTitle(type: .monthly, date: newMonthly.date)
                   
                   note.addToPages(newPage)
+                  note.lastIndex = Int32(note.pages.count - 1)
                   
                   CoreDataSave()
                   

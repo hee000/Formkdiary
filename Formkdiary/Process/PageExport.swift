@@ -88,7 +88,7 @@ class exportDiary {
     } else {
       let noteRequest: NSFetchRequest<NoteMO> = NoteMO.fetchRequest()
 
-      guard let noteResult = try? PersistenceController.shared.container.viewContext.fetch(noteRequest)
+      guard let noteResult = try? PersistenceController.shared.context.fetch(noteRequest)
       else { return "" }
       
       for note in noteResult {

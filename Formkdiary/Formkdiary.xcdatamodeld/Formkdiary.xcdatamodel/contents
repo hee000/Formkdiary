@@ -51,20 +51,4 @@
         <relationship name="dailies" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Daily" inverseName="weekly" inverseEntity="Daily"/>
         <relationship name="page" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Page" inverseName="weekly" inverseEntity="Page"/>
     </entity>
-    <configuration name="Cloud" usedWithCloudKit="YES">
-        <memberEntity name="Daily"/>
-        <memberEntity name="Memo"/>
-        <memberEntity name="Monthly"/>
-        <memberEntity name="Note"/>
-        <memberEntity name="Page"/>
-        <memberEntity name="Weekly"/>
-    </configuration>
-    <configuration name="Local">
-        <memberEntity name="Daily"/>
-        <memberEntity name="Memo"/>
-        <memberEntity name="Monthly"/>
-        <memberEntity name="Note"/>
-        <memberEntity name="Page"/>
-        <memberEntity name="Weekly"/>
-    </configuration>
 </model>

@@ -7,6 +7,8 @@
 
 import SwiftUI
 import Combine
+import CloudKit
+import CoreData
 
 struct MainView: View {
   @Environment(\.managedObjectContext) private var viewContext
@@ -24,8 +26,16 @@ struct MainView: View {
   
   @State var isDelete = false
   @State var isRename = false
+  
   @State var index = 0
   @State var renameString = ""
+  @State var isDiaryExport = false
+  
+  @State private var share: CKShare?
+  @State private var shareNote: NoteMO?
+  @State private var showShareSheet = false
+  
+  let stack = PersistenceController.shared
   
   func limitText(_ upper: Int) {
       if renameString.count > upper {
@@ -33,28 +43,42 @@ struct MainView: View {
       }
   }
   
-  @State var isDiaryExport = false
+  private func createShare(_ note: NoteMO) async {
+    do {
+      let (_, share, _) = try await stack.persistentContainer.share([note], to: nil)
+      share[CKShare.SystemFieldKey.title] = note.title
+      self.share = share
+    } catch {
+      print("Failed to create share")
+    }
+  }
+  
+  
   
     var body: some View {
       NavigationView{
         ZStack{
-//          ScrollView {
-//            if notes.isEmpty {
-//              Text("새 노트를 추가해주세요")
-//            } else {
-          
           List{
             ForEach(Array(notes.enumerated()), id:\.element) { index, note in
               ZStack{
                 NavigationLink(destination: NoteView(note: note)) {}.opacity(0)
                   .buttonStyle(PlainButtonStyle())
-                Text(note.title)
+                HStack{
+                  if let share = stack.getShare(note), share.participants.count > 1 {
+                    Image(systemName: "person.2.fill")
+                  }
+                  Text(note.title)
+                    .lineLimit(1)
+                }
+                .frame(height: 8)
               }
               .listRowSeparator(.hidden)
               .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                Button(role: .destructive) {
+                Button {
                   self.index = index
-                  isDelete.toggle()
+                  withAnimation{
+                    isDelete.toggle()
+                  }
                   print("삭제")
                 } label: {
                   Label("Delete", systemImage: "trash.fill")
@@ -63,12 +87,23 @@ struct MainView: View {
                 Button {
                   self.index = index
                   self.renameString = note.title
-                  isRename.toggle()
+                  
+                  withAnimation{
+                    isRename.toggle()
+                  }
                   print("리네임")
                 } label: {
                   Label("Rename", systemImage: "pencil")
                 }
-              
+                
+                Button {
+                  share = nil
+                  shareNote = note
+                  showShareSheet = true
+                } label: {
+                  Text("공유")
+                }
+                
               }
             } //for
           } //list
@@ -103,6 +138,25 @@ struct MainView: View {
                    menuClose: self.openMenu,
                    diaryExport: self.diaryExport)
         }//z
+        .sheet(isPresented: $showShareSheet, content: {
+          VStack{
+            if let share = share, let note = shareNote {
+              CloudSharingView(share: share, container: PersistenceController.shared.ckContainer, note: note)
+                .ignoresSafeArea()
+            }
+          }
+          .task {
+            guard let shareNote = shareNote else { return }
+            
+            if !stack.isShared(object: shareNote) {
+              print("공유설정중")
+              Task {
+                await createShare(shareNote)
+              }
+            }
+            self.share = stack.getShare(shareNote)
+          }
+        })
         
         .sheet(isPresented: $isDelete) {
           VStack{
@@ -126,7 +180,7 @@ struct MainView: View {
             }
           }
           .padding([.top, .leading, .trailing])
-          .presentationDetents([.fraction(0.2)])
+          .presentationDetents([.fraction(0.25)])
         }
         .sheet(isPresented: $isRename) {
           VStack{
@@ -292,65 +346,48 @@ struct SideMenu: View {
       .opacity(self.isOpen ? 1.0 : 0.0)
       .onChange(of: isOpen, perform: { newValue in
         if newValue {
-          withAnimation {
+          withAnimation{
             offset = .zero
           }
-//          offset = .zero
         }
       })
       .onTapGesture {
         self.menuClose()
       }
-      .gesture(
-        DragGesture()
-          .onChanged { gesture in
-            if gesture.translation.width < 0 {
-              withAnimation {
-                offset = gesture.translation
-              }
-            }
-          }
-          .onEnded { _ in
-            if offset.width < -self.width/2 {
-                // remove the card
-              self.menuClose()
-//              offset = .zero
-            } else {
-              withAnimation {
-                offset = .zero
-              }
-            }
-          }
-      )
       
       HStack {
         MenuContent(diaryExport: diaryExport)
           .frame(width: self.width)
           .background(Color.white)
           .offset(x: self.isOpen ? 0 + offset.width : -self.width)
-          .gesture(
-            DragGesture()
-              .onChanged { gesture in
-                if gesture.translation.width < 0 {
-                  withAnimation {
-                    offset = gesture.translation
-                  }
-                }
-              }
-              .onEnded { _ in
-                if offset.width < -self.width/2 {
-                    // remove the card
-                  self.menuClose()
-    //              offset = .zero
-                } else {
-                  withAnimation {
-                    offset = .zero
-                  }
-                }
-              }
-          )
+
         Spacer()
       }
-    }
+    } //z
+    .gesture(
+      DragGesture()
+        .onChanged { gesture in
+          if gesture.translation.width < 0 {
+            withAnimation(.linear(duration: 0)) {
+              offset = gesture.translation
+            }
+          } else {
+            if offset.width < 0 {
+              withAnimation(.linear(duration: 0)) {
+                offset.width = 0
+              }
+            }
+          }
+        }
+        .onEnded { _ in
+          if offset.width < -self.width/2 {
+            self.menuClose()
+          } else {
+            withAnimation {
+              offset = .zero
+            }
+          }
+        }
+    ) //gesture
   }
 }

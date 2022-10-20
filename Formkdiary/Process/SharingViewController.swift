@@ -2,7 +2,7 @@
 //  SharingViewController.swift
 //  Formkdiary
 //
-//  Created by hee on 2022/10/19.
+//  Created by hee on 2022/10/20.
 //
 
 import Foundation
@@ -23,5 +23,4 @@ struct SharingViewController: UIViewControllerRepresentable {
         }
     }
 }
-
 

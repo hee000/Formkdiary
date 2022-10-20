@@ -12,7 +12,10 @@
 		DA2F158528FEBC7900872A72 /* AlertTwoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2F158428FEBC7900872A72 /* AlertTwoButton.swift */; };
 		DA2F158728FEC00200872A72 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2F158628FEC00200872A72 /* Calendar.swift */; };
 		DA2F158928FED48100872A72 /* MonthlyDefaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2F158828FED48100872A72 /* MonthlyDefaultView.swift */; };
-		DA2F158B28FF265D00872A72 /* SharingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2F158A28FF265D00872A72 /* SharingViewController.swift */; };
+		DA2F158D28FFD0CF00872A72 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2F158C28FFD0CF00872A72 /* AppDelegate.swift */; };
+		DA2F158F28FFD72C00872A72 /* CloudSharingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2F158E28FFD72C00872A72 /* CloudSharingController.swift */; };
+		DA2F15912900EADD00872A72 /* Cloner.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2F15902900EADD00872A72 /* Cloner.swift */; };
+		DA2F15932901625200872A72 /* SharingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2F15922901625200872A72 /* SharingViewController.swift */; };
 		DA53F3AD28645AF6003D02EF /* FormkdiaryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3AC28645AF6003D02EF /* FormkdiaryApp.swift */; };
 		DA53F3AF28645AF6003D02EF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3AE28645AF6003D02EF /* ContentView.swift */; };
 		DA53F3B128645AF7003D02EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA53F3B028645AF7003D02EF /* Assets.xcassets */; };
@@ -55,7 +58,10 @@
 		DA2F158428FEBC7900872A72 /* AlertTwoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertTwoButton.swift; sourceTree = "<group>"; };
 		DA2F158628FEC00200872A72 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
 		DA2F158828FED48100872A72 /* MonthlyDefaultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyDefaultView.swift; sourceTree = "<group>"; };
-		DA2F158A28FF265D00872A72 /* SharingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingViewController.swift; sourceTree = "<group>"; };
+		DA2F158C28FFD0CF00872A72 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DA2F158E28FFD72C00872A72 /* CloudSharingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudSharingController.swift; sourceTree = "<group>"; };
+		DA2F15902900EADD00872A72 /* Cloner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cloner.swift; sourceTree = "<group>"; };
+		DA2F15922901625200872A72 /* SharingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingViewController.swift; sourceTree = "<group>"; };
 		DA53F3A928645AF6003D02EF /* Formkdiary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Formkdiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA53F3AC28645AF6003D02EF /* FormkdiaryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormkdiaryApp.swift; sourceTree = "<group>"; };
 		DA53F3AE28645AF6003D02EF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -110,9 +116,10 @@
 			isa = PBXGroup;
 			children = (
 				DA2F157D28FD3CD700872A72 /* PageExport.swift */,
+				DA2F15902900EADD00872A72 /* Cloner.swift */,
 				DA2F157F28FDB0C400872A72 /* Toast.swift */,
 				DA2F158428FEBC7900872A72 /* AlertTwoButton.swift */,
-				DA2F158A28FF265D00872A72 /* SharingViewController.swift */,
+				DA2F15922901625200872A72 /* SharingViewController.swift */,
 				DA2F158628FEC00200872A72 /* Calendar.swift */,
 			);
 			path = Process;
@@ -149,12 +156,13 @@
 		DA53F3AB28645AF6003D02EF /* Formkdiary */ = {
 			isa = PBXGroup;
 			children = (
+				DA2F158328FDBE4600872A72 /* Process */,
 				DAD9716028D30E7D002CABAC /* Info.plist */,
 				DAD9715F28D30DBC002CABAC /* Formkdiary.entitlements */,
 				DA53F3E5286EFB63003D02EF /* Extensions.swift */,
 				DA53F3AC28645AF6003D02EF /* FormkdiaryApp.swift */,
+				DA2F158C28FFD0CF00872A72 /* AppDelegate.swift */,
 				DA53F3AE28645AF6003D02EF /* ContentView.swift */,
-				DA2F158328FDBE4600872A72 /* Process */,
 				DAD7226B28D5E84C00CB0B7E /* Home */,
 				DAD7226A28D5E83600CB0B7E /* Note */,
 				DAD7226D28D5E85E00CB0B7E /* Page */,
@@ -165,6 +173,7 @@
 				DAD7227928D600BA00CB0B7E /* ConstantData.swift */,
 				DA53F3B028645AF7003D02EF /* Assets.xcassets */,
 				DA53F3B528645AF7003D02EF /* Persistence.swift */,
+				DA2F158E28FFD72C00872A72 /* CloudSharingController.swift */,
 				DAD9717128D3E4EF002CABAC /* Formkdiary.xcdatamodeld */,
 				DA53F3B228645AF7003D02EF /* Preview Content */,
 			);
@@ -349,8 +358,10 @@
 				DAD7227A28D600BA00CB0B7E /* ConstantData.swift in Sources */,
 				DA53F3E2286EE3F8003D02EF /* PageSelectView.swift in Sources */,
 				DA53F3D0286462C4003D02EF /* DailyMO+CoreDataProperties.swift in Sources */,
+				DA2F15932901625200872A72 /* SharingViewController.swift in Sources */,
 				DA53F3D5286462C4003D02EF /* MemoMO+CoreDataClass.swift in Sources */,
 				DA53F3C428645E05003D02EF /* PageMO+CoreDataProperties.swift in Sources */,
+				DA2F15912900EADD00872A72 /* Cloner.swift in Sources */,
 				DAABCBB428D1AA7600F8244E /* PageView.swift in Sources */,
 				DA53F3B628645AF7003D02EF /* Persistence.swift in Sources */,
 				DA53F3AF28645AF6003D02EF /* ContentView.swift in Sources */,
@@ -363,9 +374,9 @@
 				DA53F3D4286462C4003D02EF /* MonthlyMO+CoreDataProperties.swift in Sources */,
 				DAD7227C28D60D7D00CB0B7E /* PageAddCalView.swift in Sources */,
 				DAF4502328D8CA29003C4900 /* DailyViewWithoutPage.swift in Sources */,
+				DA2F158D28FFD0CF00872A72 /* AppDelegate.swift in Sources */,
 				DA53F3E6286EFB63003D02EF /* Extensions.swift in Sources */,
 				DA53F3AD28645AF6003D02EF /* FormkdiaryApp.swift in Sources */,
-				DA2F158B28FF265D00872A72 /* SharingViewController.swift in Sources */,
 				DA53F3DC28647575003D02EF /* NoteAddView.swift in Sources */,
 				DA53F3DE28649ACA003D02EF /* PageAddView.swift in Sources */,
 				DA53F3D8286472EE003D02EF /* MainView.swift in Sources */,
@@ -379,6 +390,7 @@
 				DA53F3C628645E05003D02EF /* NoteMO+CoreDataProperties.swift in Sources */,
 				DA2F158728FEC00200872A72 /* Calendar.swift in Sources */,
 				DAD7226928D5C45A00CB0B7E /* NoteSettingView.swift in Sources */,
+				DA2F158F28FFD72C00872A72 /* CloudSharingController.swift in Sources */,
 				DA53F3D6286462C4003D02EF /* MemoMO+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

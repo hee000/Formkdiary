@@ -155,19 +155,29 @@ struct PageSelectView: View {
         
       } //lazyv
 //      .animation(.default, value: gridData.gridItems)
-      .onAppear(perform: {
-        DispatchQueue.main.async {
-          let result = createImg(pages: pages)
-          pageRenderImage = result.imgs
-          gridData.gridItems = result.model
-        }
-      })
+      .task{
+        let result = createImg(pages: pages)
+        pageRenderImage = result.imgs
+        gridData.gridItems = result.model
+      }
+//      .onAppear(perform: {
+//        DispatchQueue.main.async {
+//          let result = createImg(pages: pages)
+//          pageRenderImage = result.imgs
+//          gridData.gridItems = result.model
+//        }
+//      })
       .onChange(of: pages, perform: { new in
-        DispatchQueue.main.async {
+        Task{
           let result = createImg(pages: new)
           pageRenderImage = result.imgs
           gridData.gridItems = result.model
         }
+//        DispatchQueue.main.async {
+//          let result = createImg(pages: new)
+//          pageRenderImage = result.imgs
+//          gridData.gridItems = result.model
+//        }
       })
       
       .padding(7.5)
