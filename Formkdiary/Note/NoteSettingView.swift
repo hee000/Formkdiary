@@ -8,6 +8,7 @@
 import SwiftUI
 import CoreData
 import Photos
+import CloudKit
 
 let SettingColumn = (UserDefaults.standard.integer(forKey: "Setting-Column") != 0) ? UserDefaults.standard.integer(forKey: "Setting-Column") : 2
 
@@ -27,6 +28,12 @@ struct NoteSettingView: View {
   @State var column: Int
   @State var isDiaryExportText = false
   @State var isDiaryExportImage = false
+  
+  
+  @State private var share: CKShare?
+  @State private var shareNote: NoteMO?
+  @State private var showShareSheet = false
+  let stack = PersistenceController.shared
   
   init(id objectID: NSManagedObjectID, in context: NSManagedObjectContext, pgid pageObjectID: NSManagedObjectID? = nil) {
     if let note = try? context.existingObject(with: objectID) as? NoteMO {
@@ -95,6 +102,21 @@ struct NoteSettingView: View {
             
             Divider()
               .padding([.top, .bottom])
+            
+            if let share = stack.getShare(note), share.participants.count > 1  {
+              Button {
+                self.share = nil
+                shareNote = note
+                showShareSheet = true
+              } label: {
+                Text("공유설정")
+                  .bold()
+              }
+              
+              Divider()
+                .padding([.top, .bottom])
+            }
+          
           }
 
           
@@ -236,10 +258,22 @@ struct NoteSettingView: View {
           } //page
           
           
-        }
+        }//v
         .padding([.leading, .trailing])
         .padding([.leading, .trailing])
       } //scroll
+      .sheet(isPresented: $showShareSheet, content: {
+        VStack{
+          if let share = share, let note = shareNote {
+            CloudSharingView(share: share, container: PersistenceController.shared.ckContainer, note: note)
+              .ignoresSafeArea()
+          }
+        }
+        .task {
+          guard let shareNote = shareNote else { return }
+          self.share = stack.getShare(shareNote)
+        }
+      })
       .onChange(of: column, perform: { newValue in
         note.column = Int16(newValue)
         CoreDataSave()
