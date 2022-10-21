@@ -73,7 +73,7 @@ struct MainView: View {
               .frame(height: 8)
             }
             .listRowSeparator(.hidden)
-            .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+            .contextMenu {
               Button {
                 self.index = index
                 withAnimation{
@@ -83,6 +83,8 @@ struct MainView: View {
               } label: {
                 Label("Delete", systemImage: "trash.fill")
               }
+              .tint(.red)
+
 
               Button {
                 self.index = index
@@ -103,7 +105,6 @@ struct MainView: View {
               } label: {
                 Text("공유")
               }
-              
             }
           } //for
         } //list
