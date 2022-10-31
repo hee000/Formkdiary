@@ -92,25 +92,24 @@ struct WeeklyDefaultView: View {
                   }//v
                 } //button label
                 .frame(height: UIScreen.main.bounds.size.height / 3)
-                .background(Color.white)
-                .foregroundColor(.black)
+                .background(Color.customBg)
+                .foregroundColor(Color.customText)
                 .cornerRadius(5)
                 .clipped()
-                .shadow(color: Color.black.opacity(0.2), radius: 2)
+                .shadow(color: Color.customTextLight, radius: 2)
             } //for
           } //grid
           .padding()
         } // scroll
+        .background(Color.customBg)
       } // geo
       .onAppear {
         if titleVisible {
-          pageNavi.title = self.weekly.page!.title
           pageNavi.pageObjectID = self.weekly.page!.objectID
         }
       }
       .onChange(of: titleVisible) { V in
         if V {
-          pageNavi.title = self.weekly.page!.title
           pageNavi.pageObjectID = self.weekly.page!.objectID
         }
       }

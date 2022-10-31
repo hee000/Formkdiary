@@ -25,15 +25,20 @@ struct NoteAddView: View {
     var body: some View {
       NavigationView{
         VStack{
-          TextField("노트 제목을 입력해주세요.", text: $title)
-            .frame(width: UIScreen.main.bounds.size.width/3*2)
+          Spacer()
+          Text("노트 이름을 입력해주세요.")
+          Spacer()
+          
+          TextField("NOTE", text: $title)
+            .multilineTextAlignment(.center)
+            .frame(width: UIScreen.main.bounds.size.width/3*2, alignment: .center)
             .disableAutocorrection(true)
+            .foregroundColor(Color.customText)
             .textCase(.none)
           Divider()
             .frame(width: UIScreen.main.bounds.size.width/3*2)
             .padding(.bottom)
             .onReceive(Just(title)) { _ in limitText(textLimit) }
-
           Button{
             if title != "" {
               let newNote = NoteMO(context: viewContext)
@@ -42,13 +47,17 @@ struct NoteAddView: View {
               presentationMode.wrappedValue.dismiss()
             }
           } label: {
-            Text("만들기")
-              .foregroundColor(.white)
+            Text("Create")
+              .foregroundColor(Color.customText)
               .frame(width: UIScreen.main.bounds.size.width/4, height: UIScreen.main.bounds.size.height/20)
-              .background(.black)
+              .background(Color.customTextLight)
               .cornerRadius(5)
           }
+          Spacer()
+          Spacer()
         } // v
+        .frame(maxWidth: .infinity)
+        .background(Color.customBg)
         .navigationTitle("노트 만들기")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
@@ -58,7 +67,7 @@ struct NoteAddView: View {
               presentationMode.wrappedValue.dismiss()
             } label: {
               Image(systemName: "xmark")
-                .foregroundColor(.black)
+                .foregroundColor(Color.customIc)
             }
           }
         }//toolbar

@@ -13,7 +13,9 @@ import CoreData
 struct NoteView: View {
   @Environment(\.presentationMode) var presentationMode
   @Environment(\.managedObjectContext) private var viewContext
+  @EnvironmentObject var keyboardManager: KeyboardManager
   @EnvironmentObject var pageNavi: PageNavi
+  @EnvironmentObject var searchNavigator: SearchNavigator
 
   @ObservedObject var note: NoteMO
   
@@ -23,27 +25,43 @@ struct NoteView: View {
   let stack = PersistenceController.shared
   
   var body: some View {
-    GeometryReader { geo in
+//    GeometryReader { geo in
       VStack{
         if note.pages.count == 0 {
           Text("페이지를 추가해주세요.")
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-
-        } else if note.isGird {
-          if let pages = note.pages.allObjects.sorted(by: {($0 as! PageMO).index < ($1 as! PageMO).index}) as? [PageMO] {
-            PageSelectView(note: note, pages: pages)
-              .onAppear{
-                pageNavi.pageObjectID = nil
+            .background(Color.customBg)
+        } else if note.style == noteStyle.page.rawValue {
+          PageView(note: note)
+            .foregroundColor(Color.customText)
+            .background(Color.customBg)
+            .onAppear{
+              if searchNavigator.isPage {
+                guard let page = searchNavigator.page else { return }
+                note.lastIndex = page.index
+                searchNavigator.isPage = false
               }
-          }
-
-        } else if !note.isGird {
-          if let pages = note.pages.allObjects.sorted(by: {($0 as! PageMO).index < ($1 as! PageMO).index}) as? [PageMO] {
-            PageView(note: note, pageIndex: Int(note.lastIndex), pages: pages)
-          }
+            }
+//            .edgesIgnoringSafeArea(.bottom)
+//            .edgesIgnoringSafeArea(.top)
+        } else if note.style == noteStyle.list.rawValue {
+          PageListView(note: note)
+            .foregroundColor(Color.customText)
+            .background(Color.customBg)
+            .onAppear{
+              pageNavi.pageObjectID = nil
+            }
+            
         }
       }
-    } //geo
+//      .ignoresSafeArea()
+      
+//    } //geo
+//    .border(.red)
+//    .fixedSize()
+//    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    
+//    .fixedSize(horizontal: false, vertical: true)
     .fullScreenCover(isPresented: $isPageAdd) {
       PageAddView(id: note.objectID, in: viewContext)
     }
@@ -60,7 +78,7 @@ struct NoteView: View {
           presentationMode.wrappedValue.dismiss()
         } label: {
           Image(systemName: "chevron.left")
-            .foregroundColor(.black)
+            .foregroundColor(Color.customIc)
         }
       }
       ToolbarItem(placement: .navigationBarTrailing) {
@@ -69,7 +87,7 @@ struct NoteView: View {
             isPageAdd.toggle()
           } label: {
             Image(systemName: "plus")
-              .foregroundColor(.black)
+              .foregroundColor(Color.customIc)
           }
           
           Button {
@@ -78,7 +96,7 @@ struct NoteView: View {
             isNoteSetting.toggle()
           } label: {
             Image(systemName: "gearshape")
-              .foregroundColor(.black)
+              .foregroundColor(Color.customIc)
           }
         }
       }

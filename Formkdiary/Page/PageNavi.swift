@@ -9,6 +9,5 @@ import Foundation
 import CoreData
 
 class PageNavi: ObservableObject {
-  @Published var title: String = ""
   @Published var pageObjectID: NSManagedObjectID? = nil
 }

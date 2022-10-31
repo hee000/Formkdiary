@@ -40,7 +40,7 @@ struct AlertTwoButton<Content>: View where Content: View {
                   .font(.system(size: 16, weight: .regular))
                   .frame(maxWidth: .infinity)
               }
-              .foregroundColor(.black)
+              .foregroundColor(Color.customText)
               .padding()
               Divider()
               Button {
@@ -51,14 +51,14 @@ struct AlertTwoButton<Content>: View where Content: View {
                   .font(.system(size: 16, weight: .regular))
                   .frame(maxWidth: .infinity)
               }
-              .foregroundColor(.black)
+              .foregroundColor(Color.customText)
               .padding()
             }
             .frame(width:UIScreen.main.bounds.width * 2/3)
             .fixedSize()
           }
           .frame(width: UIScreen.main.bounds.width * 2/3)
-          .background(.white)
+          .background(Color.customBg)
           .cornerRadius(5)
           .transition(AnyTransition.opacity.animation(Animation.easeInOut))
       }

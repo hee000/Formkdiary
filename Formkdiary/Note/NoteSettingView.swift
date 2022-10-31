@@ -14,6 +14,8 @@ let SettingColumn = (UserDefaults.standard.integer(forKey: "Setting-Column") != 
 
 let SettingColumnRange = [2, 3, 4]
 
+let noteStyleRange = [Int32(0), Int32(1), Int32(2)]
+
 struct NoteSettingView: View {
   @Environment(\.presentationMode) var presentationMode
   @EnvironmentObject var pageNavi: PageNavi
@@ -29,11 +31,19 @@ struct NoteSettingView: View {
   @State var isDiaryExportText = false
   @State var isDiaryExportImage = false
   
+  @State var isSearch = false
+  
   
   @State private var share: CKShare?
   @State private var shareNote: NoteMO?
   @State private var showShareSheet = false
   let stack = PersistenceController.shared
+  
+  func onSearchNavigator() {
+    presentationMode.wrappedValue.dismiss()
+    isSearch.toggle()
+//    presentationMode.wrappedValue.dismiss()
+  }
   
   init(id objectID: NSManagedObjectID, in context: NSManagedObjectContext, pgid pageObjectID: NSManagedObjectID? = nil) {
     if let note = try? context.existingObject(with: objectID) as? NoteMO {
@@ -59,40 +69,62 @@ struct NoteSettingView: View {
     NavigationView {
       ScrollView {
         VStack(alignment: .leading) {
-          Toggle(isOn: $note.isGird) {
-            Text("페이지 그리드 보기")
-              .bold()
+          Text("노트 설정")
+            .font(.system(size: 20, weight: .bold))
+            .padding(.vertical)
+          
+          HStack {
+            Text("페이지 보기 방식")
+              .font(.system(size: 15, weight: .regular))
+              .padding(.trailing)
+            Picker("column picker", selection: $note.style) {
+              ForEach(noteStyleRange, id:\.self) { style in
+                if style == noteStyle.list.rawValue{
+                  Text("목록")
+                    .font(.system(size: 15, weight: .regular))
+                } else if style == noteStyle.page.rawValue {
+                  Text("페이지")
+                    .font(.system(size: 15, weight: .regular))
+                }
+              }
+            }
+            .onChange(of: note.style, perform: { _ in
+              CoreDataSave()
+            })
+            .pickerStyle(SegmentedPickerStyle())
           }
-          .padding(.top)
-          .padding(.top)
-          .toggleStyle(SwitchToggleStyle())
-          .tint(.gray)
-          .onChange(of: note.isGird) { _ in
-            CoreDataSave()
-          }
+          .frame(height: UIScreen.main.bounds.size.width/14)
+          .padding(.vertical)
           
           Divider()
-            .padding([.top, .bottom])
           
-          if note.isGird {
+          if note.style == noteStyle.page.rawValue {
             HStack {
               Text("페이지 개수")
-                .bold()
-                .padding(.trailing)
+                .font(.system(size: 15, weight: .regular))
+              Spacer()
+              
               Picker("column picker", selection: $column) {
                 ForEach(SettingColumnRange, id:\.self) { column in
                   Text("\(column)")
+                    .foregroundColor(Color.customText)
                 }
               }
-              .pickerStyle(SegmentedPickerStyle())
+              .foregroundColor(Color.customIc)
+              //              .background(Color.customIc)
+              .tint(Color.customIc)
+              //              .pickerStyle(SegmentedPickerStyle())
             }
+            .frame(height: UIScreen.main.bounds.size.width/14)
+            .padding(.vertical)
             
             Divider()
-              .padding([.top, .bottom])
             
             Toggle(isOn: $note.titleVisible) {
               Text("페이지 이름 보기")
-                .bold()
+                .font(.system(size: 15, weight: .regular))
+                .frame(height: UIScreen.main.bounds.size.width/14)
+                .padding(.vertical)
             }
             .toggleStyle(SwitchToggleStyle())
             .tint(.gray)
@@ -101,45 +133,72 @@ struct NoteSettingView: View {
             }
             
             Divider()
-              .padding([.top, .bottom])
-            
-            if let share = stack.getShare(note), share.participants.count > 1  {
-              Button {
-                self.share = nil
-                shareNote = note
-                showShareSheet = true
-              } label: {
-                Text("공유설정")
-                  .bold()
-              }
-              
-              Divider()
-                .padding([.top, .bottom])
-            }
-          
           }
-
+          
+          if note.style == noteStyle.list.rawValue {
+            NavigationLink(destination: PageListEditView(note: note)) {
+              Text("순서 바꾸기")
+                .font(.system(size: 15, weight: .regular))
+                .foregroundColor(Color.customText)
+                .frame(height: UIScreen.main.bounds.size.width/14)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.vertical)
+            }
+            
+            Divider()
+          }
+          
+          Button{
+            isSearch.toggle()
+          } label: {
+            Text("검색")
+              .font(.system(size: 15, weight: .regular))
+              .frame(maxWidth: .infinity, alignment: .leading)
+              .frame(height: UIScreen.main.bounds.size.width/14)
+              .foregroundColor(Color.customText)
+              .padding(.vertical)
+          }
+          
+          Divider()
+          
+          
+          if let share = stack.getShare(note), share.participants.count > 1  {
+            Button {
+              self.share = nil
+              shareNote = note
+              showShareSheet = true
+            } label: {
+              Text("공유설정")
+                .font(.system(size: 15, weight: .regular))
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(height: UIScreen.main.bounds.size.width/14)
+                .foregroundColor(Color.customText)
+                .padding(.vertical)
+            }
+            
+            Divider()
+          }
+          
           
           if page.note != nil {
             Text("페이지 설정")
-              .bold()
-              .font(.title)
-              .padding(.bottom)
+              .font(.system(size: 20, weight: .bold))
+              .padding(.vertical)
             
             Text("이름")
               .bold()
-//              .padding(.trailing)
+              .font(.system(size: 15, weight: .regular))
+            //              .padding(.trailing)
             
             TextField("제목", text: $page.title)
               .onChange(of: page.title) { newValue in
-                pageNavi.title = newValue
                 CoreDataSave()
               }
+              .font(.system(size: 15, weight: .regular))
               .padding()
               .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.gray.opacity(0.7), lineWidth: 1))
-
+            
             Divider()
-              .padding([.top, .bottom])
             
             if let weekly = page.weekly {
               Text("스타일")
@@ -175,7 +234,7 @@ struct NoteSettingView: View {
                 .frame(height: 60)
                 
                 Button{
-//                  monthlyStyle = "twoColumnStyle"
+                  //                  monthlyStyle = "twoColumnStyle"
                 } label: {
                   VStack{
                     VStack{
@@ -189,8 +248,8 @@ struct NoteSettingView: View {
                         .fill(Color.gray)
                         .cornerRadius(5)
                     }
-                      .padding([.leading, .trailing])
-                      .padding([.leading, .trailing])
+                    .padding([.leading, .trailing])
+                    .padding([.leading, .trailing])
                     Text("한줄보기")
                   }
                 }
@@ -199,7 +258,6 @@ struct NoteSettingView: View {
               .frame(width:2*UIScreen.main.bounds.size.width/3)
               
               Divider()
-                .padding([.top, .bottom])
             } // style
             
             Menu{
@@ -208,11 +266,11 @@ struct NoteSettingView: View {
               } label: {
                 Label("텍스트 내보내기", systemImage: "doc.plaintext")
               }
-//              Button("이미지 내보내기") {isDiaryExportImage.toggle()}
+              //              Button("이미지 내보내기") {isDiaryExportImage.toggle()}
               Button {
                 let image = exportDiary().image(page: page)
                 PHPhotoLibrary.shared().performChanges {
-                    _ = PHAssetChangeRequest.creationRequestForAsset(from: image)
+                  _ = PHAssetChangeRequest.creationRequestForAsset(from: image)
                 } completionHandler: { (success, error) in
                   if success {
                     self.isToastMessage = "앨범에 저장되었습니다."
@@ -226,8 +284,16 @@ struct NoteSettingView: View {
                 Label("이미지 저장하기", systemImage: "photo")
               }
             } label: {
-              Label("내보내기", systemImage: "square.and.arrow.up")
-//              Text("내보내기")
+              HStack{
+                Image(systemName: "square.and.arrow.up")
+                  .foregroundColor(Color.customIc)
+                Text("내보내기")
+                  .foregroundColor(Color.customText)
+                  .font(.system(size: 15, weight: .regular))
+                Spacer()
+              }
+              .frame(height: UIScreen.main.bounds.size.width/14)
+              .padding(.vertical)
             }
             .background(SharingViewController(isPresenting: $isDiaryExportText) {
               let text = exportDiary().text(page: page)
@@ -237,24 +303,43 @@ struct NoteSettingView: View {
               let tempStrPath = tempDir.appendingPathComponent(strFileName)
               
               try? text.write(to: tempStrPath, atomically: true, encoding: String.Encoding.utf8)
-
+              
               
               let av = UIActivityViewController(activityItems: [tempStrPath],  applicationActivities: nil)
-                
-                // For iPad
-                if UIDevice.current.userInterfaceIdiom == .pad {
-                   av.popoverPresentationController?.sourceView = UIView()
-                }
               
-
-               av.completionWithItemsHandler = { _, _, _, _ in
-                 isDiaryExportText = false // required for re-open !!!
-                  }
-                  return av
-              })
+              // For iPad
+              if UIDevice.current.userInterfaceIdiom == .pad {
+                av.popoverPresentationController?.sourceView = UIView()
+              }
+              
+              
+              av.completionWithItemsHandler = { _, _, _, _ in
+                isDiaryExportText = false // required for re-open !!!
+              }
+              return av
+            })
             
             Divider()
-              .padding([.top, .bottom])
+            
+            Button{
+//              if note.lastIndex != 0 {
+//                note.lastIndex -= 1
+//              }
+//
+//              for otherPage: PageMO in page.note!.pages.toArray() {
+//                if otherPage.index > page.index{
+//                  otherPage.index -= 1
+//                }
+//              }
+//              stack.context.delete(page)
+//              CoreDataSave()
+            }label: {
+              Text("페이지 삭제")
+                .foregroundColor(Color.customText)
+                .font(.system(size: 15, weight: .regular))
+                .frame(height: UIScreen.main.bounds.size.width/14)
+                .padding(.vertical)
+            }
           } //page
           
           
@@ -262,11 +347,16 @@ struct NoteSettingView: View {
         .padding([.leading, .trailing])
         .padding([.leading, .trailing])
       } //scroll
+      .background(Color.customBg)
+      .sheet(isPresented: $isSearch) {
+        zzzzzzzzz(onSearchNavigator: onSearchNavigator, note: note)
+      }
       .sheet(isPresented: $showShareSheet, content: {
         VStack{
           if let share = share, let note = shareNote {
             CloudSharingView(share: share, container: PersistenceController.shared.ckContainer, note: note)
               .ignoresSafeArea()
+              .tint(Color.customText)
           }
         }
         .task {
@@ -278,7 +368,7 @@ struct NoteSettingView: View {
         note.column = Int16(newValue)
         CoreDataSave()
       })
-      .navigationTitle("노트 설정")
+      .navigationTitle("노트/페이지 설정")
       .navigationBarTitleDisplayMode(.inline)
 //      .navigationBarBackButtonHidden(true)
       .toolbar {
@@ -287,7 +377,7 @@ struct NoteSettingView: View {
             presentationMode.wrappedValue.dismiss()
           } label: {
             Image(systemName: "xmark")
-              .foregroundColor(.black)
+              .foregroundColor(Color.customIc)
           }
         }
       }//toolbar

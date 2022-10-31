@@ -28,11 +28,6 @@ struct Grid: Identifiable, Hashable, Equatable {
   var gridMove: gridMove = .none
 }
 
-struct CombinePage {
-  var fromPage: PageMO?
-  var toPage: PageMO?
-}
-
 class GridViewModel: ObservableObject{
   @Published var gridItems: [Grid] = []
   @Published var currentGrid: Grid?
@@ -140,112 +135,103 @@ struct PageSelectView: View {
   @State private var dragging: PageMO?
   
   var body: some View {
-    ScrollView{
-      LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 0), count: Int(note.column)), spacing: 0){
-        ForEach(Array(zip(pages.indices, gridData.gridItems)), id: \.1) { index, grid in
-          let page = pages[index]
-            NavigationLink(destination: PageView(note: note, pageIndex: index, pages: pages)){
+    NavigationView{
+      ScrollView{
+        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 0), count: Int(note.column)), spacing: 0){
+          ForEach(Array(zip(pages.indices, gridData.gridItems)), id: \.1) { index, grid in
+            let page = pages[index]
+//            NavigationLink(destination: PageView(note: note, pageIndex: index, pages: pages)){
               imgEffect(img: grid.gridImg, column: note.column, page: page, titleVisible: note.titleVisible, grid: grid, isDrag: gridData.currentGrid == grid)
-            }
+//            }
             .onAppear{
               print(page.index)
             }
-        } //for
-        
-        
-      } //lazyv
-//      .animation(.default, value: gridData.gridItems)
-      .task{
-        let result = createImg(pages: pages)
-        pageRenderImage = result.imgs
-        gridData.gridItems = result.model
-      }
-//      .onAppear(perform: {
-//        DispatchQueue.main.async {
-//          let result = createImg(pages: pages)
-//          pageRenderImage = result.imgs
-//          gridData.gridItems = result.model
-//        }
-//      })
-      .onChange(of: pages, perform: { new in
-        Task{
-          let result = createImg(pages: new)
+          } //for
+          
+          
+        } //lazyv
+        //      .animation(.default, value: gridData.gridItems)
+        .task{
+          let result = createImg(pages: pages)
           pageRenderImage = result.imgs
           gridData.gridItems = result.model
         }
-//        DispatchQueue.main.async {
-//          let result = createImg(pages: new)
-//          pageRenderImage = result.imgs
-//          gridData.gridItems = result.model
-//        }
-      })
-      
-      .padding(7.5)
-      
-    } //scroll
-    .onChange(of: gridData.CombineConfirm, perform: { newValue in
-//      print("합치기 시작")
-      if newValue {
-        guard let fromPage = gridData.combinePage?.fromPage,
-              let toPage = gridData.combinePage?.toPage
-        else { return }
+        .onChange(of: pages, perform: { new in
+          Task{
+            let result = createImg(pages: new)
+            pageRenderImage = result.imgs
+            gridData.gridItems = result.model
+          }
+        })
         
-        print("asdasd")
-        if let toMontly = toPage.monthly {
-          if let fromWeekly = fromPage.weekly { // 먼-위
-            if CalendarModel.shared.calendar.isDate(fromWeekly.date, equalTo: toMontly.date, toGranularity: .month) {
-              for daily: DailyMO in fromWeekly.dailies.toArray() {
-                daily.weekly = nil
-                daily.monthly = toMontly
-              }
-              for otherPage: PageMO in note.pages.toArray() {
-                if otherPage.index > fromPage.index{
-                  otherPage.index -= 1
+        .padding(7.5)
+        
+      } //scroll
+      .onChange(of: gridData.CombineConfirm, perform: { newValue in
+        //      print("합치기 시작")
+        if newValue {
+          guard let fromPage = gridData.combinePage?.fromPage,
+                let toPage = gridData.combinePage?.toPage
+          else { return }
+          
+          print("asdasd")
+          if let toMontly = toPage.monthly {
+            if let fromWeekly = fromPage.weekly { // 먼-위
+              if CalendarModel.shared.calendar.isDate(fromWeekly.date, equalTo: toMontly.date, toGranularity: .month) {
+                for daily: DailyMO in fromWeekly.dailies.toArray() {
+                  daily.weekly = nil
+                  daily.monthly = toMontly
                 }
+                for otherPage: PageMO in note.pages.toArray() {
+                  if otherPage.index > fromPage.index{
+                    otherPage.index -= 1
+                  }
+                }
+                viewContext.delete(fromPage)
               }
-              viewContext.delete(fromPage)
+            } else if let fromDaily = fromPage.daily { // 먼-데
+              if CalendarModel.shared.calendar.isDate(fromDaily.date, equalTo: toMontly.date, toGranularity: .month) {
+                if fromDaily.text != "" {
+                  fromDaily.page = nil
+                  fromDaily.monthly = toMontly
+                }
+                for otherPage: PageMO in note.pages.toArray() {
+                  if otherPage.index > fromPage.index{
+                    otherPage.index -= 1
+                  }
+                }
+                viewContext.delete(fromPage)
+              }
             }
-          } else if let fromDaily = fromPage.daily { // 먼-데
-            if CalendarModel.shared.calendar.isDate(fromDaily.date, equalTo: toMontly.date, toGranularity: .month) {
-              if fromDaily.text != "" {
-                fromDaily.page = nil
-                fromDaily.monthly = toMontly
-              }
-              for otherPage: PageMO in note.pages.toArray() {
-                if otherPage.index > fromPage.index{
-                  otherPage.index -= 1
+            
+          } else if let toWeekly = toPage.weekly {
+            if let fromDaily = fromPage.daily { // 위-데
+              if CalendarModel.shared.calendar.isDate(fromDaily.date, equalTo: toWeekly.date, toGranularity: .weekOfYear) {
+                if fromDaily.text != "" {
+                  fromDaily.page = nil
+                  fromDaily.weekly = toWeekly
                 }
+                for otherPage: PageMO in note.pages.toArray() {
+                  if otherPage.index > fromPage.index{
+                    otherPage.index -= 1
+                  }
+                }
+                viewContext.delete(fromPage)
               }
-              viewContext.delete(fromPage)
             }
           }
           
-        } else if let toWeekly = toPage.weekly {
-          if let fromDaily = fromPage.daily { // 위-데
-            if CalendarModel.shared.calendar.isDate(fromDaily.date, equalTo: toWeekly.date, toGranularity: .weekOfYear) {
-              if fromDaily.text != "" {
-                fromDaily.page = nil
-                fromDaily.weekly = toWeekly
-              }
-              for otherPage: PageMO in note.pages.toArray() {
-                if otherPage.index > fromPage.index{
-                  otherPage.index -= 1
-                }
-              }
-              viewContext.delete(fromPage)
-            }
-          }
+          CoreDataSave()
+          
+          gridData.combinePage = nil
+          gridData.CombineConfirm = false
         }
-        
-        CoreDataSave()
-        
-        gridData.combinePage = nil
-        gridData.CombineConfirm = false
-      }
-    })
-    .onDrop(of: [.text], delegate: DragRelocateDelegate2(gridData: gridData))
-    .overlay(self.gridData.isCombine ? AlertTwoButton(isPresented: $gridData.isCombine, confirm: $gridData.CombineConfirm) { Text("페이지를 합치시겠습니까?").font(.system(size: 16, weight: .regular))} : nil )
-
+      })
+      .onDrop(of: [.text], delegate: DragRelocateDelegate2(gridData: gridData))
+      .overlay(self.gridData.isCombine ? AlertTwoButton(isPresented: $gridData.isCombine, confirm: $gridData.CombineConfirm) { Text("페이지를 합치시겠습니까?").font(.system(size: 16, weight: .regular))} : nil )
+      .navigationTitle(note.title)
+      .navigationBarTitleDisplayMode(.inline)
+    }
   }
 }
 

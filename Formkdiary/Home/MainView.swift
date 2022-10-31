@@ -12,6 +12,7 @@ import CoreData
 
 struct MainView: View {
   @Environment(\.managedObjectContext) private var viewContext
+  @EnvironmentObject var searchNavigator: SearchNavigator
 
   @FetchRequest(
       sortDescriptors: [
@@ -30,6 +31,9 @@ struct MainView: View {
   @State var index = 0
   @State var renameString = ""
   @State var isDiaryExport = false
+  
+  @State var isSetting = false
+  @State var isSearch = false
   
   @State private var share: CKShare?
   @State private var shareNote: NoteMO?
@@ -56,196 +60,251 @@ struct MainView: View {
   
   
   var body: some View {
-    NavigationView{
-      ZStack{
-        List{
-          ForEach(Array(notes.enumerated()), id:\.element) { index, note in
-            ZStack{
-              NavigationLink(destination: NoteView(note: note)) {}.opacity(0)
-                .buttonStyle(PlainButtonStyle())
-              HStack{
-                if let share = stack.getShare(note), share.participants.count > 1 {
-                  Image(systemName: "person.2.fill")
-                }
-                Text(note.title)
-                  .lineLimit(1)
-              }
-              .frame(height: 8)
+    GeometryReader { geo in
+      NavigationView {
+        GeometryReader { _ in
+          Color.customBg.ignoresSafeArea()
+          
+          ZStack{
+            if let note = searchNavigator.note, searchNavigator.isNote {
+              NavigationLink(destination: NoteView(note: note), isActive: $searchNavigator.isNote) {}
             }
-            .listRowSeparator(.hidden)
-            .contextMenu {
-              Button {
-                self.index = index
-                withAnimation{
-                  isDelete.toggle()
-                }
-                print("삭제")
-              } label: {
-                Label("Delete", systemImage: "trash.fill")
-              }
-              .tint(.red)
-
-
-              Button {
-                self.index = index
-                self.renameString = note.title
-                
-                withAnimation{
-                  isRename.toggle()
-                }
-                print("리네임")
-              } label: {
-                Label("Rename", systemImage: "pencil")
-              }
-              
-              Button {
-                share = nil
-                shareNote = note
-                showShareSheet = true
-              } label: {
-                Text("공유")
-              }
-            }
-          } //for
-        } //list
-        .listStyle(.plain)
-        .padding([.leading, .trailing])
-        .background(SharingViewController(isPresenting: $isDiaryExport) {
-          let text = exportDiary().text()
-          
-          let tempDir = FileManager.default.temporaryDirectory
-          let strFileName = exportDiary().textFileName()
-          let tempStrPath = tempDir.appendingPathComponent(strFileName)
-          
-          try? text.write(to: tempStrPath, atomically: true, encoding: String.Encoding.utf8)
-
-          
-          let av = UIActivityViewController(activityItems: [tempStrPath],  applicationActivities: nil)
             
-            // For iPad
-            if UIDevice.current.userInterfaceIdiom == .pad {
-               av.popoverPresentationController?.sourceView = UIView()
-            }
-
-           av.completionWithItemsHandler = { _, _, _, _ in
-             isDiaryExport = false // required for re-open !!!
+            GeometryReader { geometry in                    // Get the geometry
+              ScrollView{
+                VStack{
+//                  Button("asdad"){
+//                    isSearch.toggle()
+//                  }
+                  
+                  ForEach(Array(notes.enumerated()), id:\.element) { index, note in
+                    NavigationLink(destination: NoteView(note: note)) {
+                      HStack{
+                        if let share = stack.getShare(note), share.participants.count > 1 {
+                          Image(systemName: "person.2.fill")
+                        }
+                        Text(note.title)
+                          .lineLimit(1)
+                        //                      .foregroundColor(Color.customText)
+                      }
+                      .padding(10)
+                      .frame(maxWidth: .infinity)
+                      .foregroundColor(Color.customText)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .contextMenu {
+                      
+                      Button {
+                        self.index = index
+                        withAnimation{
+                          isDelete.toggle()
+                        }
+                        print("삭제")
+                      } label: {
+                        Label("Delete", systemImage: "trash.fill")
+                      }
+                      .tint(.red)
+                      
+                      
+                      Button {
+                        self.index = index
+                        self.renameString = note.title
+                        
+                        withAnimation{
+                          isRename.toggle()
+                        }
+                        print("리네임")
+                      } label: {
+                        Label("Rename", systemImage: "pencil")
+                      }
+                      
+                      Button {
+                        share = nil
+                        shareNote = note
+                        showShareSheet = true
+                      } label: {
+                        Text("공유")
+                      }
+                    }
+                  } //for
+                }//v
+                .padding([.leading, .trailing])
+                .frame(width: geometry.size.width)
+                .frame(minHeight: geometry.size.height)
+              } //scroll
+              .clipped()
+//              .navigationDestination(isPresented: $searchNavigator.isNote) {
+//                if let note = searchNavigator.note {
+//                  NoteView(note: note)
+//                }
+//              }
+              .background(SharingViewController(isPresenting: $isDiaryExport) {
+                let text = exportDiary().text()
+                
+                let tempDir = FileManager.default.temporaryDirectory
+                let strFileName = exportDiary().textFileName()
+                let tempStrPath = tempDir.appendingPathComponent(strFileName)
+                
+                try? text.write(to: tempStrPath, atomically: true, encoding: String.Encoding.utf8)
+                
+                
+                let av = UIActivityViewController(activityItems: [tempStrPath],  applicationActivities: nil)
+                
+                // For iPad
+                if UIDevice.current.userInterfaceIdiom == .pad {
+                  av.popoverPresentationController?.sourceView = UIView()
+                }
+                
+                av.completionWithItemsHandler = { _, _, _, _ in
+                  isDiaryExport = false // required for re-open !!!
+                }
+                return av
+              })
+            }//geo
+            .background(Color.customBg)
+//            .border(.black)
+            
+            
+            SideMenu(width: UIScreen.main.bounds.size.width/3*2,
+                     isOpen: self.isSlideMenu,
+                     menuClose: self.openMenu,
+                     diaryExport: self.diaryExport,
+                     openSetting: self.openSetting,
+                     openSearch: self.openSearch)
+          }//z
+//          .frame(width: geo.size.width, height: geo.size.height - geo.safeAreaInsets.top)
+          .sheet(isPresented: $showShareSheet, content: {
+            VStack{
+              if let share = share, let note = shareNote {
+                CloudSharingView(share: share, container: PersistenceController.shared.ckContainer, note: note)
+                  .ignoresSafeArea()
+                  .tint(Color.customText)
               }
-              return av
+            }
+            .task {
+              guard let shareNote = shareNote else { return }
+              
+              if !stack.isShared(object: shareNote) {
+                print("공유설정중")
+                Task {
+                  await createShare(shareNote)
+                }
+              }
+              self.share = stack.getShare(shareNote)
+            }
           })
-
-        
-        SideMenu(width: UIScreen.main.bounds.size.width/3*2,
-                 isOpen: self.isSlideMenu,
-                 menuClose: self.openMenu,
-                 diaryExport: self.diaryExport)
-      }//z
-      .sheet(isPresented: $showShareSheet, content: {
-        VStack{
-          if let share = share, let note = shareNote {
-            CloudSharingView(share: share, container: PersistenceController.shared.ckContainer, note: note)
-              .ignoresSafeArea()
-          }
-        }
-        .task {
-          guard let shareNote = shareNote else { return }
           
-          if !stack.isShared(object: shareNote) {
-            print("공유설정중")
-            Task {
-              await createShare(shareNote)
+          .sheet(isPresented: $isDelete) {
+            VStack{
+              Text("'\(notes[index].title)'을")
+                .bold()
+              Text("정말 삭제하시겠습니까?")
+                .bold()
+              
+              Spacer()
+              
+              Button{
+                isDelete = false
+                viewContext.delete(notes[index])
+                CoreDataSave()
+              } label: {
+                Text("지우기")
+                  .bold()
+                  .padding(12)
+                  .background(Color.gray.opacity(0.5))
+                  .cornerRadius(5)
+              }
             }
+            .padding([.top, .leading, .trailing])
+            .presentationDetents([.fraction(0.25)])
           }
-          self.share = stack.getShare(shareNote)
-        }
-      })
-      
-      .sheet(isPresented: $isDelete) {
-        VStack{
-          Text("'\(notes[index].title)'을")
-            .bold()
-          Text("정말 삭제하시겠습니까?")
-            .bold()
-          
-          Spacer()
-          
-          Button{
-            isDelete = false
-            viewContext.delete(notes[index])
-            CoreDataSave()
-          } label: {
-            Text("지우기")
-              .bold()
-              .padding(12)
-              .background(Color.gray.opacity(0.5))
-              .cornerRadius(5)
-          }
-        }
-        .padding([.top, .leading, .trailing])
-        .presentationDetents([.fraction(0.25)])
-      }
-      .sheet(isPresented: $isRename) {
-        VStack{
-          Text("노트 이름 바꾸기")
-            .bold()
-          
-          Spacer()
-          
-          VStack{
-            TextField("노트 이름", text: $renameString)
-              .disableAutocorrection(true)
-              .textCase(.none)
-            Divider()
-              .onReceive(Just(renameString)) { _ in limitText(35) }
-          }.frame(width: UIScreen.main.bounds.size.width/3*2)
-          
-          Spacer()
-          
-          Button{
-            if renameString != "" {
-              isRename = false
-              notes[index].title = renameString
-              CoreDataSave()
+          .sheet(isPresented: $isRename) {
+            VStack{
+              Text("노트 이름 바꾸기")
+                .bold()
+              
+              Spacer()
+              
+              VStack{
+                TextField("노트 이름", text: $renameString)
+                  .disableAutocorrection(true)
+                  .textCase(.none)
+                Divider()
+                  .onReceive(Just(renameString)) { _ in limitText(35) }
+              }.frame(width: UIScreen.main.bounds.size.width/3*2)
+              
+              Spacer()
+              
+              Button{
+                if renameString != "" {
+                  isRename = false
+                  notes[index].title = renameString
+                  CoreDataSave()
+                }
+              } label: {
+                Text("바꾸기")
+                  .bold()
+                  .padding(12)
+                  .background(Color.customBg)
+                  .cornerRadius(5)
+              }
             }
-          } label: {
-            Text("바꾸기")
-              .bold()
-              .padding(12)
-              .background(Color.gray.opacity(0.5))
-              .cornerRadius(5)
+            .padding([.top, .leading, .trailing])
+            .presentationDetents([.fraction(0.25)])
           }
-        }
-        .padding([.top, .leading, .trailing])
-        .presentationDetents([.fraction(0.25)])
+          .fullScreenCover(isPresented: $isSetting) {
+            SettingView()
+          }
+          
+          .sheet(isPresented: $isSearch) {
+            zzzzzzzzz(onSearchNavigator: onSearchNavigator)
+          }
+          
+          .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+              Button {
+                openMenu()
+                print("툴바")
+              } label: {
+                Image(systemName: "line.horizontal.3")
+                  .foregroundColor(Color.customIc)
+              }
+            }
+            
+            
+            ToolbarItem(placement: .navigationBarTrailing) {
+              Button {
+                noteAdd.toggle()
+              } label: {
+                Image(systemName: "plus")
+                  .foregroundColor(Color.customIc)
+              }
+            }
+            
+          } //toolbar
+        }//geo
+//        Text("ASdda").frame(width: 300, height: 200)
+//          .background(.red)
+//
+//        Text("ASdda").frame(width: 300, height: 200)
+//          .background(.red)
+//        Text("ASdda").frame(width: 300, height: 200)
+//          .background(.red)
+        
+      }//navi
+      .navigationViewStyle(StackNavigationViewStyle())
+      //    .navigationViewStyle(DoubleColumnNavigationViewStyle())
+      .fullScreenCover(isPresented: $noteAdd) {
+        NoteAddView()
       }
-
-      .toolbar {
-        ToolbarItem(placement: .navigationBarLeading) {
-          Button {
-            openMenu()
-            print("툴바")
-          } label: {
-            Image(systemName: "line.horizontal.3")
-              .foregroundColor(.black)
-          }
-        }
-        
-        
-        ToolbarItem(placement: .navigationBarTrailing) {
-          Button {
-            noteAdd.toggle()
-          } label: {
-            Image(systemName: "plus")
-              .foregroundColor(.black)
-          }
-        }
-        
-      } //toolbar
-    }//navi
-    .navigationViewStyle(StackNavigationViewStyle())
-    .fullScreenCover(isPresented: $noteAdd) {
-      NoteAddView()
-    }
+    }//geo
   }
+  
+  func onSearchNavigator() {
+    self.isSlideMenu = false
+    self.isSearch = false
+  }
+  
   
   func diaryExport() {
 //    withAnimation {
@@ -253,9 +312,21 @@ struct MainView: View {
 //    }
   }
   
+  func openSetting() {
+    withAnimation {
+      self.isSetting.toggle()
+    }
+  }
+  
   func openMenu() {
     withAnimation {
       self.isSlideMenu.toggle()
+    }
+  }
+  
+  func openSearch() {
+    withAnimation {
+      self.isSearch.toggle()
     }
   }
 }
@@ -264,6 +335,8 @@ struct MainView: View {
 
 struct MenuContent: View {
   let diaryExport: () -> Void
+  let openSetting: () -> Void
+  let openSearch: () -> Void
   
   @AppStorage("StartMonday") var startMonday: Bool = UserDefaults.standard.bool(forKey: "StartMonday")
   @State var isDaySetting = false
@@ -271,60 +344,57 @@ struct MenuContent: View {
     var body: some View {
       VStack{
         List{
-          Text("앱이름...")
-            .bold()
-            .font(.title)
+          Color.clear
             .listRowSeparator(.hidden)
+            .listRowBackground(Color.customBg)
           
           Color.clear
             .listRowSeparator(.hidden)
+            .listRowBackground(Color.customBg)
           
           Button{
-            isDaySetting.toggle()
+            openSearch()
           } label: {
-            Text("한 주의 시작")
-              .font(.system(size: 15, weight: .bold))
+            Label("검색", systemImage: "magnifyingglass")
+              .foregroundColor(Color.customText)
           }
-          .onChange(of: isDaySetting, perform: { newValue in
-//            print(newValue, "바뀜")
-          })
-//
-          .confirmationDialog("현재 시작 요일: \(!startMonday ? "일요일" : "월요일")", isPresented: $isDaySetting, titleVisibility: .visible) {
-            Button("일요일", role: .destructive) {
-              startMonday = false
-              CalendarModel.shared.refeshCalFistWeekday()
-            }
-            
-            Button("월요일") {
-              startMonday = true
-              CalendarModel.shared.refeshCalFistWeekday()
-            }
-
-            Button("취소", role: .cancel) { }
+          .listRowSeparator(.hidden)
+          .listRowBackground(Color.customBg)
+          
+          Button{
+            openSetting()
+          } label: {
+            Label("설정", systemImage: "gearshape")
+              .foregroundColor(Color.customText)
           }
+          .listRowSeparator(.hidden)
+          .listRowBackground(Color.customBg)
           
           Button{
             diaryExport()
           } label: {
-            Text("다이어리 내보내기")
-              .font(.system(size: 15, weight: .bold))
+            Label("내보내기", systemImage: "square.and.arrow.up")
+              .foregroundColor(Color.customText)
           }
+          .listRowSeparator(.hidden)
+          .listRowBackground(Color.customBg)
           
-          Text("도움말")
-            .font(.system(size: 15, weight: .bold))
+          Button{
+            
+          } label: {
+            Label("도움말", systemImage: "questionmark.circle")
+              .foregroundColor(Color.customText)
+          }
+          .listRowSeparator(.hidden)
+          .listRowBackground(Color.customBg)
           
-          Text("기타메뉴")
-            .font(.system(size: 15, weight: .bold))
         }
-        .listStyle(.plain)
-//        Spacer()
+        .scrollContentBackground(.hidden)
+        .background(Color.customBg)
         Text("version 1.0.0")
           .font(.footnote)
           .foregroundColor(.gray)
           .bold()
-//        .padding([.leading, .trailing])
-        
-//        Text("For mk")
       }
 
     }
@@ -335,6 +405,8 @@ struct SideMenu: View {
   let isOpen: Bool
   let menuClose: () -> Void
   let diaryExport: () -> Void
+  let openSetting: () -> Void
+  let openSearch: () -> Void
   @State private var offset = CGSize.zero
 
 
@@ -343,7 +415,7 @@ struct SideMenu: View {
       GeometryReader { _ in
           EmptyView()
       }
-      .background(Color.black.opacity(0.3))
+      .background(Color.black.opacity(0.3).ignoresSafeArea())
       .opacity(self.isOpen ? 1.0 : 0.0)
       .onChange(of: isOpen, perform: { newValue in
         if newValue {
@@ -357,13 +429,14 @@ struct SideMenu: View {
       }
       
       HStack {
-        MenuContent(diaryExport: diaryExport)
+        MenuContent(diaryExport: diaryExport, openSetting: openSetting, openSearch: openSearch)
           .frame(width: self.width)
-          .background(Color.white)
+          .background(Color.customBg)
           .offset(x: self.isOpen ? 0 + offset.width : -self.width)
 
         Spacer()
       }
+      
     } //z
     .gesture(
       DragGesture()
@@ -392,3 +465,5 @@ struct SideMenu: View {
     ) //gesture
   }
 }
+
+//펜다곰의 펜시한 다이어리!

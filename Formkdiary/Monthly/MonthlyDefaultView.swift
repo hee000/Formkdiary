@@ -45,6 +45,7 @@ struct MonthlyDefaultView: View {
               .bold()
           }
         }
+        .background(Color.customBg)
       }
       
       Divider()
@@ -78,6 +79,7 @@ struct MonthlyDefaultView: View {
                     Text("\(date.toString(dateFormat: "dd"))")
                       .frame(maxWidth: .infinity, alignment: .center)
                       .bold()
+                      .foregroundColor(Color.customText)
                     VStack(spacing: 3.5) {
                       if let dailies: [DailyMO] = monthly.dailies.toArray().filter({ DailyMO in
                         calendar.isDate(DailyMO.date, equalTo: date, toGranularity: .day)
@@ -85,11 +87,13 @@ struct MonthlyDefaultView: View {
 
                         ForEach(dailies[0..<(dailies.count >= 5 ? 4 : dailies.count)]) { daily in
                           Text(daily.text)
+                            .foregroundColor(Color.customText)
                             .font(.system(size: 10, weight: .regular))
                             .lineLimit(1)
                             .padding(.leading, 3)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .background(Color.gray.opacity(0.5))
+//                            .background(Color.gray.opacity(0.5))
+                            .background(Color.customTextLight)
                             .cornerRadius(3)
                             .padding([.leading, .trailing], 5)
 //                            .cornerRadius(3)
@@ -98,6 +102,7 @@ struct MonthlyDefaultView: View {
                         if dailies.count >= 5 {
 //                          Text("+\(dailies.count - 4)")
                           Text("...")
+                            .foregroundColor(Color.customText)
                             .font(.system(size: 10, weight: .regular))
                             .padding(.leading, 3)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -110,8 +115,8 @@ struct MonthlyDefaultView: View {
 
                   }
                   .frame(height: geo.size.height/6)
-                  .background(Color.white)
-                  .foregroundColor(.black)
+                  .background(Color.customBg)
+                  .foregroundColor(Color.customText)
                 }
               } else {
                 VStack(alignment: .leading, spacing: 0) {
@@ -123,23 +128,22 @@ struct MonthlyDefaultView: View {
                   Spacer().frame(minWidth: 0, maxWidth: .infinity)
                 }
                 .frame(height: geo.size.height/6)
-                .background(Color.white)
-                .foregroundColor(.gray)
+                .background(Color.customBg)
+                .foregroundColor(Color.customTextLight)
               }
             }
           }//for
         }//grid
 //        .frame(maxHeight: .infinity)
-        .background(.gray.opacity(0.2))
-//        .ignoresSafeArea()
+//        .background(Color.customBg)
       }//geo
-//      .ignoresSafeArea()
+      .background(Color.customBg)
     }//v
     .sheet(isPresented: $isDailyList) {
       VStack(alignment: .leading) {
         HStack{
-          Text("\(dailyListDate.toString(dateFormat: "d"))일. \(startMonday ? monWeek[calendar.dateComponents([.weekday], from: dailyListDate).weekday! - 1] : sunWeek[calendar.dateComponents([.weekday], from: dailyListDate).weekday! - 1])")
-            .bold()
+          Text("\(dailyListDate.toString(dateFormat: "d")). \(startMonday ? monWeek[calendar.dateComponents([.weekday], from: dailyListDate).weekday! - 1] : sunWeek[calendar.dateComponents([.weekday], from: dailyListDate).weekday! - 1])")
+            .foregroundColor(Color.customText)
             .font(.title2)
           Spacer()
           Button{
@@ -152,6 +156,7 @@ struct MonthlyDefaultView: View {
             dailyActive = true
           } label: {
             Image(systemName: "plus.circle")
+              .foregroundColor(Color.customText)
           }
         }
         
@@ -168,15 +173,18 @@ struct MonthlyDefaultView: View {
                 } label: {
                   HStack{
                     Circle()
-                      .fill(Color.gray)
+                      .fill(Color.customTextLight)
                       .frame(width: 5, height: 5)
                     Text(daily.text)
+                      .lineLimit(1)
                       .font(.system(size: 18, weight: .regular))
                       .frame(maxWidth: .infinity, alignment: .leading)
                       .bold()
+                      .foregroundColor(Color.customText)
                   }
                 }
                 .listRowSeparator(.hidden)
+                .listRowBackground(Color.customBg)
                 .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                   Button(role: .destructive) {
                     viewContext.delete(daily)
@@ -188,10 +196,13 @@ struct MonthlyDefaultView: View {
                 }//swipe
               }//for
             }//list
+            .scrollContentBackground(.hidden)
+            .background(Color.customBg)
             .listStyle(.plain)
             Spacer()
           } else {
             Text("데일리가 비었습니다.")
+              .foregroundColor(Color.customText)
           }
         } //v
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -200,22 +211,20 @@ struct MonthlyDefaultView: View {
       .padding()
       .ignoresSafeArea()
       .presentationDetents([.fraction(0.4), .fraction(0.5), .fraction(0.6), .fraction(0.7), .fraction(0.8)])
+      .background(Color.customBg)
     }//sheet
     .onAppear{
-      if (titleVisible) {
-        pageNavi.title = self.monthly.page!.title
+      if titleVisible {
         pageNavi.pageObjectID = self.monthly.page!.objectID
       }
     }
     .onChange(of: titleVisible) { V in
       if V {
-        pageNavi.title = self.monthly.page!.title
         pageNavi.pageObjectID = self.monthly.page!.objectID
       }
     }
-    .onChange(of: monthly.page!.title) { V in
+    .onChange(of: monthly.page?.title) { V in
       print(V)
-      pageNavi.title = self.monthly.page!.title
       pageNavi.pageObjectID = self.monthly.page!.objectID
     }
   }

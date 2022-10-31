@@ -37,6 +37,16 @@
 		DA53F3DE28649ACA003D02EF /* PageAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3DD28649ACA003D02EF /* PageAddView.swift */; };
 		DA53F3E2286EE3F8003D02EF /* PageSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3E1286EE3F8003D02EF /* PageSelectView.swift */; };
 		DA53F3E6286EFB63003D02EF /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3E5286EFB63003D02EF /* Extensions.swift */; };
+		DA76353A29030EDD00B94BA9 /* PageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76353929030EDD00B94BA9 /* PageListView.swift */; };
+		DA76353C290316ED00B94BA9 /* DragDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76353B290316ED00B94BA9 /* DragDrop.swift */; };
+		DA76353E290406DA00B94BA9 /* PageListEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76353D290406DA00B94BA9 /* PageListEditView.swift */; };
+		DAA0CD9429097C730022C570 /* TSET.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA0CD9329097C730022C570 /* TSET.swift */; };
+		DAA0CD962909C4210022C570 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA0CD952909C4210022C570 /* KeyboardManager.swift */; };
+		DAA0CD98290A014A0022C570 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA0CD97290A014A0022C570 /* TextView.swift */; };
+		DAA0CD9A290A06580022C570 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA0CD99290A06580022C570 /* PhotoPicker.swift */; };
+		DAA0CD9C290A248A0022C570 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA0CD9B290A248A0022C570 /* SettingView.swift */; };
+		DAA0CD9E290A4DB70022C570 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA0CD9D290A4DB70022C570 /* SearchView.swift */; };
+		DAA0CDA0290B48020022C570 /* ImageSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA0CD9F290B48020022C570 /* ImageSlider.swift */; };
 		DAABCBB428D1AA7600F8244E /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAABCBB328D1AA7600F8244E /* PageView.swift */; };
 		DAD7226928D5C45A00CB0B7E /* NoteSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD7226828D5C45A00CB0B7E /* NoteSettingView.swift */; };
 		DAD7227A28D600BA00CB0B7E /* ConstantData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD7227928D600BA00CB0B7E /* ConstantData.swift */; };
@@ -84,6 +94,16 @@
 		DA53F3DD28649ACA003D02EF /* PageAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageAddView.swift; sourceTree = "<group>"; };
 		DA53F3E1286EE3F8003D02EF /* PageSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageSelectView.swift; sourceTree = "<group>"; };
 		DA53F3E5286EFB63003D02EF /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		DA76353929030EDD00B94BA9 /* PageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageListView.swift; sourceTree = "<group>"; };
+		DA76353B290316ED00B94BA9 /* DragDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragDrop.swift; sourceTree = "<group>"; };
+		DA76353D290406DA00B94BA9 /* PageListEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageListEditView.swift; sourceTree = "<group>"; };
+		DAA0CD9329097C730022C570 /* TSET.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSET.swift; sourceTree = "<group>"; };
+		DAA0CD952909C4210022C570 /* KeyboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
+		DAA0CD97290A014A0022C570 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
+		DAA0CD99290A06580022C570 /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
+		DAA0CD9B290A248A0022C570 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		DAA0CD9D290A4DB70022C570 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		DAA0CD9F290B48020022C570 /* ImageSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSlider.swift; sourceTree = "<group>"; };
 		DAABCBB328D1AA7600F8244E /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
 		DAD7226828D5C45A00CB0B7E /* NoteSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSettingView.swift; sourceTree = "<group>"; };
 		DAD7227928D600BA00CB0B7E /* ConstantData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantData.swift; sourceTree = "<group>"; };
@@ -120,7 +140,11 @@
 				DA2F157F28FDB0C400872A72 /* Toast.swift */,
 				DA2F158428FEBC7900872A72 /* AlertTwoButton.swift */,
 				DA2F15922901625200872A72 /* SharingViewController.swift */,
+				DAA0CD99290A06580022C570 /* PhotoPicker.swift */,
 				DA2F158628FEC00200872A72 /* Calendar.swift */,
+				DAA0CD97290A014A0022C570 /* TextView.swift */,
+				DA76353B290316ED00B94BA9 /* DragDrop.swift */,
+				DAA0CD952909C4210022C570 /* KeyboardManager.swift */,
 			);
 			path = Process;
 			sourceTree = "<group>";
@@ -201,7 +225,9 @@
 			isa = PBXGroup;
 			children = (
 				DA53F3D7286472EE003D02EF /* MainView.swift */,
+				DAA0CD9B290A248A0022C570 /* SettingView.swift */,
 				DA53F3DB28647575003D02EF /* NoteAddView.swift */,
+				DAA0CD9D290A4DB70022C570 /* SearchView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -221,6 +247,9 @@
 				DAD7226E28D5E87200CB0B7E /* PageAdd */,
 				DAABCBB328D1AA7600F8244E /* PageView.swift */,
 				DAF4502628DC40CD003C4900 /* PageNavi.swift */,
+				DA76353929030EDD00B94BA9 /* PageListView.swift */,
+				DAA0CD9329097C730022C570 /* TSET.swift */,
+				DA76353D290406DA00B94BA9 /* PageListEditView.swift */,
 			);
 			path = Page;
 			sourceTree = "<group>";
@@ -248,6 +277,7 @@
 			children = (
 				DAF4502228D8CA29003C4900 /* DailyViewWithoutPage.swift */,
 				DAF4502828DF2620003C4900 /* DailyViewOnPage.swift */,
+				DAA0CD9F290B48020022C570 /* ImageSlider.swift */,
 			);
 			path = Daily;
 			sourceTree = "<group>";
@@ -276,6 +306,8 @@
 			dependencies = (
 			);
 			name = Formkdiary;
+			packageProductDependencies = (
+			);
 			productName = Formkdiary;
 			productReference = DA53F3A928645AF6003D02EF /* Formkdiary.app */;
 			productType = "com.apple.product-type.application";
@@ -304,6 +336,8 @@
 				Base,
 			);
 			mainGroup = DA53F3A028645AF6003D02EF;
+			packageReferences = (
+			);
 			productRefGroup = DA53F3AA28645AF6003D02EF /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -330,6 +364,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAA0CD9A290A06580022C570 /* PhotoPicker.swift in Sources */,
 				DA2F158028FDB0C400872A72 /* Toast.swift in Sources */,
 				DAF4502928DF2620003C4900 /* DailyViewOnPage.swift in Sources */,
 				DA2F158528FEBC7900872A72 /* AlertTwoButton.swift in Sources */,
@@ -337,7 +372,10 @@
 				DAD7227A28D600BA00CB0B7E /* ConstantData.swift in Sources */,
 				DA53F3E2286EE3F8003D02EF /* PageSelectView.swift in Sources */,
 				DA53F3D0286462C4003D02EF /* DailyMO+CoreDataProperties.swift in Sources */,
+				DA76353E290406DA00B94BA9 /* PageListEditView.swift in Sources */,
+				DAA0CD98290A014A0022C570 /* TextView.swift in Sources */,
 				DA2F15932901625200872A72 /* SharingViewController.swift in Sources */,
+				DAA0CDA0290B48020022C570 /* ImageSlider.swift in Sources */,
 				DA53F3D5286462C4003D02EF /* MemoMO+CoreDataClass.swift in Sources */,
 				DA53F3C428645E05003D02EF /* PageMO+CoreDataProperties.swift in Sources */,
 				DA2F15912900EADD00872A72 /* Cloner.swift in Sources */,
@@ -357,18 +395,24 @@
 				DA53F3E6286EFB63003D02EF /* Extensions.swift in Sources */,
 				DA53F3AD28645AF6003D02EF /* FormkdiaryApp.swift in Sources */,
 				DA53F3DC28647575003D02EF /* NoteAddView.swift in Sources */,
+				DA76353A29030EDD00B94BA9 /* PageListView.swift in Sources */,
+				DAA0CD962909C4210022C570 /* KeyboardManager.swift in Sources */,
 				DA53F3DE28649ACA003D02EF /* PageAddView.swift in Sources */,
+				DAA0CD9429097C730022C570 /* TSET.swift in Sources */,
 				DA53F3D8286472EE003D02EF /* MainView.swift in Sources */,
 				DA2F157E28FD3CD700872A72 /* PageExport.swift in Sources */,
 				DAD9716328D30FB0002CABAC /* WeeklyMO+CoreDataClass.swift in Sources */,
 				DA53F3C528645E05003D02EF /* NoteMO+CoreDataClass.swift in Sources */,
 				DAD9717328D3E4EF002CABAC /* Formkdiary.xcdatamodeld in Sources */,
 				DAF4502728DC40CD003C4900 /* PageNavi.swift in Sources */,
+				DAA0CD9E290A4DB70022C570 /* SearchView.swift in Sources */,
 				DA53F3CF286462C4003D02EF /* DailyMO+CoreDataClass.swift in Sources */,
 				DAF4502128D8C026003C4900 /* WeeklyDefaultView.swift in Sources */,
 				DA53F3C628645E05003D02EF /* NoteMO+CoreDataProperties.swift in Sources */,
 				DA2F158728FEC00200872A72 /* Calendar.swift in Sources */,
 				DAD7226928D5C45A00CB0B7E /* NoteSettingView.swift in Sources */,
+				DAA0CD9C290A248A0022C570 /* SettingView.swift in Sources */,
+				DA76353C290316ED00B94BA9 /* DragDrop.swift in Sources */,
 				DA2F158F28FFD72C00872A72 /* CloudSharingController.swift in Sources */,
 				DA53F3D6286462C4003D02EF /* MemoMO+CoreDataProperties.swift in Sources */,
 			);
@@ -505,7 +549,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Formkdiary/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "다이어리";
+				INFOPLIST_KEY_CFBundleDisplayName = "나름";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -544,7 +588,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Formkdiary/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "다이어리";
+				INFOPLIST_KEY_CFBundleDisplayName = "나름";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

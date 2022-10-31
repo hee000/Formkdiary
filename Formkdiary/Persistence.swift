@@ -25,6 +25,17 @@ final class PersistenceController: ObservableObject {
     persistentContainer.viewContext
   }
   
+  var backgroundContext: NSManagedObjectContext{
+//    let background = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+//    background.persistentStoreCoordinator = self.persistentContainer.persistentStoreCoordinator
+//    background.parent = self.context
+    let background = self.persistentContainer.newBackgroundContext()
+    background.automaticallyMergesChangesFromParent = true
+    background.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+
+    return background
+  }
+  
   var privatePersistentStore: NSPersistentStore {
     guard let privateStore = _privatePersistentStore else {
       fatalError("Private store is not set")

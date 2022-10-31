@@ -25,6 +25,7 @@ struct PageAddCalView: View {
   var calendar: Calendar = CalendarModel.shared.calendar
 
   @AppStorage("StartMonday") var startMonday: Bool = UserDefaults.standard.bool(forKey: "StartMonday")
+  @AppStorage("EnglishDay") var englishDay: Bool = UserDefaults.standard.bool(forKey: "EnglishDay")
   
   let interval: DateInterval
 
@@ -54,7 +55,7 @@ struct PageAddCalView: View {
       VStack {
         HStack {
           ForEach((startMonday ? monWeek : sunWeek), id:\.self){ day in
-            Text(day)
+            Text(englishDay ? "\(day.first!)" : day)
               .frame(minWidth: 0, maxWidth: .infinity)
               .frame(height: 20)
           }
@@ -82,18 +83,18 @@ struct PageAddCalView: View {
                   Text("\(date.toString(dateFormat: "dd"))")
                     .frame(height: 25)
                     .frame(maxWidth: .infinity)
-                    .background(Color.white)
-                    .foregroundColor(.black)
-                    .overlay(selected.contains(date) ? Rectangle().fill(Color.black.opacity(0.4)).cornerRadius(5) : nil)
+                    .background(Color.customBg)
+                    .foregroundColor(Color.customText)
+                    .overlay(selected.contains(date) ? Rectangle().fill(Color.customTextLight.opacity(0.4)).cornerRadius(5) : nil)
                 }
               } else {
                 Text("\(date.toString(dateFormat: "dd"))")
                   .disabled(true)
                   .frame(height: 25)
                   .frame(maxWidth: .infinity)
-                  .background(Color.white)
-                  .foregroundColor(.gray)
-                  .overlay(selected.contains(date) ? Rectangle().fill(Color.black.opacity(0.4)).cornerRadius(5) : nil)
+                  .background(Color.customBg)
+                  .foregroundColor(Color.customTextLight)
+                  .overlay(selected.contains(date) ? Rectangle().fill(Color.customTextLight.opacity(0.4)).cornerRadius(5) : nil)
               }
             }
           }//for

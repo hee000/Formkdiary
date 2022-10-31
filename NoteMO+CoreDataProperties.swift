@@ -9,6 +9,10 @@
 import Foundation
 import CoreData
 
+enum noteStyle: Int32 {
+  case list = 0
+  case page = 1
+}
 
 extension NoteMO {
 
@@ -22,7 +26,13 @@ extension NoteMO {
   @NSManaged public var titleVisible: Bool
   @NSManaged public var column: Int16
   @NSManaged public var lastIndex: Int32
-  @NSManaged public var isGird: Bool
+//  @NSManaged public var isGird: Bool
+  
+  @NSManaged public var style: Int32
+  // 0 목록
+  // 1 페이지
+  
+  @NSManaged public var noteIndex: Int32
   @NSManaged public var pages: NSSet
 
   public override func awakeFromInsert() {
@@ -30,6 +40,8 @@ extension NoteMO {
     noteId = UUID()
     createdAt = Date()
   }
+  
+  
 
 }
 

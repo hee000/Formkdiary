@@ -22,6 +22,7 @@ extension DailyMO {
   @NSManaged public var date: Date
   @NSManaged public var createdAt: Date
   @NSManaged public var editedAt: Date
+  @NSManaged public var images: Data?
   @NSManaged public var page: PageMO?
   @NSManaged public var monthly: MonthlyMO?
   @NSManaged public var weekly: WeeklyMO?

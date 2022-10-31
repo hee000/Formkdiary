@@ -23,9 +23,12 @@ struct MemoView: View {
     var body: some View {
       GeometryReader { geo in
         TextEditor(text: $memo.text)
+          .scrollContentBackground(.hidden) // <- Hide it
           .frame(maxWidth:.infinity)
           .frame(maxHeight:.infinity)
           .padding()
+          .background(Color.customBg)
+          .foregroundColor(Color.customText)
       }
       .onChange(of: memo.text, perform: { newValue in
 //        print(newValue)
@@ -33,13 +36,11 @@ struct MemoView: View {
       })
       .onAppear{
         if (titleVisible) {
-          pageNavi.title = self.memo.page!.title
           pageNavi.pageObjectID = self.memo.page!.objectID
         }
       }
       .onChange(of: titleVisible) { V in
         if V {
-          pageNavi.title = self.memo.page!.title
           pageNavi.pageObjectID = self.memo.page!.objectID
         }
       }

@@ -10,12 +10,13 @@ import CoreData
 
 
 func CoreDataSave() {
-  do {
-    try PersistenceController.shared.context.save()
-  } catch {
-    let nsError = error as NSError
-    fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-  }
+  PersistenceController.shared.save()
+//  do {
+//    try PersistenceController.shared.save()
+//  } catch {
+//    let nsError = error as NSError
+//    fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+//  }
 }
 
 private let itemFormatter: DateFormatter = {
@@ -27,14 +28,26 @@ private let itemFormatter: DateFormatter = {
 
 
 struct ContentView: View {
-  var body: some View {
-    
-    MainView()
-      .environmentObject(PageNavi())
-      .onAppear{
-//        deleteAllEnt`ities()
-      }
+  @Environment(\.colorScheme) var systemColorScheme
 
+  
+  @AppStorage("DarkMode") var darkMode: Bool = UserDefaults.standard.bool(forKey: "DarkMode")
+  
+  var body: some View {
+//    NavigationView{
+      MainView()
+//    }
+    .navigationViewStyle(StackNavigationViewStyle())
+    .environmentObject(PageNavi())
+    .environmentObject(KeyboardManager())
+    .environmentObject(SearchNavigator())
+    .preferredColorScheme(darkMode ? .dark : .light)
+//      .preferredColorScheme(systemColorScheme)
+    .onAppear{
+//        deleteAllEnt`ities()
+    }
+
+//    TEst()
   }
 }
 
