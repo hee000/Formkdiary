@@ -10,6 +10,12 @@ import Foundation
 import CoreData
 
 
+enum weeklyStyle: Int32 {
+  case one = 0
+  case two = 1
+}
+
+
 extension WeeklyMO {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<WeeklyMO> {
@@ -17,7 +23,9 @@ extension WeeklyMO {
     }
 
   @NSManaged public var date: Date
-  @NSManaged public var layout: String?
+  @NSManaged public var style: Int32
+  // 0 한줄보기
+  // 1 두줄보기
   @NSManaged public var weeklyId: UUID
   @NSManaged public var dailies: NSSet
   @NSManaged public var page: PageMO?

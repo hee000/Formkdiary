@@ -48,7 +48,7 @@
     </entity>
     <entity name="Weekly" representedClassName="WeeklyMO" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="layout" optional="YES" attributeType="String"/>
+        <attribute name="style" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="weeklyId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <relationship name="dailies" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Daily" inverseName="weekly" inverseEntity="Daily"/>
         <relationship name="page" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Page" inverseName="weekly" inverseEntity="Page"/>

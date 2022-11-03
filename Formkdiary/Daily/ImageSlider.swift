@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import ImageViewer
+//import ImageViewer
 
 struct ImageSlider: View {
   @Environment(\.presentationMode) var presentationMode

@@ -35,17 +35,16 @@
 		DA53F3DA286474E1003D02EF /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3D9286474E1003D02EF /* NoteView.swift */; };
 		DA53F3DC28647575003D02EF /* NoteAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3DB28647575003D02EF /* NoteAddView.swift */; };
 		DA53F3DE28649ACA003D02EF /* PageAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3DD28649ACA003D02EF /* PageAddView.swift */; };
-		DA53F3E2286EE3F8003D02EF /* PageSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3E1286EE3F8003D02EF /* PageSelectView.swift */; };
 		DA53F3E6286EFB63003D02EF /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53F3E5286EFB63003D02EF /* Extensions.swift */; };
 		DA76353A29030EDD00B94BA9 /* PageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76353929030EDD00B94BA9 /* PageListView.swift */; };
 		DA76353C290316ED00B94BA9 /* DragDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76353B290316ED00B94BA9 /* DragDrop.swift */; };
 		DA76353E290406DA00B94BA9 /* PageListEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76353D290406DA00B94BA9 /* PageListEditView.swift */; };
-		DAA0CD9429097C730022C570 /* TSET.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA0CD9329097C730022C570 /* TSET.swift */; };
+		DAA0CD9429097C730022C570 /* PageGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA0CD9329097C730022C570 /* PageGridView.swift */; };
 		DAA0CD962909C4210022C570 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA0CD952909C4210022C570 /* KeyboardManager.swift */; };
 		DAA0CD98290A014A0022C570 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA0CD97290A014A0022C570 /* TextView.swift */; };
 		DAA0CD9A290A06580022C570 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA0CD99290A06580022C570 /* PhotoPicker.swift */; };
 		DAA0CD9C290A248A0022C570 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA0CD9B290A248A0022C570 /* SettingView.swift */; };
-		DAA0CD9E290A4DB70022C570 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA0CD9D290A4DB70022C570 /* SearchView.swift */; };
+		DAA0CD9E290A4DB70022C570 /* SearchDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA0CD9D290A4DB70022C570 /* SearchDetailView.swift */; };
 		DAA0CDA0290B48020022C570 /* ImageSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA0CD9F290B48020022C570 /* ImageSlider.swift */; };
 		DAABCBB428D1AA7600F8244E /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAABCBB328D1AA7600F8244E /* PageView.swift */; };
 		DAD7226928D5C45A00CB0B7E /* NoteSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD7226828D5C45A00CB0B7E /* NoteSettingView.swift */; };
@@ -54,10 +53,13 @@
 		DAD9716328D30FB0002CABAC /* WeeklyMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD9716128D30FB0002CABAC /* WeeklyMO+CoreDataClass.swift */; };
 		DAD9716428D30FB0002CABAC /* WeeklyMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD9716228D30FB0002CABAC /* WeeklyMO+CoreDataProperties.swift */; };
 		DAD9717328D3E4EF002CABAC /* Formkdiary.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DAD9717128D3E4EF002CABAC /* Formkdiary.xcdatamodeld */; };
+		DAEB763F291227DC0028D1E4 /* PageAddMonthly.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEB763E291227DC0028D1E4 /* PageAddMonthly.swift */; };
+		DAEB766729124BCC0028D1E4 /* PageAddWeekly.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEB766629124BCC0028D1E4 /* PageAddWeekly.swift */; };
+		DAEB76692912509A0028D1E4 /* PageAddDaily.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEB76682912509A0028D1E4 /* PageAddDaily.swift */; };
+		DAEB766B291250A10028D1E4 /* PageAddMemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEB766A291250A10028D1E4 /* PageAddMemo.swift */; };
+		DAEB766D291253E80028D1E4 /* PageAddModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEB766C291253E80028D1E4 /* PageAddModel.swift */; };
 		DAF4502128D8C026003C4900 /* WeeklyDefaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF4502028D8C026003C4900 /* WeeklyDefaultView.swift */; };
 		DAF4502328D8CA29003C4900 /* DailyViewWithoutPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF4502228D8CA29003C4900 /* DailyViewWithoutPage.swift */; };
-		DAF4502528D970C9003C4900 /* MonthlyStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF4502428D970C9003C4900 /* MonthlyStyle.swift */; };
-		DAF4502728DC40CD003C4900 /* PageNavi.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF4502628DC40CD003C4900 /* PageNavi.swift */; };
 		DAF4502928DF2620003C4900 /* DailyViewOnPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF4502828DF2620003C4900 /* DailyViewOnPage.swift */; };
 		DAF4502C28DF28FC003C4900 /* MemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF4502B28DF28FC003C4900 /* MemoView.swift */; };
 /* End PBXBuildFile section */
@@ -92,17 +94,16 @@
 		DA53F3D9286474E1003D02EF /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
 		DA53F3DB28647575003D02EF /* NoteAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteAddView.swift; sourceTree = "<group>"; };
 		DA53F3DD28649ACA003D02EF /* PageAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageAddView.swift; sourceTree = "<group>"; };
-		DA53F3E1286EE3F8003D02EF /* PageSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageSelectView.swift; sourceTree = "<group>"; };
 		DA53F3E5286EFB63003D02EF /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		DA76353929030EDD00B94BA9 /* PageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageListView.swift; sourceTree = "<group>"; };
 		DA76353B290316ED00B94BA9 /* DragDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragDrop.swift; sourceTree = "<group>"; };
 		DA76353D290406DA00B94BA9 /* PageListEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageListEditView.swift; sourceTree = "<group>"; };
-		DAA0CD9329097C730022C570 /* TSET.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSET.swift; sourceTree = "<group>"; };
+		DAA0CD9329097C730022C570 /* PageGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageGridView.swift; sourceTree = "<group>"; };
 		DAA0CD952909C4210022C570 /* KeyboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
 		DAA0CD97290A014A0022C570 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		DAA0CD99290A06580022C570 /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		DAA0CD9B290A248A0022C570 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
-		DAA0CD9D290A4DB70022C570 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		DAA0CD9D290A4DB70022C570 /* SearchDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailView.swift; sourceTree = "<group>"; };
 		DAA0CD9F290B48020022C570 /* ImageSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSlider.swift; sourceTree = "<group>"; };
 		DAABCBB328D1AA7600F8244E /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
 		DAD7226828D5C45A00CB0B7E /* NoteSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSettingView.swift; sourceTree = "<group>"; };
@@ -113,10 +114,13 @@
 		DAD9716128D30FB0002CABAC /* WeeklyMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeeklyMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		DAD9716228D30FB0002CABAC /* WeeklyMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeeklyMO+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		DAD9717228D3E4EF002CABAC /* Formkdiary.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Formkdiary.xcdatamodel; sourceTree = "<group>"; };
+		DAEB763E291227DC0028D1E4 /* PageAddMonthly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageAddMonthly.swift; sourceTree = "<group>"; };
+		DAEB766629124BCC0028D1E4 /* PageAddWeekly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageAddWeekly.swift; sourceTree = "<group>"; };
+		DAEB76682912509A0028D1E4 /* PageAddDaily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageAddDaily.swift; sourceTree = "<group>"; };
+		DAEB766A291250A10028D1E4 /* PageAddMemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageAddMemo.swift; sourceTree = "<group>"; };
+		DAEB766C291253E80028D1E4 /* PageAddModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageAddModel.swift; sourceTree = "<group>"; };
 		DAF4502028D8C026003C4900 /* WeeklyDefaultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyDefaultView.swift; sourceTree = "<group>"; };
 		DAF4502228D8CA29003C4900 /* DailyViewWithoutPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyViewWithoutPage.swift; sourceTree = "<group>"; };
-		DAF4502428D970C9003C4900 /* MonthlyStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyStyle.swift; sourceTree = "<group>"; };
-		DAF4502628DC40CD003C4900 /* PageNavi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageNavi.swift; sourceTree = "<group>"; };
 		DAF4502828DF2620003C4900 /* DailyViewOnPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyViewOnPage.swift; sourceTree = "<group>"; };
 		DAF4502B28DF28FC003C4900 /* MemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -225,9 +229,9 @@
 			isa = PBXGroup;
 			children = (
 				DA53F3D7286472EE003D02EF /* MainView.swift */,
-				DAA0CD9B290A248A0022C570 /* SettingView.swift */,
 				DA53F3DB28647575003D02EF /* NoteAddView.swift */,
-				DAA0CD9D290A4DB70022C570 /* SearchView.swift */,
+				DAA0CD9B290A248A0022C570 /* SettingView.swift */,
+				DAA0CD9D290A4DB70022C570 /* SearchDetailView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -243,13 +247,11 @@
 		DAD7226D28D5E85E00CB0B7E /* Page */ = {
 			isa = PBXGroup;
 			children = (
-				DA53F3E1286EE3F8003D02EF /* PageSelectView.swift */,
-				DAD7226E28D5E87200CB0B7E /* PageAdd */,
 				DAABCBB328D1AA7600F8244E /* PageView.swift */,
-				DAF4502628DC40CD003C4900 /* PageNavi.swift */,
+				DAA0CD9329097C730022C570 /* PageGridView.swift */,
 				DA76353929030EDD00B94BA9 /* PageListView.swift */,
-				DAA0CD9329097C730022C570 /* TSET.swift */,
 				DA76353D290406DA00B94BA9 /* PageListEditView.swift */,
+				DAD7226E28D5E87200CB0B7E /* PageAdd */,
 			);
 			path = Page;
 			sourceTree = "<group>";
@@ -257,7 +259,12 @@
 		DAD7226E28D5E87200CB0B7E /* PageAdd */ = {
 			isa = PBXGroup;
 			children = (
+				DAEB766C291253E80028D1E4 /* PageAddModel.swift */,
 				DA53F3DD28649ACA003D02EF /* PageAddView.swift */,
+				DAEB763E291227DC0028D1E4 /* PageAddMonthly.swift */,
+				DAEB766629124BCC0028D1E4 /* PageAddWeekly.swift */,
+				DAEB76682912509A0028D1E4 /* PageAddDaily.swift */,
+				DAEB766A291250A10028D1E4 /* PageAddMemo.swift */,
 				DAD7227B28D60D7D00CB0B7E /* PageAddCalView.swift */,
 			);
 			path = PageAdd;
@@ -267,7 +274,6 @@
 			isa = PBXGroup;
 			children = (
 				DAF4502028D8C026003C4900 /* WeeklyDefaultView.swift */,
-				DAF4502428D970C9003C4900 /* MonthlyStyle.swift */,
 			);
 			path = Weekly;
 			sourceTree = "<group>";
@@ -368,9 +374,9 @@
 				DA2F158028FDB0C400872A72 /* Toast.swift in Sources */,
 				DAF4502928DF2620003C4900 /* DailyViewOnPage.swift in Sources */,
 				DA2F158528FEBC7900872A72 /* AlertTwoButton.swift in Sources */,
+				DAEB766D291253E80028D1E4 /* PageAddModel.swift in Sources */,
 				DAD9716428D30FB0002CABAC /* WeeklyMO+CoreDataProperties.swift in Sources */,
 				DAD7227A28D600BA00CB0B7E /* ConstantData.swift in Sources */,
-				DA53F3E2286EE3F8003D02EF /* PageSelectView.swift in Sources */,
 				DA53F3D0286462C4003D02EF /* DailyMO+CoreDataProperties.swift in Sources */,
 				DA76353E290406DA00B94BA9 /* PageListEditView.swift in Sources */,
 				DAA0CD98290A014A0022C570 /* TextView.swift in Sources */,
@@ -385,12 +391,12 @@
 				DA2F158928FED48100872A72 /* MonthlyDefaultView.swift in Sources */,
 				DA53F3C328645E05003D02EF /* PageMO+CoreDataClass.swift in Sources */,
 				DAF4502C28DF28FC003C4900 /* MemoView.swift in Sources */,
-				DAF4502528D970C9003C4900 /* MonthlyStyle.swift in Sources */,
 				DA53F3D3286462C4003D02EF /* MonthlyMO+CoreDataClass.swift in Sources */,
 				DA53F3DA286474E1003D02EF /* NoteView.swift in Sources */,
 				DA53F3D4286462C4003D02EF /* MonthlyMO+CoreDataProperties.swift in Sources */,
 				DAD7227C28D60D7D00CB0B7E /* PageAddCalView.swift in Sources */,
 				DAF4502328D8CA29003C4900 /* DailyViewWithoutPage.swift in Sources */,
+				DAEB766729124BCC0028D1E4 /* PageAddWeekly.swift in Sources */,
 				DA2F158D28FFD0CF00872A72 /* AppDelegate.swift in Sources */,
 				DA53F3E6286EFB63003D02EF /* Extensions.swift in Sources */,
 				DA53F3AD28645AF6003D02EF /* FormkdiaryApp.swift in Sources */,
@@ -398,14 +404,16 @@
 				DA76353A29030EDD00B94BA9 /* PageListView.swift in Sources */,
 				DAA0CD962909C4210022C570 /* KeyboardManager.swift in Sources */,
 				DA53F3DE28649ACA003D02EF /* PageAddView.swift in Sources */,
-				DAA0CD9429097C730022C570 /* TSET.swift in Sources */,
+				DAA0CD9429097C730022C570 /* PageGridView.swift in Sources */,
 				DA53F3D8286472EE003D02EF /* MainView.swift in Sources */,
+				DAEB763F291227DC0028D1E4 /* PageAddMonthly.swift in Sources */,
 				DA2F157E28FD3CD700872A72 /* PageExport.swift in Sources */,
 				DAD9716328D30FB0002CABAC /* WeeklyMO+CoreDataClass.swift in Sources */,
 				DA53F3C528645E05003D02EF /* NoteMO+CoreDataClass.swift in Sources */,
 				DAD9717328D3E4EF002CABAC /* Formkdiary.xcdatamodeld in Sources */,
-				DAF4502728DC40CD003C4900 /* PageNavi.swift in Sources */,
-				DAA0CD9E290A4DB70022C570 /* SearchView.swift in Sources */,
+				DAEB766B291250A10028D1E4 /* PageAddMemo.swift in Sources */,
+				DAA0CD9E290A4DB70022C570 /* SearchDetailView.swift in Sources */,
+				DAEB76692912509A0028D1E4 /* PageAddDaily.swift in Sources */,
 				DA53F3CF286462C4003D02EF /* DailyMO+CoreDataClass.swift in Sources */,
 				DAF4502128D8C026003C4900 /* WeeklyDefaultView.swift in Sources */,
 				DA53F3C628645E05003D02EF /* NoteMO+CoreDataProperties.swift in Sources */,

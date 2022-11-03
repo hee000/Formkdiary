@@ -35,9 +35,12 @@ struct NoteAddView: View {
             .disableAutocorrection(true)
             .foregroundColor(Color.customText)
             .textCase(.none)
+            .accentColor(Color.customText)
           Divider()
+            .background(Color.customTextLight)
             .frame(width: UIScreen.main.bounds.size.width/3*2)
             .padding(.bottom)
+//            .background(Color.customTextLight)
             .onReceive(Just(title)) { _ in limitText(textLimit) }
           Button{
             if title != "" {

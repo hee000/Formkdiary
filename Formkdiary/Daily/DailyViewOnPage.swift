@@ -67,8 +67,6 @@ class DailyMemoViewModel: ObservableObject {
 struct DailyViewOnPage: View {
   @Environment(\.managedObjectContext) private var viewContext
   @EnvironmentObject var keyboardManager: KeyboardManager
-
-  @EnvironmentObject var pageNavi: PageNavi
   
   @ObservedObject var daily: DailyMO
 //  let titleVisible: Bool
@@ -90,7 +88,7 @@ struct DailyViewOnPage: View {
   }
   
   let backgroundContext = PersistenceController.shared.backgroundContext
-  var dailss: DailyMO {
+  var backDaily: DailyMO {
     let fetchRequest = NSFetchRequest<DailyMO>(entityName: "Daily")
     fetchRequest.predicate = NSPredicate(format: "dailyId == %@", daily.dailyId as CVarArg)
     let result = try! backgroundContext.fetch(fetchRequest)
@@ -133,8 +131,9 @@ struct DailyViewOnPage: View {
         TextEditor(text: $daily.text)
           .padding(.horizontal)
           .scrollContentBackground(.hidden) // <- Hide it
-
+          .accentColor(Color.customText)
           .background(Color.customBg)
+//          .edgesIgnoringSafeArea(keyboardManager.isVisible ? [] : .bottom)
         
         
         if keyboardManager.isVisible {
@@ -161,7 +160,6 @@ struct DailyViewOnPage: View {
         }
       }//v
     }// geo
-    .ignoresSafeArea()
     .fullScreenCover(isPresented: $isImagePicker) {
       PhotoPicker(isPresented: $isImagePicker, model: model)
         .ignoresSafeArea()
@@ -172,7 +170,7 @@ struct DailyViewOnPage: View {
     }
     .onChange(of: daily.text, perform: { newValue in
       backgroundContext.perform {
-        daily.text = newValue
+        backDaily.text = newValue
         do {
           try backgroundContext.save()
         } catch let error {
@@ -181,16 +179,6 @@ struct DailyViewOnPage: View {
       }
 
     })
-    .onAppear{
-      if model.titleVisible {
-        pageNavi.pageObjectID = self.daily.page!.objectID
-      }
-    }
-    .onChange(of: model.titleVisible) { V in
-      if V {
-        pageNavi.pageObjectID = self.daily.page!.objectID
-      }
-    }
-    
+
   }
 }

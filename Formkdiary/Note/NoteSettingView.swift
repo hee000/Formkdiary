@@ -18,7 +18,7 @@ let noteStyleRange = [Int32(0), Int32(1), Int32(2)]
 
 struct NoteSettingView: View {
   @Environment(\.presentationMode) var presentationMode
-  @EnvironmentObject var pageNavi: PageNavi
+  @EnvironmentObject var navigator: Navigator
 
   @State private var isToast = false
   @State private var isToastMessage = ""
@@ -45,24 +45,31 @@ struct NoteSettingView: View {
 //    presentationMode.wrappedValue.dismiss()
   }
   
-  init(id objectID: NSManagedObjectID, in context: NSManagedObjectContext, pgid pageObjectID: NSManagedObjectID? = nil) {
-    if let note = try? context.existingObject(with: objectID) as? NoteMO {
-        self.note = note
-        _column = State(initialValue: Int(note.column))
-    } else {
-        // if there is no object with that id, create new one
-      let note = NoteMO(context: context)
-        self.note = note
-        _column = State(initialValue: Int(note.column))
-        try? context.save()
-    }
+  init(note: NoteMO, page: PageMO? = nil) {
+//    if let note = try? context.existingObject(with: objectID) as? NoteMO {
+//        self.note = note
+//        _column = State(initialValue: Int(note.column))
+//    } else {
+//        // if there is no object with that id, create new one
+//      let note = NoteMO(context: context)
+//        self.note = note
+//        _column = State(initialValue: Int(note.column))
+//        try? context.save()
+//    }
+    self.note = note
+    _column = State(initialValue: Int(note.column))
     
-    if let pid = pageObjectID, let page = try? context.existingObject(with: pid) as? PageMO {
+    if let page = page {
       self.page = page
-//      print(page)
     } else {
-      self.page = PageMO(context: context)
+      self.page = PageMO(context: note.managedObjectContext!)
     }
+//    if let pid = pageObjectID, let page = try? context.existingObject(with: pid) as? PageMO {
+//      self.page = page
+////      print(page)
+//    } else {
+//      self.page = PageMO(context: context)
+//    }
   }
   
   var body: some View {
@@ -148,18 +155,20 @@ struct NoteSettingView: View {
             Divider()
           }
           
-          Button{
-            isSearch.toggle()
-          } label: {
-            Text("검색")
-              .font(.system(size: 15, weight: .regular))
-              .frame(maxWidth: .infinity, alignment: .leading)
-              .frame(height: UIScreen.main.bounds.size.width/14)
-              .foregroundColor(Color.customText)
-              .padding(.vertical)
-          }
-          
-          Divider()
+//          if note.style == 0 {
+            Button{
+              isSearch.toggle()
+            } label: {
+              Text("검색")
+                .font(.system(size: 15, weight: .regular))
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(height: UIScreen.main.bounds.size.width/14)
+                .foregroundColor(Color.customText)
+                .padding(.vertical)
+            }
+            
+            Divider()
+//          }
           
           
           if let share = stack.getShare(note), share.participants.count > 1  {
@@ -206,6 +215,7 @@ struct NoteSettingView: View {
               
               HStack{
                 Button{
+                  weekly.style = weeklyStyle.two.rawValue
                 } label: {
                   VStack{
                     VStack{
@@ -235,6 +245,7 @@ struct NoteSettingView: View {
                 
                 Button{
                   //                  monthlyStyle = "twoColumnStyle"
+                  weekly.style = weeklyStyle.one.rawValue
                 } label: {
                   VStack{
                     VStack{
@@ -322,17 +333,15 @@ struct NoteSettingView: View {
             Divider()
             
             Button{
-//              if note.lastIndex != 0 {
-//                note.lastIndex -= 1
-//              }
-//
-//              for otherPage: PageMO in page.note!.pages.toArray() {
-//                if otherPage.index > page.index{
-//                  otherPage.index -= 1
-//                }
-//              }
-//              stack.context.delete(page)
-//              CoreDataSave()
+              presentationMode.wrappedValue.dismiss()
+            
+              for otherPage: PageMO in page.note!.pages.toArray() {
+                if otherPage.index > page.index{
+                  otherPage.index -= 1
+                }
+              }
+              stack.context.delete(page)
+              CoreDataSave()
             }label: {
               Text("페이지 삭제")
                 .foregroundColor(Color.customText)
@@ -347,9 +356,20 @@ struct NoteSettingView: View {
         .padding([.leading, .trailing])
         .padding([.leading, .trailing])
       } //scroll
+      .foregroundColor(Color.customText)
       .background(Color.customBg)
       .sheet(isPresented: $isSearch) {
-        zzzzzzzzz(onSearchNavigator: onSearchNavigator, note: note)
+        SearchView(onSearchNavigator: onSearchNavigator, note: note)
+//          .onDisappear{
+//            if let note = navigator.note {
+//              navigator.path.append(Route.note(note))
+//            }
+//            if let page = navigator.page {
+//              navigator.path.append(Route.page(page))
+//            }
+//            navigator.note = nil
+//            navigator.page = nil
+//          }
       }
       .sheet(isPresented: $showShareSheet, content: {
         VStack{

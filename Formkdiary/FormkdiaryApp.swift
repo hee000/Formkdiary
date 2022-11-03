@@ -16,6 +16,7 @@ struct FormkdiaryApp: App {
     WindowGroup {
       ContentView()
         .environment(\.managedObjectContext, PersistenceController.shared.context)
+        .environmentObject(Navigator())
     }
   }
 }

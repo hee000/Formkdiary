@@ -12,28 +12,33 @@ import UIKit
 struct PageView: View {
   @Environment(\.managedObjectContext) private var viewContext
   @Environment(\.presentationMode) var presentationMode
-  @EnvironmentObject var pageNavi: PageNavi
   @EnvironmentObject var keyboardManager: KeyboardManager
-  @EnvironmentObject var searchNavigator: SearchNavigator
 
   @ObservedObject var note: NoteMO
 //  @State var pageIndex: Int
 //  let pages: [PageMO]
   @FetchRequest var pages : FetchedResults<PageMO>
+  
+  
 
-  init(note: NoteMO) {
+  @State var pageIndex: Int32
+  init(note: NoteMO, pageIndex: Int32) {
     self.note = note
     
     var predicate = NSPredicate(format: "note == %@", note)
     _pages = FetchRequest(entity: PageMO.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \PageMO.index, ascending: true)], predicate: predicate)
+    
+    _pageIndex = State(wrappedValue: pageIndex)
   }
   
   @State var isNoteSetting = false
   @State var isGrid = false
   
+  @State var isPageAdd = false
+  
   var body: some View {
     if !pages.isEmpty{
-      TabView(selection: $note.lastIndex) {
+      TabView(selection: $pageIndex) {
         ForEach(Array(pages.enumerated()), id: \.offset) { idxs, page in
           let idx = Int32(idxs)
           if let monthly = page.monthly {
@@ -53,51 +58,66 @@ struct PageView: View {
         .background(Color.customBg)
         
       } //tab
+      .background(Color.customBg)
       .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
 //      .tab
       
       .onAppear{
+        note.lastIndex = pageIndex
         CoreDataSave()
       }
-      .onChange(of: note.lastIndex, perform: { V in
-//        note.lastIndex = Int32(V)
+      .onChange(of: pageIndex, perform: { V in
+        note.lastIndex = V
         CoreDataSave()
       })
       .onChange(of: note.style, perform: { _ in
         presentationMode.wrappedValue.dismiss()
       })
-      .onChange(of: searchNavigator.isPage, perform: { V in
-        if let page = searchNavigator.page, V {
-          note.lastIndex = page.index
-          searchNavigator.isPage = false
-        }
-      })
       .sheet(isPresented: $isGrid, content: {
-        if let pages = note.pages.allObjects.sorted(by: {($0 as! PageMO).index < ($1 as! PageMO).index}) as? [PageMO] {
-//          NavigationView{
-//            PageSelectView(note: note, pages: pages)
-          TSET(note: note, pages: pages)
-        }
+//        if let pages = note.pages.allObjects.sorted(by: {($0 as! PageMO).index < ($1 as! PageMO).index}) as? [PageMO] {
+        PageGridView(note: note, pageIndex: $pageIndex)
+          .foregroundColor(Color.customText)
+//        }
       })
       
       .fullScreenCover(isPresented: $isNoteSetting) {
-        NoteSettingView(id: note.objectID, in: viewContext, pgid: pageNavi.pageObjectID)
+        NoteSettingView(note: note, page: pages[Int(pageIndex)])
+      }
+      .fullScreenCover(isPresented: $isPageAdd) {
+        PageAddView(note: note)
       }
       
-      .navigationBarTitle(pages.count > Int(note.lastIndex) ? pages[Int(note.lastIndex)].title : pages[pages.count - 1].title)
+      .navigationBarTitle(pages.count > Int(pageIndex) ? pages[Int(pageIndex)].title : pages[pages.count - 1].title)
+      .navigationBarTitleDisplayMode(.inline)
       .navigationBarBackButtonHidden(true)
       .toolbar {
-        if note.style != noteStyle.page.rawValue {
-          ToolbarItem(placement: .navigationBarLeading) {
+        ToolbarItem(placement: .navigationBarLeading) {
+          HStack{
             Button {
               presentationMode.wrappedValue.dismiss()
             } label: {
               Image(systemName: "chevron.left")
                 .foregroundColor(Color.customIc)
             }
+            if note.style == 1 {
+              Button {
+                isGrid.toggle()
+              } label: {
+                Image(systemName: "square.grid.2x2")
+                  .foregroundColor(Color.customIc)
+              }
+            }
           }
-
-          ToolbarItem(placement: .navigationBarTrailing) {
+        }
+        ToolbarItem(placement: .navigationBarTrailing) {
+          HStack {
+            Button {
+              isPageAdd.toggle()
+            } label: {
+              Image(systemName: "plus")
+                .foregroundColor(Color.customIc)
+            }
+            
             Button {
               isNoteSetting.toggle()
             } label: {
@@ -105,18 +125,8 @@ struct PageView: View {
                 .foregroundColor(Color.customIc)
             }
           }
-        } else {
-          ToolbarItem(placement: .navigationBarLeading) {
-              Button {
-                isGrid.toggle()
-              } label: {
-                Image(systemName: "square.grid.2x2")
-                  .foregroundColor(Color.customIc)
-              }
-          }
         }
       }//toolbar
-      
     }
     
   }

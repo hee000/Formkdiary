@@ -8,9 +8,20 @@
 import SwiftUI
 import CoreData
 
+enum gridMove {
+  case none
+  case left
+  case right
+}
+
 class PageGridModel: ObservableObject {
   init(note: NoteMO) {
     self.note = note
+    if let newPages = note.pages.allObjects.sorted(by: {($0 as! PageMO).index < ($1 as! PageMO).index}) as? [PageMO] {
+      self.pages = newPages
+    } else {
+      self.pages = []
+    }
   }
   @Published var images: [NSManagedObjectID:UIImage] = [:]
   @Published var gridInnerSize: CGSize = CGSize()
@@ -28,7 +39,7 @@ class PageGridModel: ObservableObject {
       }
     }
   }
-  var pages = [PageMO]()
+  var pages: [PageMO]
   var note: NoteMO
   
   func loadImage() {
@@ -129,7 +140,7 @@ class gridItemProvider: NSItemProvider {
     }
 }
 
-struct TSET: View {
+struct PageGridView: View {
   @Environment(\.managedObjectContext) private var viewContext
   @Environment(\.presentationMode) var presentationMode
   @EnvironmentObject var keyboardManager: KeyboardManager
@@ -137,13 +148,14 @@ struct TSET: View {
   @ObservedObject var note: NoteMO
   @StateObject var model: PageGridModel
   
-  init(note: NoteMO, pages: [PageMO]) {
+  @Binding var pageIndex: Int32
+  
+  init(note: NoteMO, pageIndex: Binding<Int32>) {
     self.note = note
     
     let model = PageGridModel(note: note)
-    model.pages = pages
-    
     _model = StateObject(wrappedValue: model)
+    _pageIndex = pageIndex
   }
   
   @GestureState var tapGesture = false
@@ -165,9 +177,10 @@ struct TSET: View {
               }
             
               Button{
-                guard let note = page.note else { return }
-                note.lastIndex = page.index
-                CoreDataSave()
+//                guard let note = page.note else { return }
+//                note.lastIndex = page.index
+//                CoreDataSave()
+                pageIndex = page.index
                 presentationMode.wrappedValue.dismiss()
               } label: {
                 HStack(spacing: 0) {
@@ -232,6 +245,12 @@ struct TSET: View {
                 }
                 viewContext.delete(page)
                 CoreDataSave()
+                
+                if let newPages = model.note.pages.allObjects.sorted(by: {($0 as! PageMO).index < ($1 as! PageMO).index}) as? [PageMO] {
+                  model.pages = newPages
+                }
+                
+                model.loadImage()
                 print("삭제")
               } label: {
                 Label("지우기", systemImage: "trash.fill")

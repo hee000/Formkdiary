@@ -21,7 +21,7 @@ struct DailyViewWithoutPage: View {
 
   
   let backgroundContext = PersistenceController.shared.backgroundContext
-  var dailss: DailyMO {
+  var backDaily: DailyMO {
     let fetchRequest = NSFetchRequest<DailyMO>(entityName: "Daily")
     fetchRequest.predicate = NSPredicate(format: "dailyId == %@", daily.dailyId as CVarArg)
     let result = try! backgroundContext.fetch(fetchRequest)
@@ -69,8 +69,8 @@ struct DailyViewWithoutPage: View {
         TextEditor(text: $daily.text)
           .padding(.horizontal)
           .scrollContentBackground(.hidden) // <- Hide it
-
           .background(Color.customBg)
+          .accentColor(Color.customText)
         
         
         if keyboardManager.isVisible {
@@ -108,14 +108,21 @@ struct DailyViewWithoutPage: View {
         .ignoresSafeArea()
     }
     .onChange(of: daily.text, perform: { newValue in
-      backgroundContext.perform {
-        daily.text = newValue
+      PersistenceController.shared.persistentContainer.performBackgroundTask { NSManagedObjectContext in
         do {
-          try backgroundContext.save()
+          try NSManagedObjectContext.save()
         } catch let error {
           print("@@@@@@@@@@@@@@@", error)
         }
       }
+//      backgroundContext.perform {
+//        backDaily.text = newValue
+//        do {
+//          try backgroundContext.save()
+//        } catch let error {
+//          print("@@@@@@@@@@@@@@@", error)
+//        }
+//      }
     })
     .onDisappear{
       if daily.text == "" {

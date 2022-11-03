@@ -11,36 +11,45 @@ import CoreData
 
 func CoreDataSave() {
   PersistenceController.shared.save()
-//  do {
-//    try PersistenceController.shared.save()
-//  } catch {
-//    let nsError = error as NSError
-//    fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-//  }
 }
 
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
+enum Route: Hashable {
+    case note(NoteMO)
+    case page(PageMO)
+    case daily(DailyMO)
+}
 
+class Navigator: ObservableObject {
+  @Published var path = [Route]()
+  @Published var page: PageMO? = nil
+  @Published var note: NoteMO? = nil
+}
 
 struct ContentView: View {
   @Environment(\.colorScheme) var systemColorScheme
-
+  @EnvironmentObject var navigator: Navigator
   
   @AppStorage("DarkMode") var darkMode: Bool = UserDefaults.standard.bool(forKey: "DarkMode")
   
   var body: some View {
-//    NavigationView{
+    NavigationStack(path: $navigator.path) {
       MainView()
-//    }
-    .navigationViewStyle(StackNavigationViewStyle())
-    .environmentObject(PageNavi())
+      //        .border(.black)
+        .navigationDestination(for: Route.self, destination: { route in
+          
+          switch route {
+          case let .note(note):
+            NoteView(note: note)
+          case let .page(page):
+            PageView(note: page.note!, pageIndex: page.index)
+          case let .daily(daily):
+            DailyViewWithoutPage(daily: daily)
+          }
+        })
+    }
+    
+//    .navigationViewStyle(StackNavigationViewStyle())
     .environmentObject(KeyboardManager())
-    .environmentObject(SearchNavigator())
     .preferredColorScheme(darkMode ? .dark : .light)
 //      .preferredColorScheme(systemColorScheme)
     .onAppear{

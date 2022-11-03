@@ -7,21 +7,7 @@
 
 import SwiftUI
 
-
-enum naviType: Hashable {
-    case note, page
-}
-
-
-class SearchNavigator: ObservableObject {
-  @Published var isNote = false
-  @Published var note: NoteMO?
-  @Published var isPage = false
-  @Published var page: PageMO?
-  @Published var navi: [naviType] = []
-}
-
-struct zzzzzzzzz: View {
+struct SearchView: View {
   @Environment(\.presentationMode) var presentationMode
   @State var keyword = ""
   let onSearchNavigator: () -> Void
@@ -42,7 +28,7 @@ struct zzzzzzzzz: View {
         .padding()
         
         if !keyword.isEmpty {
-          SearchView(keyword: keyword, onSearchNavigator: onSearchNavigator, note: note != nil ? note! : nil)
+          SearchDetailView(keyword: keyword, onSearchNavigator: onSearchNavigator, note: note != nil ? note! : nil)
         } else {
           Spacer()
         }
@@ -66,9 +52,9 @@ struct zzzzzzzzz: View {
 }
 
 import CoreData
-struct SearchView: View {
+struct SearchDetailView: View {
   @Environment(\.presentationMode) var presentationMode
-  @EnvironmentObject var searchNavigator: SearchNavigator
+  @EnvironmentObject var navigator: Navigator
 
   let backgroundContext = PersistenceController.shared.backgroundContext
 
@@ -82,20 +68,23 @@ struct SearchView: View {
 
   let keyword: String
 
-  private var onNote: Bool
+//  private var onNote: Bool
+  var note: NoteMO?
+  
   let onSearchNavigator: () -> Void
 
   init(keyword: String, onSearchNavigator: @escaping () -> Void, note: NoteMO? = nil) {
 
     self.onSearchNavigator = onSearchNavigator
     self.keyword = keyword
-
+    self.note = note
+    
     var titlePredicate: NSPredicate
     var textPredicate: NSPredicate
-//    var titlePredicate: NSPredicate
+
     let reg = "^.*\(keyword).*$"
 
-    if let note = note {
+    if let note = self.note {
       let pageNotePredicate = NSPredicate(format: "note == %@", note)
       let pageTitlePredicate = NSPredicate(format: "title MATCHES %@", reg)
       titlePredicate = NSCompoundPredicate(type: .and, subpredicates: [pageNotePredicate, pageTitlePredicate])
@@ -104,11 +93,9 @@ struct SearchView: View {
       let notePredicate = NSPredicate(format: "page.note == %@", note)
       let keywordPredicate = NSPredicate(format: "text MATCHES %@", reg)
       textPredicate = NSCompoundPredicate(type: .and, subpredicates: [notePredicate, keywordPredicate])
-      self.onNote = true
     } else {
       titlePredicate = NSPredicate(format: "title MATCHES %@", reg)
       textPredicate = NSPredicate(format: "text MATCHES %@", reg)
-      self.onNote = false
     }
 
     let pageFetchRequest = NSFetchRequest<PageMO>(entityName: "Page")
@@ -119,17 +106,47 @@ struct SearchView: View {
     let dailyFetchRequest = NSFetchRequest<DailyMO>(entityName: "Daily")
     dailyFetchRequest.predicate = textPredicate
     textDaily = try! backgroundContext.fetch(dailyFetchRequest)
-
-
-
-//    self.titlePage = titlePage
-//    self.textDaily = textDaily
-//    _textDaily = FetchRequest(entity: DailyMO.entity(), sortDescriptors: [], predicate: textPredicate)
-//
-//    _textMemo = FetchRequest(entity: MemoMO.entity(), sortDescriptors: [], predicate: textPredicate)
-//
-//    _titlePage = FetchRequest(entity: PageMO.entity(), sortDescriptors: [], predicate: titlePredicate)
-
+  }
+  
+  func onNote(page: PageMO) {
+    guard let note = note else { return }
+    if note.style == 0 {
+      navigator.path.append(Route.page(page))
+    } else {
+      navigator.path.popLast()
+      navigator.path.append(Route.page(page))
+    }
+  }
+  
+  func activate(page: PageMO) {
+    if let note = note {
+      if note.style == 0 {
+        navigator.path.append(Route.page(page))
+      } else {
+        navigator.path.popLast()
+        navigator.path.append(Route.page(page))
+      }
+    } else {
+      guard let note = page.note else { return }
+      if note.style == 0 {
+        navigator.note = note
+        navigator.page = page
+      } else {
+        note.lastIndex = page.index
+        navigator.note = note
+      }
+    }
+  }
+  
+  func onHome(page: PageMO) {
+    guard let note = page.note else { return }
+    if note.style == 0 {
+      navigator.note = note
+      navigator.page = page
+    } else {
+      note.lastIndex = page.index
+      navigator.note = note
+    }
   }
 
   var body: some View {
@@ -147,19 +164,8 @@ struct SearchView: View {
         }
         ForEach(titlePage) { page in
           Button{
+            activate(page: page)
             onSearchNavigator()
-
-            if onNote {
-              searchNavigator.page = page
-              searchNavigator.isPage = true
-//              searchNavigator.navi.append(.page)
-            } else {
-              guard let note = page.note else { return }
-              searchNavigator.note = note
-              searchNavigator.isNote = true
-              searchNavigator.page = page
-              searchNavigator.isPage = true
-            }
           } label: {
             HStack{
               Rectangle()
@@ -179,7 +185,6 @@ struct SearchView: View {
         }
         ForEach(textDaily) { backDaily in
           Button{
-            onSearchNavigator()
 
             let FetchRequest = NSFetchRequest<DailyMO>(entityName: "Daily")
             FetchRequest.predicate = NSPredicate(format: "dailyId == %@", backDaily.dailyId as CVarArg)
@@ -187,41 +192,16 @@ struct SearchView: View {
             let daily = try! stack.context.fetch(FetchRequest).first!
             
             if let page = daily.page {
-              if onNote {
-                searchNavigator.page = page
-                searchNavigator.isPage = true
-              } else {
-                guard let note = page.note else { return }
-                searchNavigator.note = note
-                searchNavigator.isNote = true
-                searchNavigator.page = page
-                searchNavigator.isPage = true
-              }
-            } else if let monthly = daily.monthly {
-              guard let page = monthly.page else { return }
-              if onNote {
-                searchNavigator.page = page
-                searchNavigator.isPage = true
-              } else {
-                guard let note = page.note else { return }
-                searchNavigator.note = note
-                searchNavigator.isNote = true
-                searchNavigator.page = page
-                searchNavigator.isPage = true
-              }
-            } else if let weekly = daily.weekly {
-              guard let page = weekly.page else { return }
-              if onNote {
-                searchNavigator.page = page
-                searchNavigator.isPage = true
-              } else {
-                guard let note = page.note else { return }
-                searchNavigator.note = note
-                searchNavigator.isNote = true
-                searchNavigator.page = page
-                searchNavigator.isPage = true
-              }
+              activate(page: page)
+            } else if let page = daily.monthly?.page {
+//              guard let page = monthly.page else { return }
+              activate(page: page)
+            } else if let page = daily.weekly?.page {
+//              guard let page = weekly.page else { return }
+              activate(page: page)
             }
+            
+            onSearchNavigator()
           } label: {
             HStack{
               Rectangle()
