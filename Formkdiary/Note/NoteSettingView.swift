@@ -334,14 +334,29 @@ struct NoteSettingView: View {
             
             Button{
               presentationMode.wrappedValue.dismiss()
-            
+              
+              if note.pages.count - 1 == page.index && note.pages.count != 1 {
+                note.lastIndex = page.index - 1
+              } else {
+                note.lastIndex = page.index
+              }
+              
+              
               for otherPage: PageMO in page.note!.pages.toArray() {
                 if otherPage.index > page.index{
                   otherPage.index -= 1
                 }
               }
+              
               stack.context.delete(page)
               CoreDataSave()
+              
+              if navigator.path.last == Route.page(page) && note.pages.count != 0 {
+                navigator.path[navigator.path.count - 1] = Route.page(note.pages.allObjects[Int(note.lastIndex)] as! PageMO)
+//                presentationMode.wrappedValue.dismiss()
+                return
+              }
+              
             }label: {
               Text("페이지 삭제")
                 .foregroundColor(Color.customText)

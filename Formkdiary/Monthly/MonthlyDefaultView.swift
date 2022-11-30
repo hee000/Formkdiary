@@ -19,6 +19,10 @@ struct MonthlyDefaultView: View {
   init(monthly: MonthlyMO, titleVisible: Bool = false) {
     self.monthly = monthly
     self.titleVisible = titleVisible
+    self.months = calendar.generateDates(
+                    inside: DateInterval(start: monthly.date, end: monthly.date),
+                    matching: DateComponents(day: 1, hour: 0, minute: 0, second: 0)
+                  )
   }
   
 
@@ -191,6 +195,7 @@ struct MonthlyDefaultView: View {
                       //                  dailyObjectID = daily
                       //                    isDailyList = false
                       //                  dailyActive = true
+//                      print(daily)
                       navigator.path.append(Route.daily(daily))
                     } label: {
                       HStack{
@@ -275,12 +280,14 @@ struct MonthlyDefaultView: View {
     )
   }
 
-  private var months: [Date] {
-    calendar.generateDates(
-      inside: DateInterval(start: monthly.date, end: monthly.date),
-      matching: DateComponents(day: 1, hour: 0, minute: 0, second: 0)
-    )
-  }
+//  private var months: [Date] {
+//    calendar.generateDates(
+//      inside: DateInterval(start: monthly.date, end: monthly.date),
+//      matching: DateComponents(day: 1, hour: 0, minute: 0, second: 0)
+//    )
+//  }
+  
+  private var months: [Date]
 
 
   private func days(for month: Date) -> [Date] {

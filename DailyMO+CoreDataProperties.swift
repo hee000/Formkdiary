@@ -17,7 +17,7 @@ extension DailyMO {
   }
   
   @NSManaged public var dailyId: UUID
-  @NSManaged public var layout: String?
+  @NSManaged public var style: Int32
   @NSManaged public var text: String
   @NSManaged public var date: Date
   @NSManaged public var createdAt: Date

@@ -81,7 +81,7 @@ struct PageView: View {
       })
       
       .fullScreenCover(isPresented: $isNoteSetting) {
-        NoteSettingView(note: note, page: pages[Int(pageIndex)])
+        NoteSettingView(note: note, page: pages[pageIndex >= pages.count ? pages.count - 1 : Int(pageIndex)])
       }
       .fullScreenCover(isPresented: $isPageAdd) {
         PageAddView(note: note)
@@ -127,7 +127,16 @@ struct PageView: View {
           }
         }
       }//toolbar
+    } else {
+      ProgressView()
+        .onAppear{
+          if note.style == 0 {
+            presentationMode.wrappedValue.dismiss()
+          }
+        }
     }
     
   }
 }
+
+

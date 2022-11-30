@@ -97,12 +97,12 @@ struct SettingView: View {
                 .font(.system(size: 15, weight: .regular))
             }
             .confirmationDialog("현재 요일 표기: \(!englishDay ? "국문" : "영문")", isPresented: $isEnglishDay, titleVisibility: .visible) {
-              Button("국문") {
+              Button("월 화 수") {
                 englishDay = false
                 startWeekRefresh()
               }
               
-              Button("영문") {
+              Button("Mon Tue Wed") {
                 englishDay = true
                 startWeekRefresh()
               }

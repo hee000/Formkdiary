@@ -91,7 +91,7 @@ final class PersistenceController: ObservableObject {
       }
     }
 
-    container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+    //    container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     container.viewContext.automaticallyMergesChangesFromParent = true
 //
 //    do {

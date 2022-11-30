@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA2C02AC2924C5630081A64E /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2C02AB2924C5630081A64E /* SideMenu.swift */; };
 		DA2F157E28FD3CD700872A72 /* PageExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2F157D28FD3CD700872A72 /* PageExport.swift */; };
 		DA2F158028FDB0C400872A72 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2F157F28FDB0C400872A72 /* Toast.swift */; };
 		DA2F158528FEBC7900872A72 /* AlertTwoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2F158428FEBC7900872A72 /* AlertTwoButton.swift */; };
@@ -58,6 +59,7 @@
 		DAEB76692912509A0028D1E4 /* PageAddDaily.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEB76682912509A0028D1E4 /* PageAddDaily.swift */; };
 		DAEB766B291250A10028D1E4 /* PageAddMemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEB766A291250A10028D1E4 /* PageAddMemo.swift */; };
 		DAEB766D291253E80028D1E4 /* PageAddModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEB766C291253E80028D1E4 /* PageAddModel.swift */; };
+		DAF02562292635CB002692D6 /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF02561292635CB002692D6 /* HelpView.swift */; };
 		DAF4502128D8C026003C4900 /* WeeklyDefaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF4502028D8C026003C4900 /* WeeklyDefaultView.swift */; };
 		DAF4502328D8CA29003C4900 /* DailyViewWithoutPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF4502228D8CA29003C4900 /* DailyViewWithoutPage.swift */; };
 		DAF4502928DF2620003C4900 /* DailyViewOnPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF4502828DF2620003C4900 /* DailyViewOnPage.swift */; };
@@ -65,6 +67,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DA2C02AB2924C5630081A64E /* SideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
 		DA2F157D28FD3CD700872A72 /* PageExport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageExport.swift; sourceTree = "<group>"; };
 		DA2F157F28FDB0C400872A72 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		DA2F158428FEBC7900872A72 /* AlertTwoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertTwoButton.swift; sourceTree = "<group>"; };
@@ -119,6 +122,7 @@
 		DAEB76682912509A0028D1E4 /* PageAddDaily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageAddDaily.swift; sourceTree = "<group>"; };
 		DAEB766A291250A10028D1E4 /* PageAddMemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageAddMemo.swift; sourceTree = "<group>"; };
 		DAEB766C291253E80028D1E4 /* PageAddModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageAddModel.swift; sourceTree = "<group>"; };
+		DAF02561292635CB002692D6 /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
 		DAF4502028D8C026003C4900 /* WeeklyDefaultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyDefaultView.swift; sourceTree = "<group>"; };
 		DAF4502228D8CA29003C4900 /* DailyViewWithoutPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyViewWithoutPage.swift; sourceTree = "<group>"; };
 		DAF4502828DF2620003C4900 /* DailyViewOnPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyViewOnPage.swift; sourceTree = "<group>"; };
@@ -162,8 +166,8 @@
 				DA53F3C8286462C4003D02EF /* DailyMO+CoreDataProperties.swift */,
 				DA53F3CB286462C4003D02EF /* MonthlyMO+CoreDataClass.swift */,
 				DA53F3CC286462C4003D02EF /* MonthlyMO+CoreDataProperties.swift */,
-				DA53F3CD286462C4003D02EF /* MemoMO+CoreDataClass.swift */,
 				DA53F3CE286462C4003D02EF /* MemoMO+CoreDataProperties.swift */,
+				DA53F3CD286462C4003D02EF /* MemoMO+CoreDataClass.swift */,
 				DA53F3BF28645E05003D02EF /* PageMO+CoreDataClass.swift */,
 				DA53F3C028645E05003D02EF /* PageMO+CoreDataProperties.swift */,
 				DA53F3C128645E05003D02EF /* NoteMO+CoreDataClass.swift */,
@@ -229,6 +233,8 @@
 			isa = PBXGroup;
 			children = (
 				DA53F3D7286472EE003D02EF /* MainView.swift */,
+				DA2C02AB2924C5630081A64E /* SideMenu.swift */,
+				DAF02561292635CB002692D6 /* HelpView.swift */,
 				DA53F3DB28647575003D02EF /* NoteAddView.swift */,
 				DAA0CD9B290A248A0022C570 /* SettingView.swift */,
 				DAA0CD9D290A4DB70022C570 /* SearchDetailView.swift */,
@@ -335,11 +341,12 @@
 			};
 			buildConfigurationList = DA53F3A428645AF6003D02EF /* Build configuration list for PBXProject "Formkdiary" */;
 			compatibilityVersion = "Xcode 13.0";
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
+				ko,
 				Base,
+				en,
 			);
 			mainGroup = DA53F3A028645AF6003D02EF;
 			packageReferences = (
@@ -373,6 +380,7 @@
 				DAA0CD9A290A06580022C570 /* PhotoPicker.swift in Sources */,
 				DA2F158028FDB0C400872A72 /* Toast.swift in Sources */,
 				DAF4502928DF2620003C4900 /* DailyViewOnPage.swift in Sources */,
+				DA2C02AC2924C5630081A64E /* SideMenu.swift in Sources */,
 				DA2F158528FEBC7900872A72 /* AlertTwoButton.swift in Sources */,
 				DAEB766D291253E80028D1E4 /* PageAddModel.swift in Sources */,
 				DAD9716428D30FB0002CABAC /* WeeklyMO+CoreDataProperties.swift in Sources */,
@@ -407,6 +415,7 @@
 				DAA0CD9429097C730022C570 /* PageGridView.swift in Sources */,
 				DA53F3D8286472EE003D02EF /* MainView.swift in Sources */,
 				DAEB763F291227DC0028D1E4 /* PageAddMonthly.swift in Sources */,
+				DAF02562292635CB002692D6 /* HelpView.swift in Sources */,
 				DA2F157E28FD3CD700872A72 /* PageExport.swift in Sources */,
 				DAD9716328D30FB0002CABAC /* WeeklyMO+CoreDataClass.swift in Sources */,
 				DA53F3C528645E05003D02EF /* NoteMO+CoreDataClass.swift in Sources */,
@@ -551,13 +560,13 @@
 				CODE_SIGN_ENTITLEMENTS = Formkdiary/Formkdiary.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.0;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"Formkdiary/Preview Content\"";
 				DEVELOPMENT_TEAM = P6Z9B6CV2H;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Formkdiary/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "나름";
+				INFOPLIST_KEY_CFBundleDisplayName = "쓰기나름";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -569,7 +578,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cch.Formkdiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -578,7 +587,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -590,13 +599,13 @@
 				CODE_SIGN_ENTITLEMENTS = Formkdiary/Formkdiary.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.0;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"Formkdiary/Preview Content\"";
 				DEVELOPMENT_TEAM = P6Z9B6CV2H;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Formkdiary/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "나름";
+				INFOPLIST_KEY_CFBundleDisplayName = "쓰기나름";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -608,7 +617,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cch.Formkdiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -617,7 +626,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

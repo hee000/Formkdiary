@@ -19,6 +19,8 @@ extension MemoMO {
     @NSManaged public var memoId: UUID
     @NSManaged public var text: String
     @NSManaged public var page: PageMO?
+    @NSManaged public var style: Int32
+    @NSManaged public var images: Data?
 
   public override func awakeFromInsert() {
       super.awakeFromInsert()

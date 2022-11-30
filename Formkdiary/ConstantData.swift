@@ -20,10 +20,10 @@ let monWeekEng = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 let asdsad = { return ":123"}
 
 
-var sunWeek = !UserDefaults.standard.bool(forKey: "EnglishDay") ? monWeekKor : monWeekEng
+var sunWeek = !UserDefaults.standard.bool(forKey: "EnglishDay") ? sunWeekKor : sunWeekEng
 var monWeek = !UserDefaults.standard.bool(forKey: "EnglishDay") ? monWeekKor : monWeekEng
 
 func startWeekRefresh() {
-  sunWeek = !UserDefaults.standard.bool(forKey: "EnglishDay") ? monWeekKor : monWeekEng
+  sunWeek = !UserDefaults.standard.bool(forKey: "EnglishDay") ? sunWeekKor : sunWeekEng
   monWeek = !UserDefaults.standard.bool(forKey: "EnglishDay") ? monWeekKor : monWeekEng
 }

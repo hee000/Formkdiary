@@ -6,21 +6,23 @@
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="editedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="images" optional="YES" attributeType="Binary"/>
-        <attribute name="layout" optional="YES" attributeType="String"/>
+        <attribute name="style" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="text" optional="YES" attributeType="String"/>
         <relationship name="monthly" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Monthly" inverseName="dailies" inverseEntity="Monthly"/>
         <relationship name="page" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Page" inverseName="daily" inverseEntity="Page"/>
         <relationship name="weekly" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Weekly" inverseName="dailies" inverseEntity="Weekly"/>
     </entity>
     <entity name="Memo" representedClassName="MemoMO" syncable="YES">
+        <attribute name="images" optional="YES" attributeType="Binary"/>
         <attribute name="memoId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="style" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="text" optional="YES" attributeType="String"/>
         <relationship name="page" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Page" inverseName="memo" inverseEntity="Page"/>
     </entity>
     <entity name="Monthly" representedClassName="MonthlyMO" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="layout" optional="YES" attributeType="String"/>
         <attribute name="monthlyId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="style" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="dailies" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Daily" inverseName="monthly" inverseEntity="Daily"/>
         <relationship name="page" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Page" inverseName="monthly" inverseEntity="Page"/>
     </entity>

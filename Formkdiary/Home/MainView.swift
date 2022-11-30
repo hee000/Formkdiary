@@ -37,6 +37,7 @@ struct MainView: View {
   @State private var share: CKShare?
   @State private var shareNote: NoteMO?
   @State private var showShareSheet = false
+
   
   let stack = PersistenceController.shared
   
@@ -102,17 +103,18 @@ struct MainView: View {
                     Label("이름 변경", systemImage: "pencil")
                   }
                   
-                  Button(role: .destructive) {
-                    self.index = index
-                    withAnimation{
-                      isDelete.toggle()
+//                  if stack.isOwner(object: note) {
+                    Button(role: .destructive) {
+                      self.index = index
+                      withAnimation{
+                        isDelete.toggle()
+                      }
+                      print("삭제")
+                    } label: {
+                      Label("삭제", systemImage: "trash.fill")
                     }
-                    print("삭제")
-                  } label: {
-                    Label("삭제", systemImage: "trash.fill")
-                  }
-                  .tint(.red)
-                  
+                    .tint(.red)
+//                  }
                 }
               } //for
             }//v
@@ -143,22 +145,30 @@ struct MainView: View {
             }
             return av
           })
+          
         }//geo
         .background(Color.customBg)
-//            .border(.black)
+        .fullScreenCover(isPresented: $isSetting) {
+          SettingView()
+        }
+        .fullScreenCover(isPresented: $noteAdd) {
+          NoteAddView()
+        }
+        
         .sheet(isPresented: $showShareSheet, content: {
           VStack{
             if let share = share, let note = shareNote {
               CloudSharingView(share: share, container: PersistenceController.shared.ckContainer, note: note)
                 .ignoresSafeArea()
                 .tint(Color.customText)
+            } else  {
+              ProgressView()
             }
           }
           .task {
             guard let shareNote = shareNote else { return }
             
             if !stack.isShared(object: shareNote) {
-//              print("공유설정중")
               Task {
                 await createShare(shareNote)
               }
@@ -225,9 +235,6 @@ struct MainView: View {
           .padding([.top, .leading, .trailing])
           .presentationDetents([.fraction(0.25)])
         }
-        .fullScreenCover(isPresented: $isSetting) {
-          SettingView()
-        }
         
         .sheet(isPresented: $isSearch) {
           SearchView(onSearchNavigator: onSearchNavigator)
@@ -273,26 +280,6 @@ struct MainView: View {
                  openSetting: self.openSetting,
                  openSearch: self.openSearch)
       }//z
-//      .navigationDestination(for: Route.self, destination: { route in
-//
-//        switch route {
-//          case let .note(NoteMO):
-//            NoteView(note: NoteMO)
-//        case .page(_):
-//          EmptyView()
-//        }
-//      })
-//      .navigationDestination(isPresented: $searchNavigator.isNote) {
-//        if let note = searchNavigator.note {
-//          NoteView(note: note)
-//        }
-//      }
-//    }//navi
-//    .navigationViewStyle(StackNavigationViewStyle())
-    //    .navigationViewStyle(DoubleColumnNavigationViewStyle())
-    .fullScreenCover(isPresented: $noteAdd) {
-      NoteAddView()
-    }
   }
   
   func onSearchNavigator() {
@@ -302,9 +289,7 @@ struct MainView: View {
   
   
   func diaryExport() {
-//    withAnimation {
       self.isDiaryExport.toggle()
-//    }
   }
   
   func openSetting() {
@@ -323,141 +308,6 @@ struct MainView: View {
     withAnimation {
       self.isSearch.toggle()
     }
-  }
-}
-
-
-
-struct MenuContent: View {
-  let diaryExport: () -> Void
-  let openSetting: () -> Void
-  let openSearch: () -> Void
-  
-  @AppStorage("StartMonday") var startMonday: Bool = UserDefaults.standard.bool(forKey: "StartMonday")
-  @State var isDaySetting = false
-  
-    var body: some View {
-      VStack{
-        List{
-          Color.clear
-            .listRowSeparator(.hidden)
-            .listRowBackground(Color.customBg)
-          
-          Color.clear
-            .listRowSeparator(.hidden)
-            .listRowBackground(Color.customBg)
-          
-          Button{
-            openSearch()
-          } label: {
-            Label("검색", systemImage: "magnifyingglass")
-              .foregroundColor(Color.customText)
-          }
-          .listRowSeparator(.hidden)
-          .listRowBackground(Color.customBg)
-          
-          Button{
-            openSetting()
-          } label: {
-            Label("설정", systemImage: "gearshape")
-              .foregroundColor(Color.customText)
-          }
-          .listRowSeparator(.hidden)
-          .listRowBackground(Color.customBg)
-          
-          Button{
-            diaryExport()
-          } label: {
-            Label("내보내기", systemImage: "square.and.arrow.up")
-              .foregroundColor(Color.customText)
-          }
-          .listRowSeparator(.hidden)
-          .listRowBackground(Color.customBg)
-          
-          Button{
-            
-          } label: {
-            Label("도움말", systemImage: "questionmark.circle")
-              .foregroundColor(Color.customText)
-          }
-          .listRowSeparator(.hidden)
-          .listRowBackground(Color.customBg)
-          
-        }
-        .scrollContentBackground(.hidden)
-        .background(Color.customBg)
-        Text("version 1.0.0")
-          .font(.footnote)
-          .foregroundColor(.gray)
-          .bold()
-      }
-
-    }
-}
-
-struct SideMenu: View {
-  let width: CGFloat
-  let isOpen: Bool
-  let menuClose: () -> Void
-  let diaryExport: () -> Void
-  let openSetting: () -> Void
-  let openSearch: () -> Void
-  @State private var offset = CGSize.zero
-
-
-  var body: some View {
-    ZStack {
-      GeometryReader { _ in
-          EmptyView()
-      }
-      .background(Color.black.opacity(0.3).ignoresSafeArea())
-      .opacity(self.isOpen ? 1.0 : 0.0)
-      .onChange(of: isOpen, perform: { newValue in
-        if newValue {
-          withAnimation{
-            offset = .zero
-          }
-        }
-      })
-      .onTapGesture {
-        self.menuClose()
-      }
-      
-      HStack {
-        MenuContent(diaryExport: diaryExport, openSetting: openSetting, openSearch: openSearch)
-          .frame(width: self.width)
-          .background(Color.customBg)
-          .offset(x: self.isOpen ? 0 + offset.width : -self.width)
-
-        Spacer()
-      }
-      
-    } //z
-    .gesture(
-      DragGesture()
-        .onChanged { gesture in
-          if gesture.translation.width < 0 {
-            withAnimation(.linear(duration: 0)) {
-              offset = gesture.translation
-            }
-          } else {
-            if offset.width < 0 {
-              withAnimation(.linear(duration: 0)) {
-                offset.width = 0
-              }
-            }
-          }
-        }
-        .onEnded { _ in
-          if offset.width < -self.width/2 {
-            self.menuClose()
-          } else {
-            withAnimation {
-              offset = .zero
-            }
-          }
-        }
-    ) //gesture
   }
 }
 

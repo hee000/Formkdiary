@@ -17,7 +17,7 @@ extension MonthlyMO {
     }
 
     @NSManaged public var date: Date
-    @NSManaged public var layout: String?
+    @NSManaged public var style: Int32
     @NSManaged public var monthlyId: UUID
     @NSManaged public var dailies: NSSet
     @NSManaged public var page: PageMO?

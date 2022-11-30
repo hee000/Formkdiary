@@ -47,6 +47,21 @@ struct ContentView: View {
           }
         })
     }
+    .onChange(of: navigator.path, perform: { newValue in
+//      print("변경시", newValue)
+//      guard let route = newValue.last else { return }
+//      switch route {
+//      case let .note(note):
+////        NoteView(note: note)
+//        return
+//      case let .page(page):
+////        PageView(note: page.note!, pageIndex: page.index)
+//        print(page)
+//      case let .daily(daily):
+//        return
+////        DailyViewWithoutPage(daily: daily)
+//      }
+    })
     
 //    .navigationViewStyle(StackNavigationViewStyle())
     .environmentObject(KeyboardManager())

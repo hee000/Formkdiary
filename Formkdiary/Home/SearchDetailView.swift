@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct SearchView: View {
   @Environment(\.presentationMode) var presentationMode
@@ -82,7 +83,9 @@ struct SearchDetailView: View {
     var titlePredicate: NSPredicate
     var textPredicate: NSPredicate
 
+//    let reg = ".*\(keyword).*"
     let reg = "^.*\(keyword).*$"
+    
 
     if let note = self.note {
       let pageNotePredicate = NSPredicate(format: "note == %@", note)
@@ -148,6 +151,30 @@ struct SearchDetailView: View {
       navigator.note = note
     }
   }
+  
+  
+  func getPage(backDaily: DailyMO, forePage: Bool = false) -> PageMO {
+    var daily: DailyMO
+    
+    if forePage {
+      let FetchRequest = NSFetchRequest<DailyMO>(entityName: "Daily")
+      FetchRequest.predicate = NSPredicate(format: "dailyId == %@", backDaily.dailyId as CVarArg)
+      
+      daily = try! stack.context.fetch(FetchRequest).first!
+    } else {
+      daily = backDaily
+    }
+    
+    if let page = daily.page {
+      return page
+    } else if let page = daily.monthly?.page {
+      return page
+    } else if let page = daily.weekly?.page {
+      return page
+    }
+    
+    return PageMO()
+  }
 
   var body: some View {
     ScrollView{
@@ -164,6 +191,12 @@ struct SearchDetailView: View {
         }
         ForEach(titlePage) { page in
           Button{
+            let FetchRequest = NSFetchRequest<PageMO>(entityName: "Page")
+            FetchRequest.predicate = NSPredicate(format: "pageId == %@", page.pageId as CVarArg)
+            
+            let page = try! stack.context.fetch(FetchRequest).first!
+
+            
             activate(page: page)
             onSearchNavigator()
           } label: {
@@ -185,22 +218,24 @@ struct SearchDetailView: View {
         }
         ForEach(textDaily) { backDaily in
           Button{
-
-            let FetchRequest = NSFetchRequest<DailyMO>(entityName: "Daily")
-            FetchRequest.predicate = NSPredicate(format: "dailyId == %@", backDaily.dailyId as CVarArg)
+            let page = getPage(backDaily: backDaily, forePage: true)
+            activate(page: page)
             
-            let daily = try! stack.context.fetch(FetchRequest).first!
-            
-            if let page = daily.page {
-              activate(page: page)
-            } else if let page = daily.monthly?.page {
-//              guard let page = monthly.page else { return }
-              activate(page: page)
-            } else if let page = daily.weekly?.page {
-//              guard let page = weekly.page else { return }
-              activate(page: page)
-            }
-            
+//            let FetchRequest = NSFetchRequest<DailyMO>(entityName: "Daily")
+//            FetchRequest.predicate = NSPredicate(format: "dailyId == %@", backDaily.dailyId as CVarArg)
+//
+//            let daily = try! stack.context.fetch(FetchRequest).first!
+//
+//            if let page = daily.page {
+//              activate(page: page)
+//            } else if let page = daily.monthly?.page {
+////              guard let page = monthly.page else { return }
+//              activate(page: page)
+//            } else if let page = daily.weekly?.page {
+////              guard let page = weekly.page else { return }
+//              activate(page: page)
+//            }
+//
             onSearchNavigator()
           } label: {
             HStack{
@@ -208,9 +243,38 @@ struct SearchDetailView: View {
                 .frame(width: 15, height: 1)
                 .foregroundColor(Color.customText)
 
-              Text(backDaily.text)
-                .lineLimit(1)
-                .foregroundColor(Color.customText)
+              
+              VStack(alignment: .leading) {
+                Text("\(getPage(backDaily: backDaily).title)")
+                  .lineLimit(1)
+                  .bold()
+                
+                let reg = ".{0,20}\(keyword).{0,20}"
+              
+                let aa = backDaily.text.replacingOccurrences(of: "\n", with: " ")
+                let bb = aa.getArrayAfterRegex(regex: reg)
+                if let text = bb.first {
+                  Text(text)
+                    .lineLimit(1)
+                }
+//                Text(bb.first)
+//                  .lineLimit(1)
+                
+//                Text("\(backDaily.text)")
+//                  .lineLimit(1)
+//                  .onAppear{
+//                    let reg = ".{0,10}\(keyword).{0,10}"
+//                    print(backDaily.text)
+//                    let aa = backDaily.text.replacingOccurrences(of: "\n", with: " ")
+//                    let bb = aa.getArrayAfterRegex(regex: reg)
+//                    print("aa", aa)
+//                    print("bb", bb)
+////                      .getArrayAfterRegex(regex: reg)
+////                    print(aa)
+//
+//                  }
+              }
+              .foregroundColor(Color.customText)
             }
           }
         }//for
