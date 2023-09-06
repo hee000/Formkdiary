@@ -1,6 +1,8 @@
 # [쓰기나름](https://apps.apple.com/kr/app/%EC%93%B0%EA%B8%B0%EB%82%98%EB%A6%84/id6443413796) - 미니멀리즘한 디자인을 추구하는 다이어리 앱
 
-방식, 목적과 취향을 최대한 반영할 수 있는 기록용 어플입니다. 쓰고자 하는 항목만 선택적으로 사용할 수 있는 것을 목적으로 하면서 편리함과 사용 용이성을 제공하고자 미니멀리즘한 디자인을 추구합니다.
+방식, 목적과 취향을 최대한 반영할 수 있는 기록용 어플입니다.
+<br>
+쓰고자 하는 항목만 선택적으로 사용할 수 있는 것을 목적으로 하면서 편리함과 사용 용이성을 제공하고자 미니멀리즘한 디자인을 추구합니다.
 
 ![img1](https://raw.githubusercontent.com/hee000/portfolio/main/images/s_preview_1.jpg) | ![img2](https://raw.githubusercontent.com/hee000/portfolio/main/images/s_preview_2.jpg)
 ---|---|
